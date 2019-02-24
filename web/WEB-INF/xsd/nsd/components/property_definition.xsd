@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 Enrico Cecchetti and Federico Gianno.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:include schemaLocation="./../../xml_components.xsd"/>
+
+    <xsd:element name="PropertyDefinition">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Property" type="Property" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="Property">
+        <xsd:choice>
+            <xsd:element name="HTTPDefinition" type="HTTPDefinition" minOccurs="0"/>
+            <xsd:element name="POP3Definition" type="POP3Definition" minOccurs="0"/>
+        </xsd:choice>
+        <xsd:attribute name="name" type="P-Name" use="required"/>
+        <xsd:attribute name="graph" type="xsd:long" use="required"/>
+        <xsd:attribute name="src" type="xsd:string" use="required"/>
+        <xsd:attribute name="dst" type="xsd:string" use="required"/>
+        <xsd:attribute name="lv4proto" type="L4ProtocolTypes" default="ANY"/>
+        <xsd:attribute name="src_port" type="xsd:string"/>
+        <xsd:attribute name="dst_port" type="xsd:string"/>
+        <xsd:attribute name="isSat" type="xsd:boolean"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="HTTPDefinition">
+        <xsd:attribute name="url" type="xsd:string" />
+        <xsd:attribute name="body" type="xsd:string" use="required"/>
+        <xsd:attribute name="options" type="xsd:string" />
+    </xsd:complexType>
+
+    <xsd:complexType name="POP3Definition">
+        <xsd:attribute name="email_from" type="xsd:string" use="required"/>
+        <xsd:attribute name="body" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="P-Name">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="IsolationProperty"/>
+            <xsd:enumeration value="ReachabilityProperty"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 Enrico Cecchetti and Federico Gianno.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:include schemaLocation="./../../xml_components.xsd"/>
+
+    <xsd:element name="VNFD">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Virtual_Link" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="VDU" minOccurs="1" maxOccurs="unbounded"/>
+                <xsd:element ref="Dependency" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:string" use="required"/>
+            <xsd:attribute name="vendor" type="xsd:string" use="optional"/>
+            <xsd:attribute name="version" type="xsd:string" use="optional"/>
+        </xsd:complexType>
+        <!-- key reference definitions -->
+        <xsd:unique name="VDUUniqueness">
+            <xsd:selector xpath="VDU"/>
+            <xsd:field xpath="@id"/>
+        </xsd:unique>
+        <xsd:unique name="VirtualLinkUniqueness">
+            <xsd:selector xpath="Virtual_Link"/>
+            <xsd:field xpath="@src"/>
+            <xsd:field xpath="@dst"/>
+        </xsd:unique>
+        <xsd:unique name="RelationUniqueness">
+            <xsd:selector xpath="Dependency/Relation"/>
+            <xsd:field xpath="@src"/>
+            <xsd:field xpath="@dst"/>
+        </xsd:unique>
+        <xsd:key name="VDUKey">
+            <xsd:selector xpath="VDU" />
+            <xsd:field xpath="@id" />
+        </xsd:key>
+        <xsd:keyref name="DependencySourceVDU" refer="VDUKey">
+            <xsd:selector xpath="Dependency/Relation" />
+            <xsd:field xpath="@src" />
+        </xsd:keyref>
+        <xsd:keyref name="DependencyDestVDU" refer="VDUKey">
+            <xsd:selector xpath="Dependency/Relation" />
+            <xsd:field xpath="@target" />
+        </xsd:keyref>
+    </xsd:element>
+
+    <xsd:element name="Virtual_Link">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="qos" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:choice>
+                            <xsd:element name="latency" type="xsd:int"/>
+                            <xsd:element name="jitter" type="xsd:int"/>
+                        </xsd:choice>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+            <xsd:attribute name="src" type="xsd:string" use="required" />
+            <xsd:attribute name="dst" type="xsd:string" use="required" />
+            <xsd:attribute name="test_access" type="test_accessType" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="test_accessType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="None" />
+            <xsd:enumeration value="Passive" />
+            <xsd:enumeration value="Active" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="VDU">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Computational_requirements" type="Computational_propertiesType" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="Memory_requirements" type="Memory_propertiesType" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="Network_requirements" type="Network_propertiesType" minOccurs="0" maxOccurs="1" />
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:string" use="required" />
+            <xsd:attribute name="vm_image" type="xsd:string" use="optional" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Dependency">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Relation">
+                    <xsd:complexType>
+                        <xsd:attribute name="src" type="xsd:string" use="required" />
+                        <xsd:attribute name="target" type="xsd:string" use="required" />
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
