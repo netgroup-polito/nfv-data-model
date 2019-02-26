@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element ref="{}Virtual_Link" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{}VDU" maxOccurs="unbounded"/>
- *         &lt;element ref="{}Dependency" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{}Dependency" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="vendor" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -49,7 +49,7 @@ public class VNFD {
     @XmlElement(name = "VDU", required = true)
     protected List<VDU> vdu;
     @XmlElement(name = "Dependency")
-    protected List<Dependency> dependency;
+    protected Dependency dependency;
     @XmlAttribute(name = "id", required = true)
     protected String id;
     @XmlAttribute(name = "vendor")
@@ -116,32 +116,27 @@ public class VNFD {
     }
 
     /**
-     * Gets the value of the dependency property.
+     * Recupera il valore della proprietà dependency.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the dependency property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getDependency().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Dependency }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Dependency }
+     *     
      */
-    public List<Dependency> getDependency() {
-        if (dependency == null) {
-            dependency = new ArrayList<Dependency>();
-        }
-        return this.dependency;
+    public Dependency getDependency() {
+        return dependency;
+    }
+
+    /**
+     * Imposta il valore della proprietà dependency.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Dependency }
+     *     
+     */
+    public void setDependency(Dependency value) {
+        this.dependency = value;
     }
 
     /**

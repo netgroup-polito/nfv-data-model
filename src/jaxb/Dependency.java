@@ -1,6 +1,8 @@
 
 package jaxb;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -19,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="Relation">
+ *         &lt;element name="Relation" maxOccurs="unbounded" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -44,31 +46,36 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Dependency")
 public class Dependency {
 
-    @XmlElement(name = "Relation", required = true)
-    protected Dependency.Relation relation;
+    @XmlElement(name = "Relation")
+    protected List<Dependency.Relation> relation;
 
     /**
-     * Recupera il valore della proprietà relation.
+     * Gets the value of the relation property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Dependency.Relation }
-     *     
-     */
-    public Dependency.Relation getRelation() {
-        return relation;
-    }
-
-    /**
-     * Imposta il valore della proprietà relation.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the relation property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Dependency.Relation }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getRelation().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Dependency.Relation }
+     * 
+     * 
      */
-    public void setRelation(Dependency.Relation value) {
-        this.relation = value;
+    public List<Dependency.Relation> getRelation() {
+        if (relation == null) {
+            relation = new ArrayList<Dependency.Relation>();
+        }
+        return this.relation;
     }
 
 

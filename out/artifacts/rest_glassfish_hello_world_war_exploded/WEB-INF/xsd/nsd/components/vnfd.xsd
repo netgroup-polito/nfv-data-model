@@ -11,7 +11,7 @@
             <xsd:sequence>
                 <xsd:element ref="Virtual_Link" minOccurs="0" maxOccurs="unbounded"/>
                 <xsd:element ref="VDU" minOccurs="1" maxOccurs="unbounded"/>
-                <xsd:element ref="Dependency" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="Dependency" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:string" use="required"/>
             <xsd:attribute name="vendor" type="xsd:string" use="optional"/>
@@ -87,7 +87,7 @@
     <xsd:element name="Dependency">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="Relation" minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="Relation">
                     <xsd:complexType>
                         <xsd:attribute name="src" type="xsd:string" use="required" />
                         <xsd:attribute name="target" type="xsd:string" use="required" />

@@ -9,8 +9,8 @@
     <xsd:element name="PNI">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element ref="Hosts" minOccurs="1" maxOccurs="1"/>
-                <xsd:element ref="Connections" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="Hosts" minOccurs="1" maxOccurs="unbounded"/>
+                <xsd:element ref="Connections" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>
         <!-- key reference definitions -->

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!--
+     Copyright (c) 2017 Politecnico di Torino and others.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Apache License, Version 2.0
+     which accompanies this distribution, and is available at
+     http://www.apache.org/licenses/LICENSE-2.0
+    -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Requirements (characterizing Hosts & VDU) -->
+    <xsd:complexType name="Computational_propertiesType">
+        <xsd:attribute name="cpu" type="xsd:int" use="required"/>
+        <xsd:attribute name="cores" type="xsd:int" use="required"/>
+        <xsd:attribute name="nOfOperations" type="xsd:int" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Memory_propertiesType">
+        <xsd:attribute name="disk_storage" type="xsd:int" use="required"/>
+        <xsd:attribute name="memory" type="xsd:int" use="required"/>
+        <xsd:attribute name="virtual_mem_res" type="xsd:int" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Network_propertiesType">
+        <xsd:attribute name="bandwidth" type="xsd:int" use="optional"/>
+    </xsd:complexType>
+
+    <!-- Connection point (characterizing PNFD & NSD) -->
+    <xsd:element name="Connection_point">
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string"/>
+            <xsd:attribute name="type" type="connection_pointType"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:simpleType name="connection_pointType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="virtual_port" />
+            <xsd:enumeration value="virtual_nic_addr" />
+            <xsd:enumeration value="physical_port" />
+            <xsd:enumeration value="physical_nic_addr" />
+            <xsd:enumeration value="endpoint" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- Functional_type attributes -->
+    <xsd:simpleType name="functionalTypes">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="FIREWALL" />
+            <xsd:enumeration value="ENDHOST" />
+            <xsd:enumeration value="ENDPOINT" />
+            <xsd:enumeration value="ANTISPAM" />
+            <xsd:enumeration value="CACHE" />
+            <xsd:enumeration value="DPI" />
+            <xsd:enumeration value="MAILCLIENT" />
+            <xsd:enumeration value="MAILSERVER" />
+            <xsd:enumeration value="NAT" />
+            <xsd:enumeration value="VPNACCESS" />
+            <xsd:enumeration value="VPNEXIT" />
+            <xsd:enumeration value="WEBCLIENT" />
+            <xsd:enumeration value="WEBSERVER" />
+            <xsd:enumeration value="FIELDMODIFIER" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="protocolTypes">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="HTTP_REQUEST" />
+            <xsd:enumeration value="HTTP_RESPONSE" />
+            <xsd:enumeration value="POP3_REQUEST" />
+            <xsd:enumeration value="POP3_RESPONSE" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ActionTypes">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ALLOW" />
+            <xsd:enumeration value="DENY" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="L4ProtocolTypes">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ANY" />
+            <xsd:enumeration value="TCP" />
+            <xsd:enumeration value="UDP" />
+            <xsd:enumeration value="OTHER" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="firewall">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="elements" minOccurs="0" maxOccurs="unbounded" />
+            </xsd:sequence>
+            <xsd:attribute name="defaultAction" type="ActionTypes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="elements">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="action" type="ActionTypes" minOccurs="0" default="DENY"/>
+                <xsd:element name="source" type="xsd:string"/>
+                <xsd:element name="destination" type="xsd:string" />
+                <xsd:element name="protocol" type="L4ProtocolTypes" minOccurs="0" default="ANY"/>
+                <xsd:element name="src_port" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="dst_port" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="directional" type="xsd:boolean" minOccurs="0" default="true"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="endhost">
+        <xsd:complexType>
+            <xsd:attribute name="body" type="xsd:string" />
+            <xsd:attribute name="sequence" type="xsd:integer" />
+            <xsd:attribute name="protocol" type="protocolTypes" />
+            <xsd:attribute name="email_from" type="xsd:string" />
+            <xsd:attribute name="url" type="xsd:string" />
+            <xsd:attribute name="options" type="xsd:string" />
+            <xsd:attribute name="destination" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="endpoint">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" nillable="true" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="antispam">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                <xsd:element name="source" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="cache">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                <xsd:element name="resource" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="dpi">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                <xsd:element name="notAllowed" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="mailclient">
+        <xsd:complexType>
+            <xsd:attribute name="mailserver" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="mailserver">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" nillable="true" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="nat">
+        <xsd:complexType>
+            <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                <xsd:element name="source" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="vpnaccess">
+        <xsd:complexType>
+            <xsd:attribute name="vpnexit" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="vpnexit">
+        <xsd:complexType>
+            <xsd:attribute name="vpnaccess" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="webclient">
+        <xsd:complexType>
+            <xsd:attribute name="nameWebServer" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="webserver">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" nillable="true" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="fieldmodifier">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string" nillable="true" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
