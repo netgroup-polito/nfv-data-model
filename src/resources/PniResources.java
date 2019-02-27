@@ -56,31 +56,29 @@ public class PniResources {
         return Response.status(Status.OK).entity(host).build();
     }
 
-    @POST
-    @Path("/host")
-    @ApiOperation(value = "addHost", notes = "Add a new host inside the PNI")
-    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 403, message = "Forbidden: host already exist"),
-            @ApiResponse(code = 500, message = "Internal Error")})
-    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response addHost(Host hostAdd){
-        Host host = new Host();
-        host.setId(hostAdd.getId());
-        //Set self URI
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(hostAdd.getId());
-        URI self = builder.build();
+	@POST
+	@Path("/host")
+	@ApiOperation(value = "addHost", notes = "Add a new host inside the PNI")
+	@ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
+	@ApiResponse(code = 400, message = "Bad request"),
+	@ApiResponse(code = 403, message = "Forbidden: host already exist"),
+	@ApiResponse(code = 500, message = "Internal Error")})
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response addHost(Host hostAdd){
+	//Set self URI
+	UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(hostAdd.getId());
+	URI self = builder.build();
 
-        try{
-            if(service.addHost(hostAdd) == null)
-                throw new ForbiddenException("Host just exist");
-        }catch (Exception e) {
-            throw new InternalServerErrorException();
-        }
+	try{
+	if(service.addHost(hostAdd) == null)
+	throw new ForbiddenException("Host just exist");
+	}catch (Exception e) {
+	throw new InternalServerErrorException();
+	}
 
-        return Response.created(self).entity(host).build();
-    }
+	return Response.created(self).entity(hostAdd).build();
+	}
 
     @DELETE
     @Path("/host/{id}")
@@ -159,21 +157,18 @@ public class PniResources {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addConnection(Connection connectionAdd){
-        Connection connection = new Connection();
-        connection.setSourceHost(connectionAdd.getSourceHost());
-        connection.setDestHost(connectionAdd.getDestHost());
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(connectionAdd.getSourceHost().concat(connectionAdd.getDestHost()));
         URI self = builder.build();
 
         try{
-            if(service.addConnection(connection) == null)
+            if(service.addConnection(connectionAdd) == null)
                 throw new ForbiddenException("Connection just exists");
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
 
-        return Response.created(self).entity(connection).build();
+        return Response.created(self).entity(connectionAdd).build();
     }
 
     @DELETE
