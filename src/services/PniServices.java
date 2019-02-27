@@ -3,8 +3,6 @@ package services;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import javax.ws.rs.InternalServerErrorException;
-
 import db.PniDB;
 import jaxb.*;
 
@@ -20,6 +18,15 @@ public class PniServices extends Application {
      */
     public PNI getPNI(){
         return pniDB.getPNI();
+    }
+
+    /**
+     * Add a new host inside the NFV.PNI
+     * @param pni
+     * @return The added pni or null if the operation doesn't succeed
+     */
+    public PNI addPNI(PNI pni){
+        return pniDB.addPNI(pni);
     }
 
     /**
@@ -45,13 +52,7 @@ public class PniServices extends Application {
      * @return The added host or null if the operation doesn't succeed
      */
     public Host addHost(Host host){
-        Host hostAdd = null;
-        try{
-            hostAdd =  pniDB.addHost(host);
-        }catch (Exception e) {
-            throw new InternalServerErrorException("Error: impossible to insert host");
-        }
-        return hostAdd;
+        return pniDB.addHost(host);
     }
 
     /**
@@ -96,13 +97,7 @@ public class PniServices extends Application {
      * @return The added connection or null if the connection doesn't succeed
      */
     public Connection addConnection(Connection connection){
-        Connection connectionAdd = null;
-        try{
-            connectionAdd =  pniDB.addConnection(connection);
-        }catch (Exception e) {
-            throw new InternalServerErrorException("Error: impossible to insert connection");
-        }
-        return connectionAdd;
+        return pniDB.addConnection(connection);
     }
 
     /**

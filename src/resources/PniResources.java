@@ -33,6 +33,27 @@ public class PniResources {
         return service.getPNI();
     }
 
+    @POST
+    @ApiOperation(value = "addPNI", notes = "Add a new PNI")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public Response addPNI(PNI pniAdd){
+        //Set self URI
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("pni");
+        URI self = builder.build();
+
+        try{
+            service.addPNI(pniAdd);
+        }catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
+
+        return Response.created(self).entity(pniAdd).build();
+    }
+
     @GET
     @Path("/host")
     @ApiOperation(value = "getHosts", notes = "Read all the hosts inside the PNI")
@@ -66,18 +87,18 @@ public class PniResources {
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Response addHost(Host hostAdd){
-	//Set self URI
-	UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(hostAdd.getId());
-	URI self = builder.build();
+        //Set self URI
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(hostAdd.getId());
+        URI self = builder.build();
 
-	try{
-	if(service.addHost(hostAdd) == null)
-	throw new ForbiddenException("Host just exist");
-	}catch (Exception e) {
-	throw new InternalServerErrorException();
-	}
+        try{
+            if(service.addHost(hostAdd) == null)
+                throw new ForbiddenException("Host just exist");
+        }catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
 
-	return Response.created(self).entity(hostAdd).build();
+        return Response.created(self).entity(hostAdd).build();
 	}
 
     @DELETE
@@ -163,7 +184,7 @@ public class PniResources {
 
         try{
             if(service.addConnection(connectionAdd) == null)
-                throw new ForbiddenException("Connection just exists");
+                throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }

@@ -27,11 +27,21 @@ public class PniDB {
     public PNI getPNI(){
         PNI pni = new PNI();
 
-        for(Host h : hostMap.values())
-            pni.getHosts().getHost().add(h);
+        pni.setHosts(getHosts());
+        pni.setConnections(getConnections());
 
-        for(Connection c : connectionMap.values())
-            pni.getConnections().getConnection().add(c);
+        return pni;
+    }
+
+    public PNI addPNI(PNI pni){
+        hostMap.clear();
+        connectionMap.clear();
+
+        for(Host h : pni.getHosts().getHost())
+            hostMap.put(h.getId(), h);
+
+        for(Connection c : pni.getConnections().getConnection())
+            connectionMap.put(c.getSourceHost().concat(c.getDestHost()), c);
 
         return pni;
     }
@@ -80,12 +90,15 @@ public class PniDB {
     }
 
     public synchronized Connection addConnection(Connection connection){
-        if(!connectionMap.containsKey(connection.getSourceHost().concat(connection.getDestHost()))){
-            connectionMap.put(connection.getSourceHost().concat(connection.getDestHost()), connection);
-            return connection;
-        }else{
-            return null;
+        if(hostMap.containsKey(connection.getSourceHost()) && hostMap.containsKey(connection.getDestHost())){
+            if(!connectionMap.containsKey(connection.getSourceHost().concat(connection.getDestHost()))){
+                connectionMap.put(connection.getSourceHost().concat(connection.getDestHost()), connection);
+                return connection;
+            }else{
+                return null;
+            }
         }
+        return null;
     }
 
     public Connection deleteConnection(String connectionSrc, String connectionDst){
