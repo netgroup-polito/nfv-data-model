@@ -49,6 +49,24 @@ The used software has been [IntelliJ IDEA ULTIMATE EDITION](https://www.jetbrain
 
 Click Finish and wait while IntelliJ IDEA is creating the project. 
 
+### Import the VNF_example
+This project is a good starting point to develop your own VNF service. For import a working project base you need to follow this sequential steps:
+
+1. Clone/Download this project in a different folder from the previous created.
+2. Rewrite all the file folder of your project with the new one downloaded.
+3. Insert libs dependancy inside the project (to fix class import errors).
+
+For the last one, in case you are not praticed with intellij
+
+1. Click File from the toolbar
+2. Project Structure (CTRL + SHIFT + ALT + S on Windows/Linux, ⌘ + ; on Mac OS X)
+3. Select Modules at the left panel
+    1. in Dependencies tab '+' → Java
+    2. Browse the folder lib of the Project
+    3. Apply and then OK to close
+    
+ You should see that all the error due to the library are now fixed! 
+
 # Issues
 
 - IntelliJ 13.1 and Glassfish 4.1 on MacOS X:
