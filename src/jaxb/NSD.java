@@ -21,13 +21,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}VNF_dependency" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}VNF_dependency" minOccurs="0"/>
  *         &lt;element ref="{}PropertyDefinition" maxOccurs="unbounded"/>
- *         &lt;element ref="{}VNFD" maxOccurs="unbounded"/>
- *         &lt;element ref="{}VNFFGD" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element ref="{}PNFD" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element ref="{}Service_deployment_flavour" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element ref="{}Connection_point" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{}VNF" minOccurs="0"/>
+ *         &lt;element ref="{}VNFFGD" minOccurs="0"/>
+ *         &lt;element ref="{}PNF" minOccurs="0"/>
+ *         &lt;element ref="{}flavours" minOccurs="0"/>
+ *         &lt;element ref="{}Connection_points" minOccurs="0"/>
  *         &lt;element name="ParsingString" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
@@ -44,30 +44,29 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "vnfDependency",
     "propertyDefinition",
-    "vnfd",
+    "vnf",
     "vnffgd",
-    "pnfd",
-    "serviceDeploymentFlavour",
-    "connectionPoint",
+    "pnf",
+    "flavours",
+    "connectionPoints",
     "parsingString"
 })
 @XmlRootElement(name = "NSD")
 public class NSD {
 
-    @XmlElement(name = "VNF_dependency", required = true)
-    protected List<VNFDependency> vnfDependency;
+    @XmlElement(name = "VNF_dependency")
+    protected VNFDependency vnfDependency;
     @XmlElement(name = "PropertyDefinition", required = true)
     protected List<PropertyDefinition> propertyDefinition;
-    @XmlElement(name = "VNFD", required = true)
-    protected List<VNFD> vnfd;
+    @XmlElement(name = "VNF")
+    protected VNF vnf;
     @XmlElement(name = "VNFFGD")
-    protected List<VNFFGD> vnffgd;
-    @XmlElement(name = "PNFD")
-    protected List<PNFD> pnfd;
-    @XmlElement(name = "Service_deployment_flavour")
-    protected List<ServiceDeploymentFlavour> serviceDeploymentFlavour;
-    @XmlElement(name = "Connection_point")
-    protected List<ConnectionPoint> connectionPoint;
+    protected VNFFGD vnffgd;
+    @XmlElement(name = "PNF")
+    protected PNF pnf;
+    protected Flavours flavours;
+    @XmlElement(name = "Connection_points")
+    protected ConnectionPoints connectionPoints;
     @XmlElement(name = "ParsingString")
     protected String parsingString;
     @XmlAttribute(name = "id", required = true)
@@ -78,32 +77,27 @@ public class NSD {
     protected String version;
 
     /**
-     * Gets the value of the vnfDependency property.
+     * Recupera il valore della proprietà vnfDependency.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the vnfDependency property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getVNFDependency().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link VNFDependency }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link VNFDependency }
+     *     
      */
-    public List<VNFDependency> getVNFDependency() {
-        if (vnfDependency == null) {
-            vnfDependency = new ArrayList<VNFDependency>();
-        }
-        return this.vnfDependency;
+    public VNFDependency getVNFDependency() {
+        return vnfDependency;
+    }
+
+    /**
+     * Imposta il valore della proprietà vnfDependency.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link VNFDependency }
+     *     
+     */
+    public void setVNFDependency(VNFDependency value) {
+        this.vnfDependency = value;
     }
 
     /**
@@ -136,148 +130,123 @@ public class NSD {
     }
 
     /**
-     * Gets the value of the vnfd property.
+     * Recupera il valore della proprietà vnf.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the vnfd property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getVNFD().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link VNFD }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link VNF }
+     *     
      */
-    public List<VNFD> getVNFD() {
-        if (vnfd == null) {
-            vnfd = new ArrayList<VNFD>();
-        }
-        return this.vnfd;
+    public VNF getVNF() {
+        return vnf;
     }
 
     /**
-     * Gets the value of the vnffgd property.
+     * Imposta il valore della proprietà vnf.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the vnffgd property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getVNFFGD().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link VNFFGD }
-     * 
-     * 
+     * @param value
+     *     allowed object is
+     *     {@link VNF }
+     *     
      */
-    public List<VNFFGD> getVNFFGD() {
-        if (vnffgd == null) {
-            vnffgd = new ArrayList<VNFFGD>();
-        }
-        return this.vnffgd;
+    public void setVNF(VNF value) {
+        this.vnf = value;
     }
 
     /**
-     * Gets the value of the pnfd property.
+     * Recupera il valore della proprietà vnffgd.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pnfd property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPNFD().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PNFD }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link VNFFGD }
+     *     
      */
-    public List<PNFD> getPNFD() {
-        if (pnfd == null) {
-            pnfd = new ArrayList<PNFD>();
-        }
-        return this.pnfd;
+    public VNFFGD getVNFFGD() {
+        return vnffgd;
     }
 
     /**
-     * Gets the value of the serviceDeploymentFlavour property.
+     * Imposta il valore della proprietà vnffgd.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the serviceDeploymentFlavour property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getServiceDeploymentFlavour().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ServiceDeploymentFlavour }
-     * 
-     * 
+     * @param value
+     *     allowed object is
+     *     {@link VNFFGD }
+     *     
      */
-    public List<ServiceDeploymentFlavour> getServiceDeploymentFlavour() {
-        if (serviceDeploymentFlavour == null) {
-            serviceDeploymentFlavour = new ArrayList<ServiceDeploymentFlavour>();
-        }
-        return this.serviceDeploymentFlavour;
+    public void setVNFFGD(VNFFGD value) {
+        this.vnffgd = value;
     }
 
     /**
-     * Gets the value of the connectionPoint property.
+     * Recupera il valore della proprietà pnf.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the connectionPoint property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getConnectionPoint().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ConnectionPoint }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link PNF }
+     *     
      */
-    public List<ConnectionPoint> getConnectionPoint() {
-        if (connectionPoint == null) {
-            connectionPoint = new ArrayList<ConnectionPoint>();
-        }
-        return this.connectionPoint;
+    public PNF getPNF() {
+        return pnf;
+    }
+
+    /**
+     * Imposta il valore della proprietà pnf.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PNF }
+     *     
+     */
+    public void setPNF(PNF value) {
+        this.pnf = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà flavours.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Flavours }
+     *     
+     */
+    public Flavours getFlavours() {
+        return flavours;
+    }
+
+    /**
+     * Imposta il valore della proprietà flavours.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Flavours }
+     *     
+     */
+    public void setFlavours(Flavours value) {
+        this.flavours = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà connectionPoints.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ConnectionPoints }
+     *     
+     */
+    public ConnectionPoints getConnectionPoints() {
+        return connectionPoints;
+    }
+
+    /**
+     * Imposta il valore della proprietà connectionPoints.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ConnectionPoints }
+     *     
+     */
+    public void setConnectionPoints(ConnectionPoints value) {
+        this.connectionPoints = value;
     }
 
     /**

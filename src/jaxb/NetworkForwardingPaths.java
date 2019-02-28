@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="n_endpoint" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="n_vl" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="vnffgd_security" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -48,6 +49,8 @@ public class NetworkForwardingPaths {
     protected Integer nEndpoint;
     @XmlAttribute(name = "n_vl")
     protected Integer nVl;
+    @XmlAttribute(name = "vnffgd_security")
+    protected String vnffgdSecurity;
 
     /**
      * Gets the value of the nodeConnection property.
@@ -148,6 +151,30 @@ public class NetworkForwardingPaths {
      */
     public void setNVl(Integer value) {
         this.nVl = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà vnffgdSecurity.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVnffgdSecurity() {
+        return vnffgdSecurity;
+    }
+
+    /**
+     * Imposta il valore della proprietà vnffgdSecurity.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVnffgdSecurity(String value) {
+        this.vnffgdSecurity = value;
     }
 
 }

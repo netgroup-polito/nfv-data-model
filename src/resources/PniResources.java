@@ -54,6 +54,20 @@ public class PniResources {
         return Response.created(self).entity(pniAdd).build();
     }
 
+    @DELETE
+    @ApiOperation(value = "deletePNI", notes = "Clear the PNI")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 500, message = "Internal Error"),})
+    public void deletePNI() {
+        try{
+            if(service.deletePNI() == null)
+                throw new InternalServerErrorException();
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
     @GET
     @Path("/host")
     @ApiOperation(value = "getHosts", notes = "Read all the hosts inside the PNI")
@@ -93,7 +107,7 @@ public class PniResources {
 
         try{
             if(service.addHost(hostAdd) == null)
-                throw new ForbiddenException("Host just exist");
+                throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
@@ -108,10 +122,10 @@ public class PniResources {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Host not Found"),
             @ApiResponse(code = 500, message = "Internal Error"),})
-    public void deleteVehicle(@PathParam("id") String hostID) {
+    public void deleteHost(@PathParam("id") String hostID) {
         try{
             if(service.deleteHost(hostID) == null)
-                throw new NotFoundException("Host not found");
+                throw new NotFoundException();
         }catch (ForbiddenException | BadRequestException e) {
             throw e;
         }
@@ -134,7 +148,7 @@ public class PniResources {
         try{
             host = service.modifyHost(hostMod);
             if(host == null)
-                throw new NotFoundException("Host not found");
+                throw new NotFoundException();
             if(host == hostMod)
                 throw new InternalServerErrorException();
         }
@@ -164,7 +178,7 @@ public class PniResources {
     public Response getConnectionInfo(@PathParam("src") String connectionSrc, @PathParam("dst") String connectionDst) {
         Connection connection = service.getConnectionInfo(connectionSrc, connectionDst);
         if(connection == null)
-            throw new NotFoundException("Connection not found");
+            throw new NotFoundException();
         return Response.status(Status.OK).entity(connection).build();
     }
 
@@ -199,10 +213,10 @@ public class PniResources {
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 404, message = "Connection not Found"),
             @ApiResponse(code = 500, message = "Internal Error"),})
-    public void deleteVehicle(@PathParam("src") String connectionSrc, @PathParam("dst") String connectionDst) {
+    public void deleteConnection(@PathParam("src") String connectionSrc, @PathParam("dst") String connectionDst) {
         try{
             if(service.deleteConnection(connectionSrc, connectionDst) == null)
-                throw new NotFoundException("Host not found");
+                throw new NotFoundException();
         }catch (ForbiddenException | BadRequestException e) {
             throw e;
         }
@@ -224,7 +238,7 @@ public class PniResources {
         try{
             connection = service.modifyConnection(connectionMod);
             if(connection == null)
-                throw new NotFoundException("Connection not found");
+                throw new NotFoundException();
             if(connection == connectionMod)
                 throw new InternalServerErrorException();
         }

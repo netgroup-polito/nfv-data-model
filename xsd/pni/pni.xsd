@@ -48,9 +48,9 @@
                 <xsd:element name="Computational_properties" type="Computational_propertiesType" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Memory_properties" type="Memory_propertiesType" minOccurs="0" maxOccurs="1" />
                 <xsd:element name="Network_properties" type="Network_propertiesType" minOccurs="0" maxOccurs="1" />
-                <xsd:element name="V_Node_Ref" type="VNodeRefType" maxOccurs="unbounded" minOccurs="0"/>
-                <xsd:element name="P_Node_Ref" type="PNodeRefType" maxOccurs="unbounded" minOccurs="0"/>
-                <xsd:element name="SupportedVNF" type="SupportedVNFType" maxOccurs="unbounded" minOccurs="0" />
+                <xsd:element name="V_Node_Ref" type="VNodeRefType" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="P_Node_Ref" type="PNodeRefType" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="SupportedVNF" type="SupportedVNFType" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
             <!-- <xsd:attribute name="name" type="xsd:string" use="required"/> -->
             <xsd:attribute name="id" type="xsd:string" use="required"/>

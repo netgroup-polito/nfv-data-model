@@ -262,27 +262,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Neighbour }
+     * Create an instance of {@link NS }
      * 
      */
-    public Neighbour createNeighbour() {
-        return new Neighbour();
+    public NS createNS() {
+        return new NS();
     }
 
     /**
-     * Create an instance of {@link PNI }
+     * Create an instance of {@link NSD }
      * 
      */
-    public PNI createPNI() {
-        return new PNI();
-    }
-
-    /**
-     * Create an instance of {@link NetworkForwardingPaths }
-     * 
-     */
-    public NetworkForwardingPaths createNetworkForwardingPaths() {
-        return new NetworkForwardingPaths();
+    public NSD createNSD() {
+        return new NSD();
     }
 
     /**
@@ -310,27 +302,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ServiceDeploymentFlavour }
+     * Create an instance of {@link Neighbour }
      * 
      */
-    public ServiceDeploymentFlavour createServiceDeploymentFlavour() {
-        return new ServiceDeploymentFlavour();
+    public Neighbour createNeighbour() {
+        return new Neighbour();
     }
 
     /**
-     * Create an instance of {@link PNFD }
+     * Create an instance of {@link PropertyDefinition }
      * 
      */
-    public PNFD createPNFD() {
-        return new PNFD();
+    public PropertyDefinition createPropertyDefinition() {
+        return new PropertyDefinition();
     }
 
     /**
-     * Create an instance of {@link ConnectionPoint }
+     * Create an instance of {@link Property }
      * 
      */
-    public ConnectionPoint createConnectionPoint() {
-        return new ConnectionPoint();
+    public Property createProperty() {
+        return new Property();
+    }
+
+    /**
+     * Create an instance of {@link VNF }
+     * 
+     */
+    public VNF createVNF() {
+        return new VNF();
     }
 
     /**
@@ -366,35 +366,75 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link NSD }
-     * 
-     */
-    public NSD createNSD() {
-        return new NSD();
-    }
-
-    /**
-     * Create an instance of {@link PropertyDefinition }
-     * 
-     */
-    public PropertyDefinition createPropertyDefinition() {
-        return new PropertyDefinition();
-    }
-
-    /**
-     * Create an instance of {@link Property }
-     * 
-     */
-    public Property createProperty() {
-        return new Property();
-    }
-
-    /**
      * Create an instance of {@link VNFFGD }
      * 
      */
     public VNFFGD createVNFFGD() {
         return new VNFFGD();
+    }
+
+    /**
+     * Create an instance of {@link NetworkForwardingPaths }
+     * 
+     */
+    public NetworkForwardingPaths createNetworkForwardingPaths() {
+        return new NetworkForwardingPaths();
+    }
+
+    /**
+     * Create an instance of {@link PNF }
+     * 
+     */
+    public PNF createPNF() {
+        return new PNF();
+    }
+
+    /**
+     * Create an instance of {@link PNFD }
+     * 
+     */
+    public PNFD createPNFD() {
+        return new PNFD();
+    }
+
+    /**
+     * Create an instance of {@link ConnectionPoint }
+     * 
+     */
+    public ConnectionPoint createConnectionPoint() {
+        return new ConnectionPoint();
+    }
+
+    /**
+     * Create an instance of {@link Flavours }
+     * 
+     */
+    public Flavours createFlavours() {
+        return new Flavours();
+    }
+
+    /**
+     * Create an instance of {@link ServiceDeploymentFlavour }
+     * 
+     */
+    public ServiceDeploymentFlavour createServiceDeploymentFlavour() {
+        return new ServiceDeploymentFlavour();
+    }
+
+    /**
+     * Create an instance of {@link ConnectionPoints }
+     * 
+     */
+    public ConnectionPoints createConnectionPoints() {
+        return new ConnectionPoints();
+    }
+
+    /**
+     * Create an instance of {@link PNI }
+     * 
+     */
+    public PNI createPNI() {
+        return new PNI();
     }
 
     /**

@@ -1,8 +1,6 @@
 
 package jaxb;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -21,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element ref="{}PNI"/>
- *         &lt;element ref="{}NSD" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{}NS" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,15 +31,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "pni",
-    "nsd"
+    "ns"
 })
 @XmlRootElement(name = "NFV")
 public class NFV {
 
     @XmlElement(name = "PNI", required = true)
     protected PNI pni;
-    @XmlElement(name = "NSD")
-    protected List<NSD> nsd;
+    @XmlElement(name = "NS")
+    protected NS ns;
 
     /**
      * Recupera il valore della proprietà pni.
@@ -68,32 +66,27 @@ public class NFV {
     }
 
     /**
-     * Gets the value of the nsd property.
+     * Recupera il valore della proprietà ns.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the nsd property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getNSD().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link NSD }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link NS }
+     *     
      */
-    public List<NSD> getNSD() {
-        if (nsd == null) {
-            nsd = new ArrayList<NSD>();
-        }
-        return this.nsd;
+    public NS getNS() {
+        return ns;
+    }
+
+    /**
+     * Imposta il valore della proprietà ns.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link NS }
+     *     
+     */
+    public void setNS(NS value) {
+        this.ns = value;
     }
 
 }

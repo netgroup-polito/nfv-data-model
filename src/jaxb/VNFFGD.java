@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -23,8 +22,6 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element ref="{}NetworkForwardingPaths" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="vnffgd_security" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -41,10 +38,6 @@ public class VNFFGD {
 
     @XmlElement(name = "NetworkForwardingPaths")
     protected List<NetworkForwardingPaths> networkForwardingPaths;
-    @XmlAttribute(name = "id")
-    protected String id;
-    @XmlAttribute(name = "vnffgd_security")
-    protected String vnffgdSecurity;
 
     /**
      * Gets the value of the networkForwardingPaths property.
@@ -73,54 +66,6 @@ public class VNFFGD {
             networkForwardingPaths = new ArrayList<NetworkForwardingPaths>();
         }
         return this.networkForwardingPaths;
-    }
-
-    /**
-     * Recupera il valore della proprietà id.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Imposta il valore della proprietà id.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
-
-    /**
-     * Recupera il valore della proprietà vnffgdSecurity.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getVnffgdSecurity() {
-        return vnffgdSecurity;
-    }
-
-    /**
-     * Imposta il valore della proprietà vnffgdSecurity.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setVnffgdSecurity(String value) {
-        this.vnffgdSecurity = value;
     }
 
 }

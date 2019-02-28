@@ -13,20 +13,28 @@ public class PniServices extends Application {
     private PniDB pniDB = PniDB.getPniDB();
 
     /**
-     * Get all the hosts inside the NFV.PNI
-     * @return A list of hosts or null if there are not hosts inside
+     * Get all the hosts and connection inside the NFV.PNI
+     * @return A list of hosts and connections or null if there are not hosts inside
      */
     public PNI getPNI(){
         return pniDB.getPNI();
     }
 
     /**
-     * Add a new host inside the NFV.PNI
+     * Add a PNI
      * @param pni
      * @return The added pni or null if the operation doesn't succeed
      */
     public PNI addPNI(PNI pni){
         return pniDB.addPNI(pni);
+    }
+
+    /**
+     * Delete PNI
+     * @return The void PNI
+     */
+    public PNI deletePNI(){
+        return pniDB.deletePNI();
     }
 
     /**

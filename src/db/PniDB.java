@@ -34,8 +34,7 @@ public class PniDB {
     }
 
     public PNI addPNI(PNI pni){
-        hostMap.clear();
-        connectionMap.clear();
+        deletePNI();
 
         for(Host h : pni.getHosts().getHost())
             hostMap.put(h.getId(), h);
@@ -44,6 +43,13 @@ public class PniDB {
             connectionMap.put(c.getSourceHost().concat(c.getDestHost()), c);
 
         return pni;
+    }
+
+    public PNI deletePNI(){
+        hostMap.clear();
+        connectionMap.clear();
+
+        return getPNI();
     }
 
     public Hosts getHosts(){

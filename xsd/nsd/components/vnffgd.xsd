@@ -9,8 +9,6 @@
             <xsd:sequence>
                 <xsd:element ref="NetworkForwardingPaths" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
-            <xsd:attribute name="id" type="xsd:string" use="optional"/>
-            <xsd:attribute name="vnffgd_security" type="xsd:string" use="optional"/>
         </xsd:complexType>
         <!-- key reference definitions -->
         <xsd:unique name="PathUniqueness">
@@ -27,6 +25,7 @@
             <xsd:attribute name="id" type="xsd:string" use="required"/>
             <xsd:attribute name="n_endpoint" type="xsd:int" use="optional"/>
             <xsd:attribute name="n_vl" type="xsd:int" use="optional"/>
+            <xsd:attribute name="vnffgd_security" type="xsd:string" use="optional"/>
         </xsd:complexType>
     </xsd:element>
 

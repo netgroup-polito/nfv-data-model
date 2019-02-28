@@ -15,13 +15,13 @@
     <xsd:element name="NSD">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element ref="VNF_dependency" minOccurs="1" maxOccurs="unbounded"/>
+                <xsd:element ref="VNF_dependency" minOccurs="0" maxOccurs="1"/>
                 <xsd:element ref="PropertyDefinition" minOccurs="1" maxOccurs="unbounded"/>
-                <xsd:element ref="VNFD" minOccurs="1" maxOccurs="unbounded"/>
-                <xsd:element ref="VNFFGD" minOccurs="0" maxOccurs="unbounded"/>
-                <xsd:element ref="PNFD" minOccurs="0" maxOccurs="unbounded"/>
-                <xsd:element ref="Service_deployment_flavour" minOccurs="0" maxOccurs="unbounded"/>
-                <xsd:element ref="Connection_point" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="VNF" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="VNFFGD" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="PNF" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="flavours" minOccurs="0" maxOccurs="1"/>
+                <xsd:element ref="Connection_points" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="ParsingString" type="xsd:string" minOccurs="0" maxOccurs="1"/>
             </xsd:sequence>
             <xsd:attribute name="id" type="xsd:string" use="required"/>
@@ -42,29 +42,57 @@
             <xsd:selector xpath="PropertyDefinition/Property" />
             <xsd:field xpath="@graph" />
         </xsd:keyref>
-        <xsd:unique name="vnffgdUniqueness">
-            <xsd:selector xpath="VNFFGD"/>
-            <xsd:field xpath="@id"/>
-        </xsd:unique>
         <xsd:unique name="pnfdUniqueness">
-            <xsd:selector xpath="PNFD"/>
+            <xsd:selector xpath="PNF/PNFD"/>
             <xsd:field xpath="@id"/>
         </xsd:unique>
         <xsd:unique name="flavourUniqueness">
-            <xsd:selector xpath="Service_deployment_flavour"/>
+            <xsd:selector xpath="flavour/Service_deployment_flavour"/>
             <xsd:field xpath="@id"/>
         </xsd:unique>
         <xsd:unique name="nsdCPUniqueness">
-            <xsd:selector xpath="Connection_point"/>
+            <xsd:selector xpath="Connection_points/Connection_point"/>
             <xsd:field xpath="@id"/>
         </xsd:unique>
     </xsd:element>
 
+    <xsd:element name="VNF">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="VNFD" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="PNF">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="PNFD" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:element name="flavours">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Service_deployment_flavour" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="Service_deployment_flavour">
         <xsd:complexType>
             <xsd:attribute name="id" type="xsd:string" use="required"/>
             <xsd:attribute name="flavour_key" type="xsd:string" use="optional"/>
             <xsd:attribute name="flavour_value" type="xsd:int" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="Connection_points">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="Connection_point" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
 

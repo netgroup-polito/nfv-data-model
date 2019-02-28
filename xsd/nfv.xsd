@@ -19,28 +19,29 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="PNI" minOccurs="1" maxOccurs="1"/>
-                <xsd:element ref="NSD" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element ref="NS" minOccurs="0" maxOccurs="1">
+                </xsd:element>
             </xsd:sequence>
         </xsd:complexType>
         <!-- key reference definitions -->
         <xsd:unique name="NSDUniqueness">
-            <xsd:selector xpath="NSD"/>
+            <xsd:selector xpath="NS/NSD"/>
             <xsd:field xpath="@id"/>
         </xsd:unique>
         <xsd:key name="VNFDKey">
-            <xsd:selector xpath="NSD/VNFD" />
+            <xsd:selector xpath="NS/NSD/VNF/VNFD" />
             <xsd:field xpath="@id" />
         </xsd:key>
         <xsd:keyref name="VLSourceVNFD" refer="VNFDKey">
-            <xsd:selector xpath="NSD/VNFD/Virtual_Link" />
+            <xsd:selector xpath="NS/NSD/VNF/VNFD/Virtual_Link" />
             <xsd:field xpath="@src" />
         </xsd:keyref>
         <xsd:keyref name="VLDestVNFD" refer="VNFDKey">
-            <xsd:selector xpath="NSD/VNFD/Virtual_Link" />
+            <xsd:selector xpath="NS/NSD/VNF/VNFD/Virtual_Link" />
             <xsd:field xpath="@dst" />
         </xsd:keyref>
         <xsd:key name="PNFDKey">
-            <xsd:selector xpath="NSD/PNFD" />
+            <xsd:selector xpath="NS/NSD/PNF/PNFD" />
             <xsd:field xpath="@id" />
         </xsd:key>
         <xsd:keyref name="VNodeSrc" refer="VNFDKey">
@@ -51,6 +52,13 @@
             <xsd:selector xpath="PNI/Hosts/Host/P_Node_Ref" />
             <xsd:field xpath="@id" />
         </xsd:keyref>
+    </xsd:element>
 
+    <xsd:element name="NS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="NSD" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
     </xsd:element>
 </xsd:schema>
