@@ -47,7 +47,8 @@ public class VnfdependencyResources {
         URI self = builder.build();
 
         try{
-            service.addVNFDependency(nsdID, vnfDependency);
+            if(service.addVNFDependency(nsdID, vnfDependency) == null)
+                throw new InternalServerErrorException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
@@ -80,7 +81,7 @@ public class VnfdependencyResources {
 
     @POST
     @Path("/graph")
-    @ApiOperation(value = "addGraph", notes = "Add a new VNFDependency")
+    @ApiOperation(value = "addGraph", notes = "Add a new Graph")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
@@ -92,7 +93,8 @@ public class VnfdependencyResources {
         URI self = builder.build();
 
         try{
-            service.addGraph(nsdID, graph);
+            if(service.addGraph(nsdID, graph) == null)
+                throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
@@ -102,14 +104,14 @@ public class VnfdependencyResources {
 
     @DELETE
     @Path("/graph/{graphID}")
-    @ApiOperation(value = "deleteVNFDependency", notes = "Clear the VNFDependency")
+    @ApiOperation(value = "deleteGraph", notes = "Remove a certain graph")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deleteGraph(@PathParam("nsdID") String nsdID, @PathParam("nsdID") Long graphID) {
         try{
             if(service.deleteGraph(nsdID, graphID) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -117,7 +119,7 @@ public class VnfdependencyResources {
 
     @GET
     @Path("/graph/{graphID}/node/{nodeID}")
-    @ApiOperation(value = "getGraph", notes = "Read a certain Graph")
+    @ApiOperation(value = "getNode", notes = "Read a node of a certain Graph")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Node getNode(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID, @PathParam("nodeID") String nodeName) {
@@ -126,7 +128,7 @@ public class VnfdependencyResources {
 
     @POST
     @Path("/graph/{graphID}/node")
-    @ApiOperation(value = "addGraph", notes = "Add a new VNFDependency")
+    @ApiOperation(value = "addNode", notes = "Add a new Node")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
@@ -134,11 +136,12 @@ public class VnfdependencyResources {
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addNode(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID, Node node) {
         //Set self URI
-        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(nsdID.concat(node.getId().toString()));
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(node.getName());
         URI self = builder.build();
 
         try{
-            service.addNode(nsdID, graphID, node);
+            if(service.addNode(nsdID, graphID, node) == null)
+                throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
@@ -155,7 +158,7 @@ public class VnfdependencyResources {
     public void deleteNode(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID, @PathParam("nodeID") String nodeName) {
         try{
             if(service.deleteNode(nsdID, graphID, nodeName) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }

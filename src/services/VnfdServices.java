@@ -4,9 +4,8 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import db.NsDB;
-import jaxb.*;
-
-import java.util.ArrayList;
+import jaxb.VNF;
+import jaxb.VNFD;
 
 //Defines the base URI for all resource URIs.
 @ApplicationPath("/")
@@ -14,76 +13,31 @@ import java.util.ArrayList;
 public class VnfdServices extends Application {
     private NsDB nsDB = NsDB.getNsdDB();
 
-    /**
-     * Get all the VNFDs inside the NSD
-     * @return A list of VNFD or null if there are not VNFD inside
-     */
+    public VNF getVNF(String nsdID) {
+        return nsDB.getVNF(nsdID);
+    }
 
+    public VNF addVNF(String nsdID, VNF vnf) {
+        return nsDB.addVNF(nsdID, vnf);
+    }
 
-    /**
-     * Get a VNFD inside the NSD
-     * @return The VNFD or null if there are not VNFD inside
-     */
+    public VNF deleteVNF(String nsdID) {
+        return nsDB.deleteVNF(nsdID);
+    }
 
+    public VNFD getVNFDInfo(String nsdID, String vnfdID) {
+        return nsDB.getVNFDInfo(nsdID, vnfdID);
+    }
 
-    /**
-     * Add a VNFD
-     * @param vnfd
-     * @return The added vnfd or null if the operation doesn't succeed
-     */
+    public VNFD addVNFD(String nsdID, VNFD vnfd) {
+        return nsDB.addVNFD(nsdID, vnfd);
+    }
 
+    public VNFD deleteVNFD(String nsdID, VNFD vnfd) {
+        return nsDB.deleteVNFD(nsdID, vnfd);
+    }
 
-    /**
-     * Delete a VNFD from NSD
-     * @param vnfdID
-     * @return VNFD removed or null if the host is not present
-     */
-
-    /**
-     * Modify a host from NSD
-     * @param vnfd
-     * @return Vnfd modified or null if the vnfd is not present
-     */
-
-    /**
-     * Add a VirtualLink
-     * @param vl
-     * @return The added VirtualLink or null if the operation doesn't succeed
-     */
-
-    /**
-     * Delete a VirtualLInk
-     * @param vl
-     * @return VirtualLink removed or null if the VirtualLink is not present
-     */
-
-    /**
-     * Add a VDU
-     * @param vnfdID
-     * @param vdu
-     * @return The added VDU or null if the operation doesn't succeed
-     */
-
-    /**
-     * Delete a VDU
-     * @param vnfdID
-     * @param vdu
-     * @return VDU removed or null if the VDU is not present
-     */
-
-    /**
-     * Add a Dependency
-     * @param vnfdID
-     * @param relation
-     * @return The added Dependency or null if the operation doesn't succeed
-     */
-
-
-    /**
-     * Delete a Dependency
-     * @param vnfdID
-     * @param relation
-     * @return Dependency removed or null if the Dependency is not present
-     */
-
+    public VNFD modifyVNFD(String nsdID, VNFD vnfd) {
+        return nsDB.modifyVNFD(nsdID, vnfd);
+    }
 }

@@ -18,20 +18,19 @@ public class NsDB {
         nsdMap = new ConcurrentHashMap<String, NSD>();
     }
 
+    /* --- NSD --- */
     public NS getNSD(){
         NS ns = new NS();
 
-        if(ns.getNSD().addAll(nsdMap.values()))
-            return ns;
-
-        return null;
+        ns.getNSD().addAll(nsdMap.values());
+        return ns;
     }
 
     public NSD getNSDInfo(String nsdID){
         return nsdMap.get(nsdID);
     }
 
-    public NSD addNSD(NSD nsd){
+    public synchronized NSD addNSD(NSD nsd){
         return nsdMap.put(nsd.getId(), nsd);
     }
 
@@ -39,6 +38,7 @@ public class NsDB {
         return nsdMap.remove(nsdID);
     }
 
+    /* --- VNFDependency --- */
     public VNFDependency getVNFDependency(String nsdID){
         return nsdMap.get(nsdID).getVNFDependency();
     }
@@ -68,7 +68,7 @@ public class NsDB {
     }
 
     public synchronized Graph addGraph(String nsdID, Graph graph){
-        if(getGraph(nsdID, graph.getId()) != null){
+        if(getGraph(nsdID, graph.getId()) == null){
             if(nsdMap.get(nsdID).getVNFDependency().getGraph().add(graph))
                 return graph;
         }
@@ -78,8 +78,10 @@ public class NsDB {
 
     public Graph deleteGraph(String nsdID, Long graphID){
         for(Graph graph : getVNFDependency(nsdID).getGraph()) {
-            if(graph.getId().equals(graphID))
+            if(graph.getId().equals(graphID)) {
                 getVNFDependency(nsdID).getGraph().remove(graph);
+                return graph;
+            }
         }
 
         return null;
@@ -95,23 +97,46 @@ public class NsDB {
     }
 
     public synchronized Node addNode(String nsdID, Long graphID, Node node){
-        if(getGraph(nsdID, graphID).getNode().add(node))
-            return node;
+        Graph graph = getGraph(nsdID, graphID);
 
-        return null;
+        for (Node n : graph.getNode()) {
+            if(n.getName().equals(node.getName()))
+                return null;
+        }
+
+        graph.getNode().add(node);
+        return node;
     }
 
     public Node deleteNode(String nsdID, Long graphID, String nodeName){
         for(Node node : getGraph(nsdID, graphID).getNode()) {
-            if(node.getName().equals(nodeName))
+            if(node.getName().equals(nodeName)) {
                 getGraph(nsdID, graphID).getNode().remove(node);
+                return node;
+            }
         }
 
         return null;
     }
 
+    /* --- VNF --- */
     public VNF getVNF(String nsdID){
         return nsdMap.get(nsdID).getVNF();
+    }
+
+    public synchronized VNF addVNF(String nsdID, VNF vnf){
+        nsdMap.get(nsdID).getVNF().getVNFD().clear();
+        nsdMap.get(nsdID).getVNF().getVNFD().addAll(vnf.getVNFD());
+
+        return vnf;
+    }
+
+    public VNF deleteVNF(String nsdID){
+        VNF vnf = new VNF();
+
+        nsdMap.get(nsdID).getVNF().getVNFD().clear();
+
+        return vnf;
     }
 
     public VNFD getVNFDInfo(String nsdID, String vnfdID){
@@ -123,19 +148,242 @@ public class NsDB {
         return null;
     }
 
+    public synchronized VNFD addVNFD(String nsdID, VNFD vnfd){
+        if(getVNFDInfo(nsdID, vnfd.getId()) == null){
+            getVNF(nsdID).getVNFD().add(vnfd);
+            return vnfd;
+        }
+
+        return null;
+    }
+
+    public VNFD deleteVNFD(String nsdID, VNFD vnfd){
+        if(getVNFDInfo(nsdID, vnfd.getId()) != null){
+            getVNF(nsdID).getVNFD().remove(vnfd);
+            return vnfd;
+        }
+
+        return null;
+    }
+
+    public VNFD modifyVNFD(String nsdID, VNFD vnfd){
+        if(deleteVNFD(nsdID, vnfd) == null)
+            return null;
+        if(addVNFD(nsdID, vnfd) == null)
+            return null;
+
+        return vnfd;
+    }
+
+    /* --- VNFFGD --- */
     public VNFFGD getVNFFGD(String nsdID){
         return nsdMap.get(nsdID).getVNFFGD();
     }
 
+    public synchronized VNFFGD addVNFFGD(String nsdID, VNFFGD vnffgd){
+        getVNFFGD(nsdID).getNetworkForwardingPaths().clear();
+        getVNFFGD(nsdID).getNetworkForwardingPaths().addAll(vnffgd.getNetworkForwardingPaths());
+
+        return vnffgd;
+    }
+
+    public VNFFGD deletevVNFFGD(String nsdID){
+        VNFFGD vnffgd = new VNFFGD();
+
+        getVNFFGD(nsdID).getNetworkForwardingPaths().clear();
+
+        return vnffgd;
+    }
+
+    public NetworkForwardingPaths getNetworkForwardingPathsInfo(String nsdID, String nfpID){
+        for(NetworkForwardingPaths nfp : getVNFFGD(nsdID).getNetworkForwardingPaths()){
+            if(nfp.getId().equals(nfpID))
+                return nfp;
+        }
+
+        return null;
+    }
+
+    public synchronized NetworkForwardingPaths addNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp){
+        if(getNetworkForwardingPathsInfo(nsdID, nfp.getId()) == null){
+            getVNFFGD(nsdID).getNetworkForwardingPaths().add(nfp);
+            return nfp;
+        }
+
+        return null;
+    }
+
+    public NetworkForwardingPaths deleteNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp){
+        if(getNetworkForwardingPathsInfo(nsdID, nfp.getId()) != null){
+            getVNFFGD(nsdID).getNetworkForwardingPaths().remove(nfp);
+            return nfp;
+        }
+
+        return null;
+    }
+
+    public NetworkForwardingPaths modifyNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp){
+        if(deleteNetworkForwardingPaths(nsdID, nfp) == null)
+            return null;
+        if(addNetworkForwardingPaths(nsdID, nfp) == null)
+            return null;
+
+        return nfp;
+    }
+
+    /* --- PNF --- */
     public PNF getPNF(String nsdID){
         return nsdMap.get(nsdID).getPNF();
     }
 
+    public synchronized PNF addPNF(String nsdID, PNF pnf){
+        getPNF(nsdID).getPNFD().clear();
+        getPNF(nsdID).getPNFD().addAll(pnf.getPNFD());
+
+        return pnf;
+    }
+
+    public PNF deletevPNF(String nsdID){
+        PNF pnf = new PNF();
+
+        getPNF(nsdID).getPNFD().clear();
+
+        return pnf;
+    }
+
+    public PNFD getPNFDInfo(String nsdID, String pnfdID){
+        for(PNFD pnfd : getPNF(nsdID).getPNFD()){
+            if(pnfd.getId().equals(pnfdID))
+                return pnfd;
+        }
+
+        return null;
+    }
+
+    public synchronized PNFD addPNFD(String nsdID, PNFD pnfd){
+        if(getPNFDInfo(nsdID, pnfd.getId()) == null){
+            getPNF(nsdID).getPNFD().add(pnfd);
+            return pnfd;
+        }
+
+        return null;
+    }
+
+    public PNFD deletePNFD(String nsdID, PNFD pnfd){
+        if(getPNFDInfo(nsdID, pnfd.getId()) != null){
+            getPNF(nsdID).getPNFD().remove(pnfd);
+            return pnfd;
+        }
+
+        return null;
+    }
+
+    public PNFD modifyPNFD(String nsdID, PNFD pnfd){
+        if(deletePNFD(nsdID, pnfd) == null)
+            return null;
+        if(addPNFD(nsdID, pnfd) == null)
+            return null;
+
+        return pnfd;
+    }
+
+    /* --- Flavours --- */
     public Flavours getFlavours(String nsdID){
         return nsdMap.get(nsdID).getFlavours();
     }
 
+    public synchronized Flavours addFlavours(String nsdID, Flavours flavours){
+        getFlavours(nsdID).getServiceDeploymentFlavour().clear();
+        getFlavours(nsdID).getServiceDeploymentFlavour().addAll(flavours.getServiceDeploymentFlavour());
+
+        return flavours;
+    }
+
+    public PNF deletevFlavours(String nsdID){
+        PNF pnf = new PNF();
+
+        getFlavours(nsdID).getServiceDeploymentFlavour().clear();
+
+        return pnf;
+    }
+
+    public ServiceDeploymentFlavour getServiceDeploymentFlavour(String nsdID, String sdfID){
+        for(ServiceDeploymentFlavour s : getFlavours(nsdID).getServiceDeploymentFlavour()){
+            if(s.getId().equals(sdfID))
+                return s;
+        }
+
+        return null;
+    }
+
+    public synchronized ServiceDeploymentFlavour addServiceDeploymentFlavour(String nsdID, ServiceDeploymentFlavour sdf){
+        for(ServiceDeploymentFlavour s : getFlavours(nsdID).getServiceDeploymentFlavour()){
+            if(s.getId().equals(sdf.getId()))
+                return null;
+        }
+
+        getFlavours(nsdID).getServiceDeploymentFlavour().add(sdf);
+        return sdf;
+    }
+
+    public ServiceDeploymentFlavour deleteServiceDeploymentFlavour(String nsdID, ServiceDeploymentFlavour sdf){
+        for(ServiceDeploymentFlavour s : getFlavours(nsdID).getServiceDeploymentFlavour()){
+            if(s.getId().equals(sdf.getId())){
+                getFlavours(nsdID).getServiceDeploymentFlavour().remove(sdf);
+                return sdf;
+            }
+        }
+
+        return null;
+    }
+
+    /* --- ConnectionPoints --- */
     public ConnectionPoints getConnectionPoints(String nsdID){
         return nsdMap.get(nsdID).getConnectionPoints();
+    }
+
+    public synchronized ConnectionPoints addConnectionPoints(String nsdID, ConnectionPoints cp){
+        getConnectionPoints(nsdID).getConnectionPoint().clear();
+        getConnectionPoints(nsdID).getConnectionPoint().addAll(cp.getConnectionPoint());
+
+        return cp;
+    }
+
+    public ConnectionPoints deletevConnectionPoints(String nsdID){
+        ConnectionPoints cp = new ConnectionPoints();
+
+        getConnectionPoints(nsdID).getConnectionPoint().clear();
+
+        return cp;
+    }
+
+    public ConnectionPoint getConnectionPoint(String nsdID, String cpID){
+        for(ConnectionPoint c : getConnectionPoints(nsdID).getConnectionPoint()){
+            if(c.getId().equals(cpID))
+                return c;
+        }
+
+        return null;
+    }
+
+    public synchronized ConnectionPoint addConnectionPoint(String nsdID, ConnectionPoint cp){
+        for(ConnectionPoint c : getConnectionPoints(nsdID).getConnectionPoint()){
+            if(c.getId().equals(cp.getId()))
+                return null;
+        }
+
+        getConnectionPoints(nsdID).getConnectionPoint().add(cp);
+        return cp;
+    }
+
+    public ConnectionPoint deleteConnectionPoint(String nsdID, ConnectionPoint cp){
+        for(ConnectionPoint c : getConnectionPoints(nsdID).getConnectionPoint()){
+            if(c.getId().equals(cp.getId())){
+                getConnectionPoints(nsdID).getConnectionPoint().remove(cp);
+                return cp;
+            }
+        }
+
+        return null;
     }
 }

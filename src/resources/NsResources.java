@@ -54,7 +54,8 @@ public class NsResources {
         URI self = builder.build();
 
         try{
-            service.addNSD(nsd);
+            if(service.addNSD(nsd) == null)
+                throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
         }
@@ -71,7 +72,7 @@ public class NsResources {
     public void deleteVNFDependency(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteNSD(nsdID) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }

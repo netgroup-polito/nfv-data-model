@@ -15,12 +15,5 @@ import services.VnfdServices;
 import java.net.URI;
 
 public class VnfdResources {
-    public UriInfo uriInfo;
-
-    private VnfdServices service = new VnfdServices();
-
-    public VnfdResources(@Context UriInfo uriInfo) {
-        this.uriInfo = uriInfo;
-    }
 
 }
