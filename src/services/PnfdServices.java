@@ -4,11 +4,6 @@ import db.NsDB;
 import jaxb.PNF;
 import jaxb.PNFD;
 
-import javax.ws.rs.ApplicationPath;
-
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
 public class PnfdServices {
     private NsDB nsDB = NsDB.getNsdDB();
 

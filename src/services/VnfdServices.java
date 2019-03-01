@@ -1,16 +1,10 @@
 package services;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-
 import db.NsDB;
 import jaxb.VNF;
 import jaxb.VNFD;
 
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
-public class VnfdServices extends Application {
+public class VnfdServices{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**

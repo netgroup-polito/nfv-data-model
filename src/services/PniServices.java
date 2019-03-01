@@ -1,15 +1,9 @@
 package services;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-
 import db.PniDB;
 import jaxb.*;
 
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
-public class PniServices extends Application {
+public class PniServices{
     private PniDB pniDB = PniDB.getPniDB();
 
     /**

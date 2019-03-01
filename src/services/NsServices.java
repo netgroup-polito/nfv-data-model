@@ -1,14 +1,9 @@
 package services;
 
-import javax.ws.rs.ApplicationPath;
-
 import db.NsDB;
 import jaxb.NSD;
 import jaxb.NS;
 
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
 public class NsServices {
     private NsDB nsDB = NsDB.getNsdDB();
 

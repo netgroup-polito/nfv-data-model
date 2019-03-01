@@ -5,11 +5,7 @@ import jaxb.Flavours;
 import jaxb.PNF;
 import jaxb.ServiceDeploymentFlavour;
 
-import javax.ws.rs.ApplicationPath;
 
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
 public class FlavoursServices {
     private NsDB nsDB = NsDB.getNsdDB();
 

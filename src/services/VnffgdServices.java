@@ -1,15 +1,9 @@
 package services;
 
-
 import db.NsDB;
 import jaxb.NetworkForwardingPaths;
 import jaxb.VNFFGD;
 
-import javax.ws.rs.ApplicationPath;
-
-//Defines the base URI for all resource URIs.
-@ApplicationPath("/")
-//The java class declares root resource and provider classes
 public class VnffgdServices {
     private NsDB nsDB = NsDB.getNsdDB();
 
