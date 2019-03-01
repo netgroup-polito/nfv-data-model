@@ -19,11 +19,22 @@ public class NsDB {
     }
 
     /* --- NSD --- */
-    public NS getNSD(){
+    public NS getNS(){
         NS ns = new NS();
 
         ns.getNSD().addAll(nsdMap.values());
         return ns;
+    }
+
+    public NS addNS(NS ns){
+        for (NSD nsd : ns.getNSD())
+            nsdMap.put(nsd.getId(),nsd);
+
+        return ns;
+    }
+
+    public void deleteNS(){
+        nsdMap.clear();
     }
 
     public NSD getNSDInfo(String nsdID){
@@ -157,17 +168,18 @@ public class NsDB {
         return null;
     }
 
-    public VNFD deleteVNFD(String nsdID, VNFD vnfd){
-        if(getVNFDInfo(nsdID, vnfd.getId()) != null){
-            getVNF(nsdID).getVNFD().remove(vnfd);
-            return vnfd;
+    public VNFD deleteVNFD(String nsdID, String vnfdID){
+        for(VNFD vnfd : getVNF(nsdID).getVNFD()) {
+            if(vnfd.getId().equals(vnfdID))
+                getVNF(nsdID).getVNFD().remove(vnfd);
+                return vnfd;
         }
 
         return null;
     }
 
     public VNFD modifyVNFD(String nsdID, VNFD vnfd){
-        if(deleteVNFD(nsdID, vnfd) == null)
+        if(deleteVNFD(nsdID, vnfd.getId()) == null)
             return null;
         if(addVNFD(nsdID, vnfd) == null)
             return null;
@@ -187,7 +199,7 @@ public class NsDB {
         return vnffgd;
     }
 
-    public VNFFGD deletevVNFFGD(String nsdID){
+    public VNFFGD deleteVNFFGD(String nsdID){
         VNFFGD vnffgd = new VNFFGD();
 
         getVNFFGD(nsdID).getNetworkForwardingPaths().clear();
@@ -213,17 +225,19 @@ public class NsDB {
         return null;
     }
 
-    public NetworkForwardingPaths deleteNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp){
-        if(getNetworkForwardingPathsInfo(nsdID, nfp.getId()) != null){
-            getVNFFGD(nsdID).getNetworkForwardingPaths().remove(nfp);
-            return nfp;
+    public NetworkForwardingPaths deleteNetworkForwardingPaths(String nsdID, String nfpID){
+        for(NetworkForwardingPaths nfp : getVNFFGD(nsdID).getNetworkForwardingPaths()){
+            if(nfp.getId().equals(nfpID))
+                getVNFFGD(nsdID).getNetworkForwardingPaths().remove(nfp);
+                return nfp;
         }
+
 
         return null;
     }
 
     public NetworkForwardingPaths modifyNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp){
-        if(deleteNetworkForwardingPaths(nsdID, nfp) == null)
+        if(deleteNetworkForwardingPaths(nsdID, nfp.getId()) == null)
             return null;
         if(addNetworkForwardingPaths(nsdID, nfp) == null)
             return null;
@@ -243,7 +257,7 @@ public class NsDB {
         return pnf;
     }
 
-    public PNF deletevPNF(String nsdID){
+    public PNF deletePNF(String nsdID){
         PNF pnf = new PNF();
 
         getPNF(nsdID).getPNFD().clear();
@@ -269,17 +283,18 @@ public class NsDB {
         return null;
     }
 
-    public PNFD deletePNFD(String nsdID, PNFD pnfd){
-        if(getPNFDInfo(nsdID, pnfd.getId()) != null){
-            getPNF(nsdID).getPNFD().remove(pnfd);
-            return pnfd;
+    public PNFD deletePNFD(String nsdID, String pnfdID){
+        for(PNFD pnfd : getPNF(nsdID).getPNFD()){
+            if(pnfd.getId().equals(pnfdID))
+                getPNF(nsdID).getPNFD().remove(pnfd);
+                return pnfd;
         }
 
         return null;
     }
 
     public PNFD modifyPNFD(String nsdID, PNFD pnfd){
-        if(deletePNFD(nsdID, pnfd) == null)
+        if(deletePNFD(nsdID, pnfd.getId()) == null)
             return null;
         if(addPNFD(nsdID, pnfd) == null)
             return null;
@@ -299,7 +314,7 @@ public class NsDB {
         return flavours;
     }
 
-    public PNF deletevFlavours(String nsdID){
+    public PNF deleteFlavours(String nsdID){
         PNF pnf = new PNF();
 
         getFlavours(nsdID).getServiceDeploymentFlavour().clear();
@@ -326,12 +341,11 @@ public class NsDB {
         return sdf;
     }
 
-    public ServiceDeploymentFlavour deleteServiceDeploymentFlavour(String nsdID, ServiceDeploymentFlavour sdf){
+    public ServiceDeploymentFlavour deleteServiceDeploymentFlavour(String nsdID, String sdfID){
         for(ServiceDeploymentFlavour s : getFlavours(nsdID).getServiceDeploymentFlavour()){
-            if(s.getId().equals(sdf.getId())){
-                getFlavours(nsdID).getServiceDeploymentFlavour().remove(sdf);
-                return sdf;
-            }
+            if(s.getId().equals(sdfID))
+                getFlavours(nsdID).getServiceDeploymentFlavour().remove(s);
+                return s;
         }
 
         return null;
@@ -349,7 +363,7 @@ public class NsDB {
         return cp;
     }
 
-    public ConnectionPoints deletevConnectionPoints(String nsdID){
+    public ConnectionPoints deleteConnectionPoints(String nsdID){
         ConnectionPoints cp = new ConnectionPoints();
 
         getConnectionPoints(nsdID).getConnectionPoint().clear();
@@ -376,11 +390,11 @@ public class NsDB {
         return cp;
     }
 
-    public ConnectionPoint deleteConnectionPoint(String nsdID, ConnectionPoint cp){
+    public ConnectionPoint deleteConnectionPoint(String nsdID, String cp){
         for(ConnectionPoint c : getConnectionPoints(nsdID).getConnectionPoint()){
-            if(c.getId().equals(cp.getId())){
-                getConnectionPoints(nsdID).getConnectionPoint().remove(cp);
-                return cp;
+            if(c.getId().equals(cp)){
+                getConnectionPoints(nsdID).getConnectionPoint().remove(c);
+                return c;
             }
         }
 

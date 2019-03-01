@@ -37,7 +37,7 @@ public class ConnectionPointsServices {
      * @return The void Connection Points
      */
     public ConnectionPoints deletevConnectionPoints(String nsdID) {
-        return nsDB.deletevConnectionPoints(nsdID);
+        return nsDB.deleteConnectionPoints(nsdID);
     }
 
     /**
@@ -62,10 +62,10 @@ public class ConnectionPointsServices {
     /**
      * Delete a ConnectionPoint
      * @param nsdID
-     * @param cp
+     * @param cpID
      * @return ConnectionPoint removed or null if ConnectionPoint is not present
      */
-    public ConnectionPoint deleteConnectionPoint(String nsdID, ConnectionPoint cp) {
-        return nsDB.deleteConnectionPoint(nsdID, cp);
+    public ConnectionPoint deleteConnectionPoint(String nsdID, String cpID) {
+        return nsDB.deleteConnectionPoint(nsdID, cpID);
     }
 }

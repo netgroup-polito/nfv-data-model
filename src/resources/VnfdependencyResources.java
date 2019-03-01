@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiResponses;
 
 import java.net.URI;
 
-@Path("/ns/{nsdID}/vnfdependency")
+@Path("ns/nsd/{nsdID}/vnfdependency")
 @Api(value = "/ns/{nsdID}/vnfdependency")
 public class VnfdependencyResources {
     public UriInfo uriInfo;
@@ -108,7 +108,7 @@ public class VnfdependencyResources {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 500, message = "Internal Error"),})
-    public void deleteGraph(@PathParam("nsdID") String nsdID, @PathParam("nsdID") Long graphID) {
+    public void deleteGraph(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
         try{
             if(service.deleteGraph(nsdID, graphID) == null)
                 throw new NotFoundException();

@@ -63,11 +63,11 @@ public class VnfdServices extends Application {
     /**
      * Delete a VNFD
      * @param nsdID
-     * @param vnfd
+     * @param vnfdID
      * @return VNFD removed or null if VNFD is not present
      */
-    public VNFD deleteVNFD(String nsdID, VNFD vnfd) {
-        return nsDB.deleteVNFD(nsdID, vnfd);
+    public VNFD deleteVNFD(String nsdID, String vnfdID) {
+        return nsDB.deleteVNFD(nsdID, vnfdID);
     }
 
     /**

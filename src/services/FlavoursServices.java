@@ -38,7 +38,7 @@ public class FlavoursServices {
      * @return The void flavours
      */
     public PNF deletevFlavours(String nsdID) {
-        return nsDB.deletevFlavours(nsdID);
+        return nsDB.deleteFlavours(nsdID);
     }
 
     /**
@@ -64,10 +64,10 @@ public class FlavoursServices {
     /**
      * Delete a ServiceDeploymentFlavour
      * @param nsdID
-     * @param sdf
+     * @param sdfID
      * @return ServiceDeploymentFlavour removed or null if ServiceDeploymentFlavour is not present
      */
-    public ServiceDeploymentFlavour deleteServiceDeploymentFlavour(String nsdID, ServiceDeploymentFlavour sdf) {
-        return nsDB.deleteServiceDeploymentFlavour(nsdID, sdf);
+    public ServiceDeploymentFlavour deleteServiceDeploymentFlavour(String nsdID, String sdfID) {
+        return nsDB.deleteServiceDeploymentFlavour(nsdID, sdfID);
     }
 }

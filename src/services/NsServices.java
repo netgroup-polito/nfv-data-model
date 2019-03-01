@@ -16,8 +16,25 @@ public class NsServices {
      * Get all the virtualized NSD
      * @return The NS or null if there are not graphs inside
      */
-    public NS getNSD() {
-        return nsDB.getNSD();
+    public NS getNS() {
+        return nsDB.getNS();
+    }
+
+    /**
+     * Add a NS list
+     * @param ns
+     * @return The NS or null if the NSD exists
+     */
+    public NS addNS(NS ns) {
+        return nsDB.addNS(ns);
+    }
+
+    /**
+     * Delete all NS
+     * @return The NS or null if the NSD exists
+     */
+    public void deleteNS() {
+        nsDB.deleteNS();
     }
 
     /**

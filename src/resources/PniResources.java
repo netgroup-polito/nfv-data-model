@@ -224,7 +224,7 @@ public class PniResources {
 
     @PUT
     @Path("/connection")
-    @ApiOperation(value = "cmodifyConnection", notes = "Modify connection between host inside the PNI")
+    @ApiOperation(value = "modifyConnection", notes = "Modify connection between host inside the PNI")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 204, message = "No content"),
             @ApiResponse(code = 400, message = "Bad request"),

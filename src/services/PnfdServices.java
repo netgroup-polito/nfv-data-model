@@ -37,7 +37,7 @@ public class PnfdServices {
      * @return The void PNF
      */
     public PNF deletevPNF(String nsdID) {
-        return nsDB.deletevPNF(nsdID);
+        return nsDB.deletePNF(nsdID);
     }
 
     /**
@@ -63,11 +63,11 @@ public class PnfdServices {
     /**
      * Delete a PNFD
      * @param nsdID
-     * @param pnfd
+     * @param pnfdID
      * @return PNFD removed or null if PNFD is not present
      */
-    public PNFD deletePNFD(String nsdID, PNFD pnfd) {
-        return nsDB.deletePNFD(nsdID, pnfd);
+    public PNFD deletePNFD(String nsdID, String pnfdID) {
+        return nsDB.deletePNFD(nsdID, pnfdID);
     }
 
     /**

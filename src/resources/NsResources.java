@@ -28,12 +28,46 @@ public class NsResources {
     @ApiOperation(value = "getNS", notes = "Read the NS data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public NS getNSD() {
-        return service.getNSD();
+    public NS getNS() {
+        return service.getNS();
+    }
+
+    @POST
+    @ApiOperation(value = "addNS", notes = "Add a list of NS")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public Response addNS(NS ns) {
+        //Set self URI
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("ns");
+        URI self = builder.build();
+
+        try{
+            service.addNS(ns);
+        }catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
+
+        return Response.created(self).entity(ns).build();
+    }
+
+    @DELETE
+    @ApiOperation(value = "deleteNS", notes = "Delete a NSD")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 403, message = "Forbidden"),
+            @ApiResponse(code = 500, message = "Internal Error"),})
+    public void deleteVNFDependency() {
+        try{
+            service.deleteNS();
+        }catch (Exception e) {
+            throw e;
+        }
     }
 
     @GET
-    @Path("/{nsdID}")
+    @Path("nsd/{nsdID}")
     @ApiOperation(value = "getNSD", notes = "Read the NSD data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -42,6 +76,7 @@ public class NsResources {
     }
 
     @POST
+    @Path("nsd/")
     @ApiOperation(value = "addNSD", notes = "Add a new NSD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad request"),
@@ -54,7 +89,7 @@ public class NsResources {
         URI self = builder.build();
 
         try{
-            if(service.addNSD(nsd) == null)
+            if(service.addNSD(nsd) != null)
                 throw new ForbiddenException();
         }catch (Exception e) {
             throw new InternalServerErrorException();
@@ -64,7 +99,7 @@ public class NsResources {
     }
 
     @DELETE
-    @Path("/{nsdID}")
+    @Path("nsd/{nsdID}")
     @ApiOperation(value = "deleteNSD", notes = "Delete a NSD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Forbidden"),

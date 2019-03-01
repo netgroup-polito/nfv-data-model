@@ -38,7 +38,7 @@ public class VnffgdServices {
      * @return The void vnffgd
      */
     public VNFFGD deletevVNFFGD(String nsdID) {
-        return nsDB.deletevVNFFGD(nsdID);
+        return nsDB.deleteVNFFGD(nsdID);
     }
 
     /**
@@ -64,11 +64,11 @@ public class VnffgdServices {
     /**
      * Delete a NFP
      * @param nsdID
-     * @param nfp
+     * @param nfpID
      * @return NFP removed or null if NFP is not present
      */
-    public NetworkForwardingPaths deleteNetworkForwardingPaths(String nsdID, NetworkForwardingPaths nfp) {
-        return nsDB.deleteNetworkForwardingPaths(nsdID, nfp);
+    public NetworkForwardingPaths deleteNetworkForwardingPaths(String nsdID, String nfpID) {
+        return nsDB.deleteNetworkForwardingPaths(nsdID, nfpID);
     }
 
     /**
