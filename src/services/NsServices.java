@@ -13,8 +13,8 @@ public class NsServices {
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**
-     * Get all the nsd and related elements of the network
-     * @return All the NSD or null if the NS is void
+     * Get all the virtualized NSD
+     * @return The NS or null if there are not graphs inside
      */
     public NS getNSD() {
         return nsDB.getNSD();
