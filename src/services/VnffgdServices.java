@@ -1,10 +1,13 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.NetworkForwardingPaths;
 import jaxb.VNFFGD;
 
-public class VnffgdServices {
+@ApplicationPath("/")
+public class VnffgdServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**
@@ -31,7 +34,7 @@ public class VnffgdServices {
      * @param nsdID
      * @return The void vnffgd
      */
-    public VNFFGD deletevVNFFGD(String nsdID) {
+    public VNFFGD deleteVNFFGD(String nsdID) {
         return nsDB.deleteVNFFGD(nsdID);
     }
 

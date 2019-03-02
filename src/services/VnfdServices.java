@@ -1,10 +1,13 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.VNF;
 import jaxb.VNFD;
 
-public class VnfdServices{
+@ApplicationPath("/")
+public class VnfdServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**

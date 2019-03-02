@@ -1,12 +1,14 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.Flavours;
 import jaxb.PNF;
 import jaxb.ServiceDeploymentFlavour;
 
-
-public class FlavoursServices {
+@ApplicationPath("/")
+public class FlavoursServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**
@@ -33,7 +35,7 @@ public class FlavoursServices {
      * @param nsdID
      * @return The void flavours
      */
-    public PNF deletevFlavours(String nsdID) {
+    public PNF deleteFlavours(String nsdID) {
         return nsDB.deleteFlavours(nsdID);
     }
 

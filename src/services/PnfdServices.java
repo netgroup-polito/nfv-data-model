@@ -1,10 +1,13 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.PNF;
 import jaxb.PNFD;
 
-public class PnfdServices {
+@ApplicationPath("/")
+public class PnfdServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**
@@ -31,7 +34,7 @@ public class PnfdServices {
      * @param nsdID
      * @return The void PNF
      */
-    public PNF deletevPNF(String nsdID) {
+    public PNF deletePNF(String nsdID) {
         return nsDB.deletePNF(nsdID);
     }
 

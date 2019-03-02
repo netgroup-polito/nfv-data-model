@@ -60,7 +60,7 @@ public class VnffgdResources {
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deleteVNFFGD(@PathParam("nsdID") String nsdID) {
         try{
-            if(service.deletevVNFFGD(nsdID) == null)
+            if(service.deleteVNFFGD(nsdID) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
             throw e;

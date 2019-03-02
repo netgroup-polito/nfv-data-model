@@ -1,9 +1,12 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.PniDB;
 import jaxb.*;
 
-public class PniServices{
+@ApplicationPath("/")
+public class PniServices extends Application{
     private PniDB pniDB = PniDB.getPniDB();
 
     /**

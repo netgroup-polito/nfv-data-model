@@ -1,10 +1,13 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.NSD;
 import jaxb.NS;
 
-public class NsServices {
+@ApplicationPath("/")
+public class NsServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**

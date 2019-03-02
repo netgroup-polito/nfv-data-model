@@ -60,7 +60,7 @@ public class ConnectionPointsResources {
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deleteConnectionPoints(@PathParam("nsdID") String nsdID) {
         try{
-            if(service.deletevConnectionPoints(nsdID) == null)
+            if(service.deleteConnectionPoints(nsdID) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
             throw e;

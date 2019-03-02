@@ -1,12 +1,14 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.Graph;
 import jaxb.Node;
 import jaxb.VNFDependency;
 
-
-public class VnfdependencyServices {
+@ApplicationPath("/")
+public class VnfdependencyServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**

@@ -60,7 +60,7 @@ public class PnfdResources {
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deletePNF(@PathParam("nsdID") String nsdID) {
         try{
-            if(service.deletevPNF(nsdID) == null)
+            if(service.deletePNF(nsdID) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
             throw e;

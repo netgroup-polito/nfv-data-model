@@ -1,10 +1,13 @@
 package services;
 
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 import db.NsDB;
 import jaxb.ConnectionPoint;
 import jaxb.ConnectionPoints;
 
-public class ConnectionPointsServices {
+@ApplicationPath("/")
+public class ConnectionPointsServices extends Application{
     private NsDB nsDB = NsDB.getNsdDB();
 
     /**
@@ -31,7 +34,7 @@ public class ConnectionPointsServices {
      * @param nsdID
      * @return The void Connection Points
      */
-    public ConnectionPoints deletevConnectionPoints(String nsdID) {
+    public ConnectionPoints deleteConnectionPoints(String nsdID) {
         return nsDB.deleteConnectionPoints(nsdID);
     }
 

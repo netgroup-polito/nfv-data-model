@@ -60,7 +60,7 @@ public class FlavoursResources {
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deleteFlavours(@PathParam("nsdID") String nsdID) {
         try{
-            if(service.deletevFlavours(nsdID) == null)
+            if(service.deleteFlavours(nsdID) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
             throw e;
