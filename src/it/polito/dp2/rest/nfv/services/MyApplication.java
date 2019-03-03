@@ -1,4 +1,5 @@
 package it.polito.dp2.rest.nfv.services;
+
 import it.polito.dp2.rest.nfv.resources.*;
 
 import javax.ws.rs.ApplicationPath;
@@ -11,7 +12,7 @@ public class MyApplication extends Application{
 	//The method returns a non-empty collection with classes, that must be included in the published JAX-RS application
 	@Override
 	public Set<Class<?>> getClasses() {
-	HashSet h = new HashSet<Class<?>>();
+	HashSet<Class<?>> h = new HashSet<Class<?>>();
 	
 	h.add(ConnectionPointsResources.class);
 	h.add(FlavoursResources.class);

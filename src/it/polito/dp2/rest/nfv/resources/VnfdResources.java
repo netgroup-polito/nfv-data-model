@@ -115,7 +115,6 @@ public class VnfdResources {
         }
     }
 
-
     @PUT
     @Path("/vnfd")
     @ApiOperation(value = "deleteVNFD", notes = "Remove a certain VNFD")
