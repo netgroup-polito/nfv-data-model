@@ -1,13 +1,8 @@
 package it.polito.dp2.rest.nfv.services;
 
-
 import it.polito.dp2.rest.nfv.db.NsDB;
 import it.polito.dp2.rest.nfv.jaxb.NetworkForwardingPaths;
 import it.polito.dp2.rest.nfv.jaxb.VNFFGD;
-import it.polito.dp2.rest.nfv.jaxb.NetworkForwardingPaths;
-import it.polito.dp2.rest.nfv.jaxb.VNFFGD;
-
-import javax.ws.rs.ApplicationPath;
 
 public class VnffgdServices {
     private NsDB nsDB = NsDB.getNsdDB();

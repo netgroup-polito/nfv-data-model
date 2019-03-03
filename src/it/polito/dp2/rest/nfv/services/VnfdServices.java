@@ -1,11 +1,8 @@
 package it.polito.dp2.rest.nfv.services;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import it.polito.dp2.rest.nfv.db.NsDB;
-import it.polito.dp2.rest.nfv.jaxb.VNF;
-import it.polito.dp2.rest.nfv.jaxb.VNFD;
 import it.polito.dp2.rest.nfv.jaxb.VNF;
 import it.polito.dp2.rest.nfv.jaxb.VNFD;
 

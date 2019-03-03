@@ -1,12 +1,9 @@
 package it.polito.dp2.rest.nfv.services;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import it.polito.dp2.rest.nfv.db.PniDB;
 import it.polito.dp2.rest.nfv.jaxb.*;
-import it.polito.dp2.rest.nfv.jaxb.*;
-
 
 public class PniServices extends Application {
     private PniDB pniDB = PniDB.getPniDB();

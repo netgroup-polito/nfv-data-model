@@ -3,10 +3,6 @@ package it.polito.dp2.rest.nfv.services;
 import it.polito.dp2.rest.nfv.db.NsDB;
 import it.polito.dp2.rest.nfv.jaxb.ConnectionPoint;
 import it.polito.dp2.rest.nfv.jaxb.ConnectionPoints;
-import it.polito.dp2.rest.nfv.jaxb.ConnectionPoint;
-import it.polito.dp2.rest.nfv.jaxb.ConnectionPoints;
-
-import javax.ws.rs.ApplicationPath;
 
 public class ConnectionPointsServices {
     private NsDB nsDB = NsDB.getNsdDB();

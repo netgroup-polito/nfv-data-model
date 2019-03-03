@@ -3,11 +3,6 @@ package it.polito.dp2.rest.nfv.services;
 import it.polito.dp2.rest.nfv.db.NsDB;
 import it.polito.dp2.rest.nfv.jaxb.PNF;
 import it.polito.dp2.rest.nfv.jaxb.PNFD;
-import it.polito.dp2.rest.nfv.jaxb.PNF;
-import it.polito.dp2.rest.nfv.jaxb.PNFD;
-
-import javax.ws.rs.ApplicationPath;
-
 
 public class PnfdServices {
     private NsDB nsDB = NsDB.getNsdDB();

@@ -1,8 +1,7 @@
 package it.polito.dp2.rest.nfv.resources;
-import it.polito.dp2.rest.nfv.services.PniServices;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.Status;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +10,6 @@ import io.swagger.annotations.ApiResponses;
 
 import it.polito.dp2.rest.nfv.jaxb.*;
 import it.polito.dp2.rest.nfv.services.VnfdServices;
-import it.polito.dp2.rest.nfv.services.VnfdependencyServices;
 
 import java.net.URI;
 

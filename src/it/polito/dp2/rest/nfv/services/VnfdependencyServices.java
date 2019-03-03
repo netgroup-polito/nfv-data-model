@@ -1,15 +1,9 @@
 package it.polito.dp2.rest.nfv.services;
 
-import javax.ws.rs.ApplicationPath;
-
 import it.polito.dp2.rest.nfv.db.NsDB;
 import it.polito.dp2.rest.nfv.jaxb.Graph;
 import it.polito.dp2.rest.nfv.jaxb.Node;
 import it.polito.dp2.rest.nfv.jaxb.VNFDependency;
-import it.polito.dp2.rest.nfv.jaxb.Graph;
-import it.polito.dp2.rest.nfv.jaxb.Node;
-import it.polito.dp2.rest.nfv.jaxb.VNFDependency;
-
 
 public class VnfdependencyServices {
     private NsDB nsDB = NsDB.getNsdDB();
