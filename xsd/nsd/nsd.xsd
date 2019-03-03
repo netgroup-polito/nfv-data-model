@@ -16,7 +16,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element ref="VNF_dependency" minOccurs="0" maxOccurs="1"/>
-                <xsd:element ref="PropertyDefinition" minOccurs="1" maxOccurs="unbounded"/>
+                <xsd:element ref="PropertyDefinition" minOccurs="1" maxOccurs="1"/>
                 <xsd:element ref="VNF" minOccurs="0" maxOccurs="1"/>
                 <xsd:element ref="VNFFGD" minOccurs="0" maxOccurs="1"/>
                 <xsd:element ref="PNF" minOccurs="0" maxOccurs="1"/>

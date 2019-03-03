@@ -48,6 +48,47 @@ public class NsDB {
     public NSD deleteNSD(String nsdID){
         return nsdMap.remove(nsdID);
     }
+    
+    /* --- PropertyDefinition --- */
+    public PropertyDefinition getPropertyDefinition(String nsdID){
+        return nsdMap.get(nsdID).getPropertyDefinition();
+    }
+
+    public Property getProperty(String nsdID, Long graphID){
+        for(Property p : getPropertyDefinition(nsdID).getProperty()){
+            if(p.getGraph() == graphID)
+                return p;
+        }
+
+        return null;
+    }
+
+    public synchronized Property addProperty(String nsdID, Property property){
+        if(getProperty(nsdID, property.getGraph()) == null){
+            getPropertyDefinition(nsdID).getProperty().add(property);
+            return property;
+        }
+
+        return null;
+    }
+
+    public Property deleteProperty(String nsdID, Long graphID){
+        for(Property p : getPropertyDefinition(nsdID).getProperty()){
+            if(p.getGraph() == graphID){
+                getPropertyDefinition(nsdID).getProperty().remove(p);
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public Property modifyProperty(String nsdID, Property property){
+        if(deleteProperty(nsdID, property.getGraph()) != null)
+            addProperty(nsdID, property);
+
+        return null;
+    }
 
     /* --- VNFDependency --- */
     public VNFDependency getVNFDependency(String nsdID){
