@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element ref="{}VNF_dependency" minOccurs="0"/>
- *         &lt;element ref="{}PropertyDefinition" maxOccurs="unbounded"/>
+ *         &lt;element ref="{}PropertyDefinition"/>
  *         &lt;element ref="{}VNF" minOccurs="0"/>
  *         &lt;element ref="{}VNFFGD" minOccurs="0"/>
  *         &lt;element ref="{}PNF" minOccurs="0"/>
@@ -57,7 +57,7 @@ public class NSD {
     @XmlElement(name = "VNF_dependency")
     protected VNFDependency vnfDependency;
     @XmlElement(name = "PropertyDefinition", required = true)
-    protected List<PropertyDefinition> propertyDefinition;
+    protected PropertyDefinition propertyDefinition;
     @XmlElement(name = "VNF")
     protected VNF vnf;
     @XmlElement(name = "VNFFGD")
@@ -101,32 +101,27 @@ public class NSD {
     }
 
     /**
-     * Gets the value of the propertyDefinition property.
+     * Recupera il valore della proprietà propertyDefinition.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the propertyDefinition property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPropertyDefinition().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PropertyDefinition }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link PropertyDefinition }
+     *     
      */
-    public List<PropertyDefinition> getPropertyDefinition() {
-        if (propertyDefinition == null) {
-            propertyDefinition = new ArrayList<PropertyDefinition>();
-        }
-        return this.propertyDefinition;
+    public PropertyDefinition getPropertyDefinition() {
+        return propertyDefinition;
+    }
+
+    /**
+     * Imposta il valore della proprietà propertyDefinition.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PropertyDefinition }
+     *     
+     */
+    public void setPropertyDefinition(PropertyDefinition value) {
+        this.propertyDefinition = value;
     }
 
     /**
