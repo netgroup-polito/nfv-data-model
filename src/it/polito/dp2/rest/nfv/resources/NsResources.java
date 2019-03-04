@@ -33,9 +33,8 @@ public class NsResources {
     }
 
     @POST
-    @ApiOperation(value = "addNS", notes = "Add a list of NS")
+    @ApiOperation(value = "addNS", notes = "Add a list of NSD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -54,15 +53,14 @@ public class NsResources {
     }
 
     @DELETE
-    @ApiOperation(value = "deleteNS", notes = "Delete a NSD")
+    @ApiOperation(value = "deleteNS", notes = "Delete all NSD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 500, message = "Internal Error")})
     public void deleteVNFDependency() {
         try{
             service.deleteNS();
         }catch (Exception e) {
-            throw e;
+            throw new InternalServerErrorException();
         }
     }
 
@@ -72,7 +70,15 @@ public class NsResources {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public NSD getNSDInfo(@PathParam("nsdID") String nsdID) {
-        return service.getNSDInfo(nsdID);
+    	NSD nsd = new NSD();
+        try{
+        	if((nsd = service.getNSDInfo(nsdID)) == null)
+        		throw new NotFoundException();
+        }catch(Exception e){
+        	throw e;
+        }
+        
+        return nsd; 
     }
 
     @POST
@@ -92,7 +98,7 @@ public class NsResources {
             if(service.addNSD(nsd) != null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(nsd).build();

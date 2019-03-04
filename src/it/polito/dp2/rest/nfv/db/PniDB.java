@@ -60,6 +60,15 @@ public class PniDB {
 
         return hosts;
     }
+    
+    public synchronized Hosts addHosts(Hosts hosts){
+    	for(Host h : hosts.getHost()){
+    		if(getHostInfo(h.getId()) == null){
+    			hostMap.put(h.getId(), h);
+    		}
+    	}
+    	return hosts;
+    }
 
     public Host getHostInfo(String hostID){
         return hostMap.get(hostID);
@@ -90,6 +99,14 @@ public class PniDB {
 
         return connections;
     }
+    
+    public synchronized Connections addConnections(Connections connections){
+    	for(Connection c : connections.getConnection()){
+    		addConnection(c);
+    	}
+    	return connections;
+    }
+    
 
     public Connection getConnectionInfo(String connectionSrc, String connectionDst){
         return connectionMap.get(connectionSrc.concat(connectionDst));

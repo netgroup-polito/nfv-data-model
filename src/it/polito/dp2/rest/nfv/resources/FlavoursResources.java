@@ -13,7 +13,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 
 @Path("ns/nsd/{nsdID}/flavours")
-@Api(value = "/ns/{nsdID}/flavours")
+@Api(value = "ns/nsd/{nsdID}/flavours")
 public class FlavoursResources {
     public UriInfo uriInfo;
 
@@ -34,11 +34,10 @@ public class FlavoursResources {
     @POST
     @ApiOperation(value = "addFlavours", notes = "Add a new Flavours")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response addPNF(@PathParam("nsdID") String nsdID, Flavours flavours) {
+    public Response addFlavours(@PathParam("nsdID") String nsdID, Flavours flavours) {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(nsdID);
         URI self = builder.build();
@@ -47,7 +46,7 @@ public class FlavoursResources {
             if(service.addFlavours(nsdID, flavours) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(flavours).build();
@@ -56,8 +55,7 @@ public class FlavoursResources {
     @DELETE
     @ApiOperation(value = "deleteFlavours", notes = "Clear the Flavours")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 500, message = "Internal Error")})
     public void deleteFlavours(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteFlavours(nsdID) == null)
@@ -70,18 +68,28 @@ public class FlavoursResources {
     @GET
     @Path("/flavour/{sdfID}")
     @ApiOperation(value = "getServiceDeploymentFlavour", notes = "Read a certain ServiceDeploymentFlavour")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 200, message = "Flavour Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ServiceDeploymentFlavour getVNFInfo(@PathParam("nsdID") String nsdID, @PathParam("sdfID") String sdfID) {
-        return service.getServiceDeploymentFlavour(nsdID, sdfID);
+    public ServiceDeploymentFlavour getFlavourInfo(@PathParam("nsdID") String nsdID, @PathParam("sdfID") String sdfID) {
+    	ServiceDeploymentFlavour sdf = new ServiceDeploymentFlavour();
+    	
+    	try{
+        	if((sdf = service.getServiceDeploymentFlavour(nsdID, sdfID)) == null)
+        		throw new NotFoundException();
+        }
+        catch(Exception e){
+        	throw e;
+        }
+    	
+    	return sdf;
     }
 
     @POST
     @Path("/flavour")
     @ApiOperation(value = "addServiceDeploymentFlavour", notes = "Add a new ServiceDeploymentFlavour")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 400, message = "Forbidden: Flavour already exists")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addServiceDeploymentFlavour(@PathParam("nsdID") String nsdID, ServiceDeploymentFlavour sdf) {
@@ -93,7 +101,7 @@ public class FlavoursResources {
             if(service.addServiceDeploymentFlavour(nsdID, sdf) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(sdf).build();
@@ -103,8 +111,7 @@ public class FlavoursResources {
     @Path("/flavour/{sdfID}")
     @ApiOperation(value = "deleteServiceDeploymentFlavour", notes = "Remove a certain ServiceDeploymentFlavour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 404, message = "Flavour Not Found")})
     public void deleteServiceDeploymentFlavour(@PathParam("nsdID") String nsdID, @PathParam("sdfID") String sdfID) {
         try{
             if(service.deleteServiceDeploymentFlavour(nsdID, sdfID) == null)

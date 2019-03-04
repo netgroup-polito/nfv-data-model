@@ -3,7 +3,6 @@ package it.polito.dp2.rest.nfv.services;
 import it.polito.dp2.rest.nfv.db.NsDB;
 import it.polito.dp2.rest.nfv.jaxb.Flavours;
 import it.polito.dp2.rest.nfv.jaxb.ServiceDeploymentFlavour;
-import it.polito.dp2.rest.nfv.jaxb.PNF;
 
 public class FlavoursServices {
     private NsDB nsDB = NsDB.getNsdDB();
@@ -32,7 +31,7 @@ public class FlavoursServices {
      * @param nsdID
      * @return The void flavours
      */
-    public PNF deleteFlavours(String nsdID) {
+    public Flavours deleteFlavours(String nsdID) {
         return nsDB.deleteFlavours(nsdID);
     }
 

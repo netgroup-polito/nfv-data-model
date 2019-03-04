@@ -12,8 +12,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
 
-@Path("ns/nsd/{nsdID}/propertyDefinition")
-@Api(value = "/ns/{nsdID}/propertyDefinition")
+@Path("ns/nsd/{nsdID}/propertydefinition")
+@Api(value = "/ns/nsd/{nsdID}/propertydefinition")
 public class PropertyDefinitionResources {
     public UriInfo uriInfo;
 
@@ -30,24 +30,69 @@ public class PropertyDefinitionResources {
     public PropertyDefinition getPropertyDefinition(@PathParam("nsdID") String nsdID) {
         return service.getPropertyDefinition(nsdID);
     }
-
-    @GET
-    @Path("/{graphID}")
-    @ApiOperation(value = "getProperty", notes = "Read the Property")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Property getPropertyDefinition(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
-        return service.getProperty(nsdID, graphID);
-    }
-
+    
     @POST
-    @ApiOperation(value = "addProperty", notes = "Add a new Property")
+    @ApiOperation(value = "addPropertyDefinition", notes = "Add a new PropertyDefinition")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response addPNF(@PathParam("nsdID") String nsdID, Property property) {
+    public Response addPropertyDefinition(@PathParam("nsdID") String nsdID, PropertyDefinition propertyDefinition) {
+        //Set self URI
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(nsdID);
+        URI self = builder.build();
+
+        try{
+            if(service.addPropertyDefinition(nsdID, propertyDefinition) == null)
+                throw new InternalServerErrorException();
+        }catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
+
+        return Response.created(self).entity(propertyDefinition).build();
+    }
+
+    @DELETE
+    @ApiOperation(value = "deletePropertyDefinition", notes = "Delete a PropertyDefinition")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    public void deletePropertyDefinition(@PathParam("nsdID") String nsdID) {
+        try{
+            if(service.deletePropertyDefinition(nsdID) == null)
+                throw new InternalServerErrorException();
+        }catch (Exception e) {
+            throw e;
+        }
+    }
+
+    @GET
+    @Path("/property/{graphID}")
+    @ApiOperation(value = "getProperty", notes = "Read the Property")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 404, message = "Property of graph not Found")})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Property getPropertyDefinition(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
+        Property property = new Property();
+        
+    	try{
+        	if((property = service.getProperty(nsdID, graphID)) == null)
+        		throw new NotFoundException();
+        }catch (Exception e) {
+            throw e;
+        }
+    	
+    	return property;
+    }
+
+    @POST
+    @Path("/property")
+    @ApiOperation(value = "addProperty", notes = "Add a new Property")
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public Response addProperty(@PathParam("nsdID") String nsdID, Property property) {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(nsdID);
         URI self = builder.build();
@@ -63,12 +108,11 @@ public class PropertyDefinitionResources {
     }
 
     @DELETE
-    @Path("/{graphID}")
+    @Path("property/{graphID}")
     @ApiOperation(value = "deleteProperty", notes = "Delete a Property")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
-    public void deletePNF(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
+            @ApiResponse(code = 500, message = "Internal Error")})
+    public void deleteProperty(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
         try{
             if(service.deleteProperty(nsdID, graphID) == null)
                 throw new InternalServerErrorException();
@@ -78,16 +122,19 @@ public class PropertyDefinitionResources {
     }
 
     @PUT
+    @Path("property/")
     @ApiOperation(value = "modifyProperty", notes = "Modify a certain Property")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
-    public void modifyVNFD(@PathParam("nsdID") String nsdID, Property property) {
+    		@ApiResponse(code = 404, message = "Property of graph not Found"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    public Property modifyProperty(@PathParam("nsdID") String nsdID, Property property) {
         try{
             if(service.modifyProperty(nsdID, property) == null)
                 throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
+        
+        return property;
     }
 }

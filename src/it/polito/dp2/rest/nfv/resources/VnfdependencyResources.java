@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiResponses;
 import java.net.URI;
 
 @Path("ns/nsd/{nsdID}/vnfdependency")
-@Api(value = "/ns/{nsdID}/vnfdependency")
+@Api(value = "ns/nsd/{nsdID}/vnfdependency")
 public class VnfdependencyResources {
     public UriInfo uriInfo;
 
@@ -37,7 +37,6 @@ public class VnfdependencyResources {
     @POST
     @ApiOperation(value = "addVNFDependency", notes = "Add a new VNFDependency")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -50,7 +49,7 @@ public class VnfdependencyResources {
             if(service.addVNFDependency(nsdID, vnfDependency) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(vnfDependency).build();
@@ -59,7 +58,6 @@ public class VnfdependencyResources {
     @DELETE
     @ApiOperation(value = "deleteVNFDependency", notes = "Clear the VNFDependency")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deleteVNFDependency(@PathParam("nsdID") String nsdID) {
         try{
@@ -73,18 +71,26 @@ public class VnfdependencyResources {
     @GET
     @Path("/graph/{graphID}")
     @ApiOperation(value = "getGraph", notes = "Read a certain Graph")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 404, message = "Graph not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Graph getGraph(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
-        return service.getGraph(nsdID, graphID);
+    	Graph graph = new Graph();
+        try{
+        	if((graph=service.getGraph(nsdID, graphID))==null)
+        		throw new NotFoundException();
+        }catch(Exception e){
+        	throw e;
+        }
+        
+        return graph;
     }
 
     @POST
     @Path("/graph")
     @ApiOperation(value = "addGraph", notes = "Add a new Graph")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+    		@ApiResponse(code = 403, message = "Forbidden: graph already exist")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addGraph(@PathParam("nsdID") String nsdID, Graph graph) {
@@ -96,7 +102,7 @@ public class VnfdependencyResources {
             if(service.addGraph(nsdID, graph) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(graph).build();
@@ -106,8 +112,7 @@ public class VnfdependencyResources {
     @Path("/graph/{graphID}")
     @ApiOperation(value = "deleteGraph", notes = "Remove a certain graph")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+    		@ApiResponse(code = 404, message = "Graph not Found")})
     public void deleteGraph(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID) {
         try{
             if(service.deleteGraph(nsdID, graphID) == null)
@@ -123,7 +128,15 @@ public class VnfdependencyResources {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Node getNode(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID, @PathParam("nodeID") String nodeName) {
-        return service.getNode(nsdID, graphID, nodeName);
+        Node node = new Node();
+        	
+    	try{
+        	if((node = service.getNode(nsdID, graphID, nodeName)) == null)
+        		throw new NotFoundException();
+        }catch (Exception e) {
+            throw e;
+        }
+        return node;
     }
 
     @POST
@@ -143,7 +156,7 @@ public class VnfdependencyResources {
             if(service.addNode(nsdID, graphID, node) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(node).build();

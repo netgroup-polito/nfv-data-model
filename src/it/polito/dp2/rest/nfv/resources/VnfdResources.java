@@ -14,7 +14,7 @@ import it.polito.dp2.rest.nfv.services.VnfdServices;
 import java.net.URI;
 
 @Path("ns/nsd/{nsdID}/vnf")
-@Api(value = "/ns/{nsdID}/vnf")
+@Api(value = "ns/nsd/{nsdID}/vnf")
 public class VnfdResources {
     public UriInfo uriInfo;
 
@@ -35,7 +35,6 @@ public class VnfdResources {
     @POST
     @ApiOperation(value = "addVNF", notes = "Add a new VNF")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -48,7 +47,7 @@ public class VnfdResources {
             if(service.addVNF(nsdID, vnf) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(vnf).build();
@@ -57,8 +56,7 @@ public class VnfdResources {
     @DELETE
     @ApiOperation(value = "deleteVNF", notes = "Clear the VNF")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 500, message = "Internal Error")})
     public void deleteVNF(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteVNF(nsdID) == null)
@@ -71,18 +69,28 @@ public class VnfdResources {
     @GET
     @Path("/vnfd/{vnfdID}")
     @ApiOperation(value = "getVNFD", notes = "Read a certain VNFD")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 404, message = "vnfd not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public VNFD getVNFInfo(@PathParam("nsdID") String nsdID, @PathParam("vnfdID") String vnfdID) {
-        return service.getVNFDInfo(nsdID, vnfdID);
+        VNFD vnfd = new VNFD();
+        
+    	try{
+    		if((vnfd = service.getVNFDInfo(nsdID, vnfdID)) == null)
+    			throw new NotFoundException();
+    	}
+    	catch(Exception e){
+    		throw e;
+    	}
+    	
+    	return vnfd;
     }
 
     @POST
     @Path("/vnfd")
     @ApiOperation(value = "addVNFD", notes = "Add a new VNFD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+    		@ApiResponse(code = 403, message = "Forbidden")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addVnfd(@PathParam("nsdID") String nsdID, VNFD vnfd) {
@@ -94,7 +102,7 @@ public class VnfdResources {
             if(service.addVNFD(nsdID, vnfd) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(vnfd).build();
@@ -104,8 +112,7 @@ public class VnfdResources {
     @Path("/vnfd/{vnfdID}")
     @ApiOperation(value = "deleteVNFD", notes = "Remove a certain VNFD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 404, message = "VNFD Not Found")})
     public void deleteVNFD(@PathParam("nsdID") String nsdID, @PathParam("vnfdID") String vnfdID) {
         try{
             if(service.deleteVNFD(nsdID, vnfdID) == null)
@@ -119,15 +126,16 @@ public class VnfdResources {
     @Path("/vnfd")
     @ApiOperation(value = "deleteVNFD", notes = "Remove a certain VNFD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
-    public void MODIFYVNFD(@PathParam("nsdID") String nsdID, VNFD vnfd) {
+            @ApiResponse(code = 404, message = "VNFD Not Found")})
+    public VNFD modifyVNFD(@PathParam("nsdID") String nsdID, VNFD vnfd) {
         try{
             if(service.modifyVNFD(nsdID, vnfd) == null)
                 throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
+        
+        return vnfd;
     }
 
 }

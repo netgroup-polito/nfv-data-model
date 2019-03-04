@@ -15,10 +15,34 @@ public class PropertyDefinitionServices {
     public PropertyDefinition getPropertyDefinition(String nsdID) {
         return nsDB.getPropertyDefinition(nsdID);
     }
+    
+    
+    /**
+     * Add Property Definition
+     * @param nsdID
+     * @param propertyDefinition
+     * @return The added PropertyDefinition or null if the operation doesn't succeed
+     */
+    public PropertyDefinition addPropertyDefinition(String nsdID, PropertyDefinition propertyDef) {
+		return nsDB.addPropertyDefinition(nsdID, propertyDef);
+	}
+
 
     /**
+     * Delete PropertyDefinition
+     * @param nsdID
+     * @return The deleted Property
+     */
+	public PropertyDefinition deletePropertyDefinition(String nsdID) {
+		return nsDB.deletePropertyDefinition(nsdID);
+	}
+
+
+
+	/**
      * Get all a Property
      * @param nsdID
+     * @param graphID
      * @return The Property or null if there are not Property defined
      */
     public Property getProperty(String nsdID, Long graphID) {
@@ -47,6 +71,7 @@ public class PropertyDefinitionServices {
     /**
      * Modify a Property
      * @param nsdID
+     * @param property
      * @return The modified Property
      */
     public Property modifyProperty(String nsdID, Property property) {

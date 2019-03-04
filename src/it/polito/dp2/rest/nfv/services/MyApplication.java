@@ -14,6 +14,7 @@ public class MyApplication extends Application{
 	public Set<Class<?>> getClasses() {
 	HashSet<Class<?>> h = new HashSet<Class<?>>();
 	
+	h.add(NfvResources.class);
 	h.add(ConnectionPointsResources.class);
 	h.add(FlavoursResources.class);
 	h.add(NsResources.class);

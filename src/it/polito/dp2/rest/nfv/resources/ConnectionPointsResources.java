@@ -34,7 +34,6 @@ public class ConnectionPointsResources {
     @POST
     @ApiOperation(value = "addConnectionPoints", notes = "Add a new ConnectionPoints")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 500, message = "Internal Error")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -47,7 +46,7 @@ public class ConnectionPointsResources {
             if(service.addConnectionPoints(nsdID, cps) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(cps).build();
@@ -56,8 +55,7 @@ public class ConnectionPointsResources {
     @DELETE
     @ApiOperation(value = "deleteConnectionPoints", notes = "Clear the ConnectionPoints")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 500, message = "Internal Error")})
     public void deleteConnectionPoints(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteConnectionPoints(nsdID) == null)
@@ -70,18 +68,28 @@ public class ConnectionPointsResources {
     @GET
     @Path("/cp/{cpID}")
     @ApiOperation(value = "getServiceConnectionPoint", notes = "Read a certain ConnectionPoint")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 404, message = "Connection Point Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ConnectionPoint getVNFInfo(@PathParam("nsdID") String nsdID, @PathParam("cpID") String cpID) {
-        return service.getConnectionPoint(nsdID, cpID);
+    public ConnectionPoint getConnectionPointInfo(@PathParam("nsdID") String nsdID, @PathParam("cpID") String cpID) {
+    	ConnectionPoint cp = new ConnectionPoint();
+    	
+    	try{ 
+        	if((cp = service.getConnectionPoint(nsdID, cpID)) == null)
+        		throw new NotFoundException();
+        }
+        catch(Exception e){
+        	throw e;
+        }
+    	
+    	return cp;
     }
 
     @POST
     @Path("/cp")
     @ApiOperation(value = "addConnectionPoint", notes = "Add a new ConnectionPoint")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 403, message = "Forbidden: connection point already exists")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addConnectionPoint(@PathParam("nsdID") String nsdID, ConnectionPoint cp) {
@@ -93,7 +101,7 @@ public class ConnectionPointsResources {
             if(service.addConnectionPoint(nsdID, cp) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(cp).build();
@@ -103,8 +111,7 @@ public class ConnectionPointsResources {
     @Path("/cp/{cpID}")
     @ApiOperation(value = "deleteConnectionPoint", notes = "Remove a certain ConnectionPoint")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 404, message = "Connection Point Not Found")})
     public void deleteConnectionPoint(@PathParam("nsdID") String nsdID, @PathParam("cpID") String cpID) {
         try{
             if(service.deleteConnectionPoint(nsdID, cpID) == null)

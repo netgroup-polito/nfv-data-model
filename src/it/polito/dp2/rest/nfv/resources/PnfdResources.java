@@ -13,7 +13,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 
 @Path("ns/nsd/{nsdID}/pnf")
-@Api(value = "/ns/{nsdID}/vnfdependency")
+@Api(value = "ns/nsd/{nsdID}/pnf")
 public class PnfdResources {
     public UriInfo uriInfo;
 
@@ -47,7 +47,7 @@ public class PnfdResources {
             if(service.addPNF(nsdID, pnf) == null)
                 throw new InternalServerErrorException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(pnf).build();
@@ -56,7 +56,6 @@ public class PnfdResources {
     @DELETE
     @ApiOperation(value = "deletePNF", notes = "Clear the PNF")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
             @ApiResponse(code = 500, message = "Internal Error"),})
     public void deletePNF(@PathParam("nsdID") String nsdID) {
         try{
@@ -70,21 +69,31 @@ public class PnfdResources {
     @GET
     @Path("/pnfd/{pnfdID}")
     @ApiOperation(value = "getPNFD", notes = "Read a certain PNFD")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+    		@ApiResponse(code = 404, message = "pnfd Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public PNFD getVNFInfo(@PathParam("nsdID") String nsdID, @PathParam("pnfdID") String pnfdID) {
-        return service.getPNFDInfo(nsdID, pnfdID);
+    public PNFD getPNFDInfo(@PathParam("nsdID") String nsdID, @PathParam("pnfdID") String pnfdID) {
+        PNFD pnfd = new PNFD();
+    	
+    	try{
+        	if((pnfd = service.getPNFDInfo(nsdID, pnfdID)) == null)
+        		throw new NotFoundException();
+        }
+        catch(Exception e){
+        	throw e;
+        }
+    	
+    	return pnfd;
     }
 
     @POST
     @Path("/pnfd")
     @ApiOperation(value = "addPNFD", notes = "Add a new PNFD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 403, message = "Forbidden: pnfd already defined")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response addVnfd(@PathParam("nsdID") String nsdID, PNFD pnfd) {
+    public Response addPNFD(@PathParam("nsdID") String nsdID, PNFD pnfd) {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(pnfd.getId());
         URI self = builder.build();
@@ -93,7 +102,7 @@ public class PnfdResources {
             if(service.addPNFD(nsdID, pnfd) == null)
                 throw new ForbiddenException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(pnfd).build();
@@ -103,9 +112,8 @@ public class PnfdResources {
     @Path("/pnfd/{pnfID}")
     @ApiOperation(value = "deletePNFD", notes = "Remove a certain PNFD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
-    public void deleteVNFD(@PathParam("nsdID") String nsdID, @PathParam("pnfID") String pnfID) {
+            @ApiResponse(code = 404, message = "pnfd Not Found")})
+    public void deletePNFD(@PathParam("nsdID") String nsdID, @PathParam("pnfID") String pnfID) {
         try{
             if(service.deletePNFD(nsdID, pnfID) == null)
                 throw new NotFoundException();
@@ -119,15 +127,16 @@ public class PnfdResources {
     @Path("/pnfd")
     @ApiOperation(value = "deletePNFD", notes = "Remove a certain PNFD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
-    public void MODIFYVNFD(@PathParam("nsdID") String nsdID, PNFD pnfd) {
+            @ApiResponse(code = 404, message = "pnfd Not Found")})
+    public PNFD modifyPNFD(@PathParam("nsdID") String nsdID, PNFD pnfd) {
         try{
             if(service.modifyPNFD(nsdID, pnfd) == null)
                 throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
+        
+        return pnfd;
     }
 
 }

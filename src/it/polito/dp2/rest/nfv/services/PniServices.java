@@ -40,6 +40,15 @@ public class PniServices extends Application {
     public Hosts getHosts(){
         return pniDB.getHosts();
     }
+    
+    /**
+     * Add list of Host
+     * @param hosts
+     * @return The added hosts or null if the operation doesn't succeed
+     */
+    public Hosts addHosts(Hosts hosts){
+    	return pniDB.addHosts(hosts);
+    }
 
     /**
      * Get a host's info inside the NFV.PNI
@@ -83,6 +92,15 @@ public class PniServices extends Application {
      */
     public Connections getConnections(){
         return pniDB.getConnections();
+    }
+    
+    /**
+     * Add list of Connection
+     * @param connections
+     * @return The added connections or null if the operation doesn't succeed
+     */
+    public Connections addConnections(Connections connections){
+    	return pniDB.addConnections(connections);
     }
 
     /**
