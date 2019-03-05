@@ -1,6 +1,8 @@
 # RESTful web service
 
-Implementation of a RESTful web service that permits to store and retrieve the NFV/SDN information and call an Orchestration service like Verifoo or Verigraph.
+Implementation of a RESTful web service that permits to store and retrieve the NFV/SDN information. 
+
+Different methos allow you to manage the whole structure and also the sub-structure. There is the possibility to **add**, **remove**, **modify** hosts, graphs, vnfd and so on. Check [documentation](https://github.com/NFV-Architecture/data-format/blob/master/doc/DP2_NFV_Data_Models.pdf), section 5, for more details.
 
 # Menù
 
@@ -80,7 +82,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
 
 ### Before starting
 
-- Donwload  SE Development Kit (JDK), version 1.8, see [Download Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+- Donwload  SE Development Kit (JDK), at least version 1.8, see [Download Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 - Donwload Apache Tomcat, version 8.5, see [Download Tomcat](https://tomcat.apache.org/download-80.cgi).
 
 ### Create Project and configure Tomcat
@@ -92,6 +94,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     3. On **Target runtime** select **Apache Tomcat v8.5**.
     4. From **Dynamic web module version** select **3.1**.
     5. Click **Finish**.
+    
 ### Import the project
 
 1. Clone the project
@@ -103,13 +106,13 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     1. Right click on the project and click on **Properties**.
     2. From **Java Build Path** select **Add jARs**.
     3. Select all jARs inside **lib** folder and click **OK**.
-    4. Apply and then OK to close
+    4. **Apply** and then **OK** to close
 
 # Issues
 
 - IntelliJ 13.1 and Glassfish 4.1 on MacOS X:
 
-    To force using Java 8 JDK, I edited /Applications/IntelliJ IDEA 13.app/Contents/Info.plist - JVMOptions > JVMVersion from 1.8*,1.8+ to 1.8*
+    To force using Java 8 JDK, edite `/Applications/IntelliJ IDEA 13.app/Contents/Info.plist` - JVMOptions > JVMVersion from 1.8*,1.8+ to 1.8*
 
 - Glassfish does not recognize JDK (*Error: glassfish requires java se version 6. your jdk is version 0*)
 
