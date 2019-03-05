@@ -2,7 +2,16 @@
 
 Implementation of a RESTful web service that permits to store and retrieve the NFV/SDN information and call an Orchestration service like Verifoo or Verigraph.
 
+# Menù
+
+- [Configuration](https://github.com/NFV-Architecture/RESTful-web-service#configuration)
+    - [IntelliJ IDEA](https://github.com/NFV-Architecture/RESTful-web-service#intellij-idea)
+    - [Eclipse](https://github.com/NFV-Architecture/RESTful-web-service#eclipse)
+- [Issues](https://github.com/NFV-Architecture/RESTful-web-service#issues)
+
 # Configuration
+
+## IntelliJ IDEA
 
 The used software has been [IntelliJ IDEA ULTIMATE EDITION](https://www.jetbrains.com/idea/).
 
@@ -49,26 +58,63 @@ The used software has been [IntelliJ IDEA ULTIMATE EDITION](https://www.jetbrain
 
 Click Finish and wait while IntelliJ IDEA is creating the project. 
 
-### Import the VNF_example
-This project is a good starting point to develop your own VNF service. For import a working project base you need to follow this sequential steps:
+### Import the project
 
-1. Clone/Download this project in a different folder from the previous created.
+1. Clone the project
+
+        git clone https://github.com/NFV-Architecture/RESTful-web-service.git
+
+2. Change the name folder of **WebContent** into **web**.
+3. Rewrite all the file folder of your project with the new one downloaded.
+4. Insert libs dependancy inside the project (to fix class import errors).
+    1. Click File from the toolbar
+    2. Project Structure (CTRL + SHIFT + ALT + S on Windows/Linux, ⌘ + ; on Mac OS X)
+    3. Select Modules at the left panel
+        1. in Dependencies tab '+' → Java
+        2. Browse the folder lib of the Project
+        3. Apply and then OK to close
+
+## Eclipse
+
+The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/packages/release/neon/2)
+
+### Before starting
+
+- Donwload  SE Development Kit (JDK), version 1.8, see [Download Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+- Donwload Apache Tomcat, version 8.5, see [Download Tomcat](https://tomcat.apache.org/download-80.cgi).
+
+### Create Project and configure Tomcat
+
+1. Click *File > New > Other*.
+2. On the page of the Wizard:
+    1. Search for **Dynamic Web Project**.
+    2. Set the **Project name**.
+    3. On **Target runtime** select **Apache Tomcat v8.5**.
+    4. From **Dynamic web module version** select **3.1**.
+    5. Click **Finish**.
+### Import the project
+
+1. Clone the project
+
+        git clone https://github.com/NFV-Architecture/RESTful-web-service.git
+
 2. Rewrite all the file folder of your project with the new one downloaded.
 3. Insert libs dependancy inside the project (to fix class import errors).
-
-For the last one, in case you are not praticed with intellij
-
-1. Click File from the toolbar
-2. Project Structure (CTRL + SHIFT + ALT + S on Windows/Linux, ⌘ + ; on Mac OS X)
-3. Select Modules at the left panel
-    1. in Dependencies tab '+' → Java
-    2. Browse the folder lib of the Project
-    3. Apply and then OK to close
-    
- You should see that all the error due to the library are now fixed! 
+    1. Right click on the project and click on **Properties**.
+    2. From **Java Build Path** select **Add jARs**.
+    3. Select all jARs inside **lib** folder and click **OK**.
+    4. Apply and then OK to close
 
 # Issues
 
 - IntelliJ 13.1 and Glassfish 4.1 on MacOS X:
 
-  To force using Java 8 JDK, I edited /Applications/IntelliJ IDEA 13.app/Contents/Info.plist - JVMOptions > JVMVersion from 1.8*,1.8+ to 1.8*
+    To force using Java 8 JDK, I edited /Applications/IntelliJ IDEA 13.app/Contents/Info.plist - JVMOptions > JVMVersion from 1.8*,1.8+ to 1.8*
+
+- Glassfish does not recognize JDK (*Error: glassfish requires java se version 6. your jdk is version 0*)
+
+    Check `glassfish\config\asenv.bat` and edit it: `set AS_JAVA=PATH_TO_JDK`
+
+- Java Path
+
+        export JAVA_HOME="PATH_TO_JAVA"
