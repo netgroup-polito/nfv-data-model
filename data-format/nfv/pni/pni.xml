@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PNI>
+	<Hosts>
+		<Host id="hostA" type="CLIENT" fixedEndpoint="nodeA">
+			<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
+			<Memory_properties memory="4" disk_storage="10"/>
+			<Network_properties bandwidth="20"/>
+			<V_Node_Ref id="0"/>
+		</Host>
+		<Host id="hostC" type="SERVER" fixedEndpoint="nodeB">
+			<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
+			<Memory_properties memory="4" disk_storage="10"/>
+			<Network_properties bandwidth="20"/>
+			<P_Node_Ref id="0"/>
+		</Host>
+		<Host id="host1" maxVNF="1" type="MIDDLEBOX">
+			<Computational_properties cpu="3000" cores="16"/>
+			<Memory_properties memory="16" disk_storage="50"/>
+			<Network_properties bandwidth="20"/>
+			<SupportedVNF functional_type="FIREWALL"/>
+			<SupportedVNF functional_type="CACHE"/>
+			<SupportedVNF functional_type="FIELDMODIFIER"/>
+		</Host>
+		<Host id="host2" maxVNF="2" type="MIDDLEBOX">
+			<Computational_properties cpu="4000" cores="4"/>
+			<Memory_properties memory="16" disk_storage="20"/>
+			<Network_properties bandwidth="20"/>
+			<SupportedVNF functional_type="FIREWALL"/>
+		</Host>
+		<Host id="host3" maxVNF="3" type="MIDDLEBOX">
+			<Computational_properties cpu="3000" cores="8"/>
+			<Memory_properties memory="16" disk_storage="10"/>
+			<Network_properties bandwidth="20"/>
+			<SupportedVNF functional_type="CACHE"/>
+			<SupportedVNF functional_type="FIELDMODIFIER"/>
+		</Host>
+		<Host id="hostB" type="SERVER" fixedEndpoint="nodeB">
+			<Computational_properties cpu="1000" cores="2"/>
+			<Memory_properties memory="2" disk_storage="10"/>
+			<Network_properties bandwidth="20"/>
+		</Host>
+	</Hosts>
+
+	<Connections>
+		<Connection sourceHost="host1" destHost="host2"/>
+		<Connection sourceHost="host2" destHost="host3"/>
+	</Connections>
+
+</PNI>

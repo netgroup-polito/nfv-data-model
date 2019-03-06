@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 Enrico Cecchetti and Federico Gianno.
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:annotation>
+        <xsd:documentation
+                source="https://github.com/NFV-Architecture/data-format"
+                xml:lang="EN">
+            Special Project 3 - NFV dataModel
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:include schemaLocation="nsd/nsd.xsd"/>
+    <xsd:include schemaLocation="pni/pni.xsd"/>
+
+    <xsd:element name="NFV">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="PNI" minOccurs="1" maxOccurs="1"/>
+                <xsd:element ref="NS" minOccurs="0" maxOccurs="1">
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+        <!-- key reference definitions -->
+        <xsd:unique name="NSDUniqueness">
+            <xsd:selector xpath="NS/NSD"/>
+            <xsd:field xpath="@id"/>
+        </xsd:unique>
+        <xsd:key name="VNFDKey">
+            <xsd:selector xpath="NS/NSD/VNF/VNFD" />
+            <xsd:field xpath="@id" />
+        </xsd:key>
+        <xsd:keyref name="VLSourceVNFD" refer="VNFDKey">
+            <xsd:selector xpath="NS/NSD/VNF/VNFD/Virtual_Link" />
+            <xsd:field xpath="@src" />
+        </xsd:keyref>
+        <xsd:keyref name="VLDestVNFD" refer="VNFDKey">
+            <xsd:selector xpath="NS/NSD/VNF/VNFD/Virtual_Link" />
+            <xsd:field xpath="@dst" />
+        </xsd:keyref>
+        <xsd:key name="PNFDKey">
+            <xsd:selector xpath="NS/NSD/PNF/PNFD" />
+            <xsd:field xpath="@id" />
+        </xsd:key>
+        <xsd:keyref name="VNodeSrc" refer="VNFDKey">
+            <xsd:selector xpath="PNI/Hosts/Host/V_Node_Ref" />
+            <xsd:field xpath="@id" />
+        </xsd:keyref>
+        <xsd:keyref name="PNodeSrc" refer="PNFDKey">
+            <xsd:selector xpath="PNI/Hosts/Host/P_Node_Ref" />
+            <xsd:field xpath="@id" />
+        </xsd:keyref>
+    </xsd:element>
+
+    <xsd:element name="NS">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="NSD" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

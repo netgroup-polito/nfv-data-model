@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NS>
+	<NSD id="0">
+		<VNF_dependency>
+			<graph id="0">
+				<node functional_type="WEBCLIENT" name="nodeA">
+					<neighbour name="node1"/>
+					<configuration description="A simple description" name="confA">
+						<webclient nameWebServer="nodeB"/>
+					</configuration>
+				</node>
+				<node functional_type="WEBCLIENT" name="nodeC">
+					<neighbour name="node3"/>
+					<configuration description="A simple description" name="confA">
+						<webclient nameWebServer="nodeD"/>
+					</configuration>
+				</node>
+				<node functional_type="FIREWALL" name="node1">
+					<neighbour name="nodeA"/>
+					<neighbour name="node2"/>
+					<neighbour name="node3"/>
+					<configuration description="A simple description" name="conf1">
+						<firewall>
+							<elements>
+								<source>nodeC</source>
+								<destination>nodeC</destination>
+							</elements>
+						</firewall>
+					</configuration>
+				</node>
+				<node functional_type="CACHE" name="node2">
+					<neighbour name="node1"/>
+					<neighbour name="node3"/>
+					<neighbour name="nodeB"/>
+					<configuration description="A simple description" name="conf2">
+						<cache>
+							<resource>nodeA</resource>
+							<resource>node1</resource>
+						</cache>
+					</configuration>
+				</node>
+				<node functional_type="FIELDMODIFIER" name="node3">
+					<neighbour name="nodeC"/>
+					<neighbour name="node1"/>
+					<neighbour name="node2"/>
+					<neighbour name="nodeD"/>
+					<configuration description="A simple description" name="conf3">
+						<fieldmodifier>
+							<name>name</name>
+						</fieldmodifier>
+					</configuration>
+				</node>
+				<node functional_type="WEBSERVER" name="nodeB">
+					<neighbour name="node2"/>
+					<configuration description="A simple description" name="confB">
+						<webserver>
+							<name>nodeB</name>
+						</webserver>
+					</configuration>
+				</node>
+				<node functional_type="WEBSERVER" name="nodeD">
+					<neighbour name="node3"/>
+					<configuration description="A simple description" name="confB">
+						<webserver>
+							<name>nodeD</name>
+						</webserver>
+					</configuration>
+				</node>
+			</graph>
+		</VNF_dependency>
+
+		<PropertyDefinition>
+			<Property graph="0" name="IsolationProperty" src="nodeA" dst="nodeB" src_port="5000" dst_port="80">
+				<HTTPDefinition body="weapons"/>
+			</Property>
+			<Property graph="0" name="ReachabilityProperty" src="nodeC" dst="nodeD" src_port="3000" dst_port="110">
+				<POP3Definition email_from="polito" body="weapons"/>
+			</Property>
+		</PropertyDefinition>
+
+		<VNF>
+			<VNFD id="0" vendor="POLITO" version="1.0">
+				<Virtual_Link src="0" dst="1" test_access="Passive">
+					<qos>
+						<latency>10</latency>
+					</qos>
+				</Virtual_Link>
+				<VDU id="0" vm_image="Linux_Server">
+					<Computational_requirements cpu="1000" cores="1" nOfOperations="1000" />
+					<Memory_requirements memory="30" disk_storage="100" virtual_mem_res="10" />
+					<Network_requirements bandwidth="150" />
+				</VDU>
+				<VDU id="1" vm_image="Linux Server">
+					<Computational_requirements cpu="500" cores="2" nOfOperations="500" />
+					<Memory_requirements memory="30" disk_storage="100" virtual_mem_res="10" />
+					<Network_requirements bandwidth="100" />
+				</VDU>
+				<Dependency>
+					<Relation src="0" target="1" />
+				</Dependency>
+			</VNFD>
+			<VNFD id="1" vendor="POLIMI" version="0.5">
+				<Virtual_Link src="0" dst="1" test_access="Passive">
+					<qos>
+						<latency>10</latency>
+					</qos>
+				</Virtual_Link>
+				<VDU id="0" vm_image="Linux Server">
+					<Computational_requirements cpu="500" cores="2" nOfOperations="500" />
+					<Memory_requirements memory="30" disk_storage="100" virtual_mem_res="10" />
+					<Network_requirements bandwidth="100" />
+				</VDU>
+			</VNFD>
+		</VNF>
+
+		<VNFFGD>
+			<NetworkForwardingPaths id="0" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
+				<Node_Connection nodeRef="nodeA"/>
+				<Node_Connection nodeRef="nodeB"/>
+				<Node_Connection nodeRef="node1"/>
+				<Node_Connection nodeRef="node2"/>
+			</NetworkForwardingPaths>
+			<NetworkForwardingPaths id="1">
+				<Node_Connection nodeRef="node1"/>
+				<Node_Connection nodeRef="node2"/>
+				<Node_Connection nodeRef="node3"/>
+				<Node_Connection nodeRef="nodeC"/>
+				<Node_Connection nodeRef="nodeC"/>
+				<Node_Connection nodeRef="nodeD"/>
+			</NetworkForwardingPaths>
+		</VNFFGD>
+
+		<PNF>
+			<PNFD id="0" vendor="fastweb" version="1.2" description="DHCP">
+				<Connection_point id="0" type="physical_port" />
+			</PNFD>
+			<PNFD id="1" vendor="fastweb" version="1.0" description="LoadBalancer">
+				<Connection_point id="0" type="endpoint" />
+			</PNFD>
+		</PNF>
+
+		<flavours>
+			<Service_deployment_flavour id="0" flavour_key="calls_per_second" flavour_value="300"/>
+		</flavours>
+
+		<Connection_points>
+			<Connection_point id="0" type="endpoint"/>
+		</Connection_points>
+		<ParsingString>30L?</ParsingString>
+	</NSD>
+</NS>
