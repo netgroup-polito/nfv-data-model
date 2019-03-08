@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+example representing a Mail network service.
+More in detail there is 1 Hosts(host1) that try to use an online mail client like mail hosted by 1 machines
+(host 3) that host the mailclient himself plus a firewall.
+The mailServer is finally osted by another host (host3) that virtualized it in addition to an antispam
+and another firewall for his own protection
+-->
+
+<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file://../nfv/nfv.xsd">
+    <PNI>
+        <Hosts>
+            <Host id="host1" maxVNF="0" type="CLIENT">
+                <Computational_properties cpu="2000" cores="8"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="100"/>
+            </Host>
+            <Host id="host2" maxVNF="2" type="MIDDLEBOX">
+                <Computational_properties cpu="4000" cores="16"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="150"/>
+                <V_Node_Ref id="0"/>
+                <V_Node_Ref id="1"/>
+                <SupportedVNF functional_type="FIREWALL"/>
+                <SupportedVNF functional_type="MAILCLIENT"/>
+            </Host>
+            <Host id="host3" maxVNF="3" type="SERVER">
+                <Computational_properties cpu="4000" cores="16"/>
+                <Memory_properties memory="32" disk_storage="1000"/>
+                <Network_properties bandwidth="150"/>
+                <V_Node_Ref id="2"/>
+                <V_Node_Ref id="3"/>
+                <V_Node_Ref id="4"/>
+                <SupportedVNF functional_type="FIREWALL"/>
+                <SupportedVNF functional_type="MAILSERVER"/>
+                <SupportedVNF functional_type="ANTISPAM"/>
+            </Host>
+        </Hosts>
+
+        <Connections>
+            <Connection sourceHost="host1" destHost="host2"/>
+            <Connection sourceHost="host2" destHost="host3"/>
+        </Connections>
+    </PNI>
+
+    <NS>
+        <NSD id="0">
+            <VNF_dependency>
+                <graph id="0">
+                    <!-- Host1 components-->
+                    <node functional_type="FIREWALL" name="nodeA" id="0" vnfd_ref="0">
+                        <neighbour name="nodeB"/>
+                        <neighbour name="nodeC"/>
+                        <configuration description="A simple description" name="conf1">
+                            <firewall>
+                                <elements>
+                                    <source>nodeC</source>
+                                    <destination>nodeB</destination>
+                                </elements>
+                            </firewall>
+                        </configuration>
+                    </node>
+                    <node functional_type="MAILCLIENT" name="nodeB" id="1" vnfd_ref="1">
+                        <neighbour name="nodeA"/>
+                        <configuration description="A simple description" name="conf2">
+                            <webclient nameWebServer="Gmail"/>
+                        </configuration>
+                    </node>
+                    <!-- Host2 components-->
+                    <node functional_type="FIREWALL" name="nodeC" id="2" vnfd_ref="0">
+                        <neighbour name="nodeD"/>
+                        <neighbour name="nodeE"/>
+                        <neighbour name="nodeA"/>
+                        <configuration description="A simple description" name="conf3">
+                            <firewall>
+                                <elements>
+                                    <source>nextNode</source>
+                                    <destination>nodeE</destination>
+                                </elements>
+                            </firewall>
+                        </configuration>
+                    </node>
+                    <node functional_type="ANTISPAM" name="nodeD" id="3" vnfd_ref="2">
+                        <neighbour name="nodeE"/>
+                        <configuration description="A simple description" name="conf4">
+                            <antispam></antispam>
+                        </configuration>
+                    </node>
+                    <node functional_type="MAILSERVER" name="nodeE" id="4" vnfd_ref="3">
+                        <neighbour name="nodeC"/>
+                        <neighbour name="nodeA"/>
+                        <configuration description="A simple description" name="conf5">
+                            <mailserver>
+                                <name>Gmail</name>
+                            </mailserver>
+                        </configuration>
+                    </node>
+                </graph>
+            </VNF_dependency>
+
+            <PropertyDefinition>
+                <Property graph="0" name="ReachabilityProperty" src="nodeA" dst="nodeC" src_port="50" dst_port="110">
+                    <POP3Definition email_from="polito" body="weapons"/>
+                </Property>
+            </PropertyDefinition>
+
+            <VNF>
+                <!-- firewall -->
+                <VNFD id="0" vendor="Barracuda NextGen Firewall" version="1.0">
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="1000" cores="1" nOfOperations="2000" />
+                        <Memory_requirements memory="4" disk_storage="150" virtual_mem_res="20" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <!-- mailclient -->
+                <VNFD id="1" vendor="google" version="5.2">
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="500" cores="4" nOfOperations="1000" />
+                        <Memory_requirements memory="4" disk_storage="150" virtual_mem_res="100" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <!-- antispam -->
+                <VNFD id="2" vendor="antispam_vendor" version="1.0">
+                    <Virtual_Link src="2" dst="3" test_access="Active">
+                        <qos>
+                            <latency>30</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="200" cores="16" nOfOperations="2000" />
+                    </VDU>
+                </VNFD>
+                <!-- web server  -->
+                <VNFD id="3" vendor="google" version="5.6">
+                    <Virtual_Link src="3" dst="2" test_access="Active">
+                        <qos>
+                            <latency>30</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="4000" cores="8" nOfOperations="1000" />
+                        <Memory_requirements memory="8" disk_storage="250" virtual_mem_res="50" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+            </VNF>
+
+            <VNFFGD>
+                <NetworkForwardingPaths id="0" n_endpoint="3" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeA"/>
+                    <Node_Connection nodeRef="nodeB"/>
+                </NetworkForwardingPaths>
+                <NetworkForwardingPaths id="1" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeC"/>
+                    <Node_Connection nodeRef="nodeD"/>
+                    <Node_Connection nodeRef="nodeE"/>
+                </NetworkForwardingPaths>
+                <NetworkForwardingPaths id="2" n_endpoint="2" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeC"/>
+                    <Node_Connection nodeRef="nodeA"/>
+                </NetworkForwardingPaths>
+            </VNFFGD>
+
+            <flavours>
+                <Service_deployment_flavour id="0" flavour_key="calls_per_second" flavour_value="300"/>
+            </flavours>
+
+            <Connection_points>
+                <Connection_point id="0" type="endpoint"/>
+                <Connection_point id="1" type="virtual_nic_addr"/>
+            </Connection_points>
+        </NSD>
+    </NS>
+</NFV>

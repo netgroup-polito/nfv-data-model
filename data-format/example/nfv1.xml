@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+example representing  2 Host connected  by a VPN service, the vpns run over 2 host[MIDDLEWARE] toghether with a
+Firewall(... So, in the same machine there are FW+VPNexit+VPNaccess)
+-->
+
+<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file://../nfv/nfv.xsd">
+    <PNI>
+        <Hosts>
+            <Host id="host1" maxVNF="0" type="CLIENT">
+                <Computational_properties cpu="3000" cores="16"/>
+                <Memory_properties memory="16" disk_storage="50"/>
+                <Network_properties bandwidth="20"/>
+            </Host>
+            <Host id="host2" maxVNF="5" type="MIDDLEBOX">
+                <Computational_properties cpu="3000" cores="16"/>
+                <Memory_properties memory="16" disk_storage="50"/>
+                <Network_properties bandwidth="20"/>
+                <V_Node_Ref id="0"/>
+                <V_Node_Ref id="1"/>
+                <V_Node_Ref id="2"/>
+                <SupportedVNF functional_type="FIREWALL"/>
+                <SupportedVNF functional_type="VPNACCESS"/>
+                <SupportedVNF functional_type="VPNEXIT"/>
+            </Host>
+            <Host id="host3" maxVNF="5" type="MIDDLEBOX">
+                <Computational_properties cpu="3000" cores="16"/>
+                <Memory_properties memory="16" disk_storage="50"/>
+                <Network_properties bandwidth="20"/>
+                <V_Node_Ref id="3"/>
+                <V_Node_Ref id="4"/>
+                <V_Node_Ref id="5"/>
+                <SupportedVNF functional_type="FIREWALL"/>
+                <SupportedVNF functional_type="VPNACCESS"/>
+                <SupportedVNF functional_type="VPNEXIT"/>
+            </Host>
+            <Host id="host4" maxVNF="0" type="CLIENT">
+                <Computational_properties cpu="4000" cores="4"/>
+                <Memory_properties memory="16" disk_storage="20"/>
+                <Network_properties bandwidth="20"/>
+            </Host>
+        </Hosts>
+
+        <Connections>
+            <Connection sourceHost="host1" destHost="host2"/>
+            <Connection sourceHost="host3" destHost="host4"/>
+            <Connection sourceHost="host2" destHost="host3"/>
+        </Connections>
+    </PNI>
+
+    <NS>
+        <NSD id="0">
+            <VNF_dependency>
+                <graph id="0">
+                    <node functional_type="FIREWALL" name="nodeA" id="0" vnfd_ref="0">
+                        <neighbour name="nodeD"/>
+                        <neighbour name="nodeB"/>
+                        <neighbour name="nodeC"/>
+                        <configuration description="A simple description" name="confA">
+                            <firewall>
+                                <elements>
+                                    <source>nodeA</source>
+                                    <destination>nodeB</destination>
+                                </elements>
+                            </firewall>
+                        </configuration>
+                    </node>
+                    <node functional_type="VPNACCESS" name="nodeB" id="1" vnfd_ref="1">
+                        <neighbour name="nodeA"/>
+                        <neighbour name="nodeC"/>
+                        <configuration description="A simple description" name="confC">
+                            <vpnaccess vpnexit="nodeF"/>
+                        </configuration>
+                    </node>
+                    <node functional_type="VPNEXIT" name="nodeC" id="2" vnfd_ref="1">
+                        <neighbour name="nodeB"/>
+                        <neighbour name="nodeA"/>
+                        <configuration description="A simple description" name="confD">
+                            <vpnexit vpnaccess="nodeE"/>
+                        </configuration>
+                    </node>
+                    <node functional_type="FIREWALL" name="nodeD" id="3" vnfd_ref="0">
+                        <neighbour name="nodeA"/>
+                        <neighbour name="nodeE"/>
+                        <neighbour name="nodeF"/>
+                        <configuration description="A simple description" name="confB">
+                            <firewall>
+                                <elements>
+                                    <source>nodeB</source>
+                                    <destination>nodeA</destination>
+                                </elements>
+                            </firewall>
+                        </configuration>
+                    </node>
+                    <node functional_type="VPNACCESS" name="nodeE" id="4" vnfd_ref="1">
+                        <neighbour name="nodeD"/>
+                        <neighbour name="nodeF"/>
+                        <configuration description="A simple description" name="confC">
+                            <vpnaccess vpnexit="nodeC"/>
+                        </configuration>
+                    </node>
+                    <node functional_type="VPNEXIT" name="nodeF" id="5" vnfd_ref="1">
+                        <neighbour name="nodeE"/>
+                        <neighbour name="nodeD"/>
+                        <configuration description="A simple description" name="confD">
+                            <vpnexit vpnaccess="nodeB"/>
+                        </configuration>
+                    </node>
+                </graph>
+            </VNF_dependency>
+
+            <PropertyDefinition>
+                <Property graph="0" name="ReachabilityProperty" src="nodeA" dst="nodeD" src_port="3000" dst_port="110">
+                    <POP3Definition email_from="polito" body="weapons"/>
+                </Property>
+            </PropertyDefinition>
+
+            <VNF>
+                <VNFD id="0" vendor="POLITO" version="1.0">
+                    <Virtual_Link src="0" dst="1" test_access="Passive">
+                        <qos>
+                            <latency>30</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="1000" cores="1" nOfOperations="2000" />
+                        <Memory_requirements memory="40" disk_storage="1000" virtual_mem_res="20" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <VNFD id="1" vendor="POLIMI" version="1.1">
+                    <Virtual_Link src="0" dst="1" test_access="Passive">
+                        <qos>
+                            <latency>30</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="1000" cores="1" nOfOperations="1000" />
+                        <Memory_requirements memory="30" disk_storage="500" virtual_mem_res="10" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+            </VNF>
+
+            <VNFFGD>
+                <NetworkForwardingPaths id="0" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeA"/>
+                    <Node_Connection nodeRef="nodeD"/>
+                </NetworkForwardingPaths>
+            </VNFFGD>
+        </NSD>
+    </NS>
+</NFV>

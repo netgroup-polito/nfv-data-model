@@ -48,8 +48,9 @@
                 <xsd:element ref="neighbour" maxOccurs="unbounded" minOccurs="0" />
                 <xsd:element ref="configuration" maxOccurs="1" minOccurs="1" />
             </xsd:sequence>
-            <xsd:attribute name="id" type="xsd:long" use="optional" />
+            <xsd:attribute name="id" type="xsd:string" use="optional" />
             <xsd:attribute name="name" type="xsd:string" use="required" />
+            <xsd:attribute name="vnfd_ref" type="xsd:string" use="optional" />
             <xsd:attribute name="functional_type" type="functionalTypes" use="required" />
         </xsd:complexType>
         <!-- key reference definitions -->
@@ -65,7 +66,7 @@
 
     <xsd:element name="neighbour">
         <xsd:complexType>
-            <xsd:attribute name="id" type="xsd:long" use="optional" />
+            <xsd:attribute name="id" type="xsd:string" use="optional" />
             <xsd:attribute name="name" type="xsd:string" use="required" />
         </xsd:complexType>
     </xsd:element>

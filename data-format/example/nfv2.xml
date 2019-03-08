@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+example representing a Distribute network service.
+More in detail there are 2 Hosts(host1, hosts2) that try to use an online web service hosted by 2 machines
+(host 3 and host 4) both of them own a WebClient and a WebServer for the comunication between them.
+To the connection and the traslation of the adress the 2  must connect before with another host (firewall + nat) host3
+-->
+
+<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file://../nfv/nfv.xsd">
+    <PNI>
+        <Hosts>
+            <Host id="host1" maxVNF="0" type="CLIENT">
+                <Computational_properties cpu="2000" cores="8"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="20"/>
+            </Host>
+            <Host id="host2" maxVNF="0" type="CLIENT">
+                <Computational_properties cpu="2000" cores="8"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="20"/>
+            </Host>
+            <Host id="host3" maxVNF="3" type="MIDDLEBOX">
+                <Computational_properties cpu="4000" cores="16"/>
+                <Memory_properties memory="16" disk_storage="250"/>
+                <Network_properties bandwidth="150"/>
+                <V_Node_Ref id="0"/>
+                <V_Node_Ref id="1"/>
+                <V_Node_Ref id="2"/>
+                <SupportedVNF functional_type="FIREWALL"/>
+                <SupportedVNF functional_type="NAT"/>
+                <SupportedVNF functional_type="CACHE"/>
+            </Host>
+            <Host id="host4" maxVNF="5" type="SERVER">
+                <Computational_properties cpu="4000" cores="4"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="70"/>
+                <V_Node_Ref id="3"/>
+                <V_Node_Ref id="4"/>
+                <V_Node_Ref id="5"/>
+                <V_Node_Ref id="6"/>
+                <SupportedVNF functional_type="WEBSERVER"/>
+                <SupportedVNF functional_type="WEBCLIENT"/>
+                <SupportedVNF functional_type="NAT"/>
+                <SupportedVNF functional_type="CACHE"/>
+            </Host>
+            <Host id="host5" maxVNF="5" type="SERVER">
+                <Computational_properties cpu="4000" cores="4"/>
+                <Memory_properties memory="16" disk_storage="500"/>
+                <Network_properties bandwidth="70"/>
+                <V_Node_Ref id="7"/>
+                <V_Node_Ref id="8"/>
+                <V_Node_Ref id="9"/>
+                <V_Node_Ref id="10"/>
+                <SupportedVNF functional_type="WEBSERVER"/>
+                <SupportedVNF functional_type="WEBCLIENT"/>
+                <SupportedVNF functional_type="NAT"/>
+                <SupportedVNF functional_type="CACHE"/>
+            </Host>
+        </Hosts>
+
+        <Connections>
+            <Connection sourceHost="host4" destHost="host5"/>
+            <Connection sourceHost="host1" destHost="host3"/>
+            <Connection sourceHost="host2" destHost="host3"/>
+        </Connections>
+    </PNI>
+
+    <NS>
+        <NSD id="0">
+            <VNF_dependency>
+                <graph id="0">
+                    <!-- Host1 components-->
+                    <node functional_type="FIREWALL" name="nodeA" id="0" vnfd_ref="0">
+                        <neighbour name="nodeB"/>
+                        <neighbour name="nodeC"/>
+                        <configuration description="A simple description" name="confA">
+                            <firewall>
+                                <elements>
+                                    <source>nodeA</source>
+                                    <destination>nodeB</destination>
+                                </elements>
+                            </firewall>
+                        </configuration>
+                    </node>
+                    <node functional_type="NAT" name="nodeB" id="1" vnfd_ref="1">
+                        <neighbour name="nodeA"/>
+                        <neighbour name="nodeC"/>
+                        <configuration description="A simple description" name="confD">
+                            <nat>
+                                <source></source>
+                            </nat>
+                        </configuration>
+                    </node>
+                    <node functional_type="CACHE" name="nodeC" id="2" vnfd_ref="2">
+                        <neighbour name="nodeA"/>
+                        <neighbour name="nodeB"/>
+                        <configuration description="A simple description" name="conf2">
+                            <cache>
+                                <resource>nodeB</resource>
+                            </cache>
+                        </configuration>
+                    </node>
+                    <!-- Host2 components-->
+                    <node functional_type="WEBSERVER" name="node1" id="3" vnfd_ref="3">
+                        <neighbour name="node2"/>
+                        <neighbour name="node3"/>
+                        <configuration description="A simple description" name="confB">
+                            <webserver>
+                                <name>WebServiceServer</name>
+                            </webserver>
+                        </configuration>
+                    </node>
+                    <node functional_type="WEBCLIENT" name="node2" id="4" vnfd_ref="4">
+                        <neighbour name="node1"/>
+                        <neighbour name="node3"/>
+                        <configuration description="A simple description" name="confC">
+                            <webclient nameWebServer="WebServiceServer"/>
+                        </configuration>
+                    </node>
+                    <node functional_type="NAT" name="node3" id="5" vnfd_ref="1">
+                        <neighbour name="node1"/>
+                        <neighbour name="node2"/>
+                        <neighbour name="node4"/>
+                        <configuration description="A simple description" name="confD">
+                            <nat>
+                                <source></source>
+                            </nat>
+                        </configuration>
+                    </node>
+                    <node functional_type="CACHE" name="node4" id="6" vnfd_ref="2">
+                        <neighbour name="node3"/>
+                        <configuration description="A simple description" name="conf2">
+                            <cache>
+                                <resource>node4</resource>
+                            </cache>
+                        </configuration>
+                    </node>
+                    <!-- Host3 components-->
+                    <node functional_type="WEBSERVER" name="node5" id="7" vnfd_ref="3">
+                        <neighbour name="node6"/>
+                        <neighbour name="node7"/>
+                        <configuration description="A simple description" name="confB">
+                            <webserver>
+                                <name>WebServiceServer</name>
+                            </webserver>
+                        </configuration>
+                    </node>
+                    <node functional_type="WEBCLIENT" name="node6" id="8" vnfd_ref="4">
+                        <neighbour name="node5"/>
+                        <neighbour name="node7"/>
+                        <configuration description="A simple description" name="confC">
+                            <webclient nameWebServer="WebServiceServer"/>
+                        </configuration>
+                    </node>
+                    <node functional_type="NAT" name="node7" id="9" vnfd_ref="1">
+                        <neighbour name="node5"/>
+                        <neighbour name="node6"/>
+                        <neighbour name="node8"/>
+                        <configuration description="A simple description" name="confD">
+                            <nat>
+                                <source></source>
+                            </nat>
+                        </configuration>
+                    </node>
+                    <node functional_type="CACHE" name="node8" id="10" vnfd_ref="2">
+                        <neighbour name="node7"/>
+                        <configuration description="A simple description" name="conf2">
+                            <cache>
+                                <resource>node8</resource>
+                            </cache>
+                        </configuration>
+                    </node>
+                </graph>
+            </VNF_dependency>
+
+            <PropertyDefinition>
+                <Property graph="0" name="ReachabilityProperty" src="nodeC" dst="node3" src_port="50" dst_port="110">
+                    <POP3Definition email_from="polito" body="weapons"/>
+                </Property>
+                <Property graph="0" name="ReachabilityProperty" src="node3" dst="node7" src_port="50" dst_port="110">
+                    <POP3Definition email_from="polito" body="weapons"/>
+                </Property>
+            </PropertyDefinition>
+
+            <VNF>
+                <!-- firewall -->
+                <VNFD id="0" vendor="Barracuda NextGen Firewall" version="1.0">
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="1000" cores="1" nOfOperations="2000" />
+                        <Memory_requirements memory="4" disk_storage="150" virtual_mem_res="20" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <!-- nat -->
+                <VNFD id="1" vendor="cisco" version="1.1">
+                    <Virtual_Link src="1" dst="2" test_access="Passive">
+                        <qos>
+                            <latency>20</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="300" cores="1" nOfOperations="500" />
+                        <Memory_requirements memory="0" disk_storage="0" virtual_mem_res="0" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <!-- cache -->
+                <VNFD id="2" vendor="cache_vendor" version="1.0">
+                    <Virtual_Link src="2" dst="1" test_access="Passive">
+                        <qos>
+                            <latency>20</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0">
+                        <Computational_requirements cpu="0" cores="0" nOfOperations="0" />
+                        <Memory_requirements memory="100" disk_storage="0" virtual_mem_res="0" />
+                        <Network_requirements bandwidth="0" />
+                    </VDU>
+                </VNFD>
+                <!-- web server  -->
+                <VNFD id="3" vendor="web_service_provider" version="x.x">
+                    <Virtual_Link src="3" dst="4" test_access="Passive">
+                        <qos>
+                            <latency>80</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="4000" cores="4" nOfOperations="2000" />
+                        <Memory_requirements memory="8" disk_storage="250" virtual_mem_res="50" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+                <!-- web client  -->
+                <VNFD id="4" vendor="web_service_provider" version="x.x">
+                    <Virtual_Link src="4" dst="3" test_access="Passive">
+                        <qos>
+                            <latency>80</latency>
+                        </qos>
+                    </Virtual_Link>
+                    <VDU id="0" vm_image="Linux_Server">
+                        <Computational_requirements cpu="500" cores="2" nOfOperations="2000" />
+                        <Memory_requirements memory="2" disk_storage="250" virtual_mem_res="50" />
+                        <Network_requirements bandwidth="150" />
+                    </VDU>
+                </VNFD>
+            </VNF>
+
+            <VNFFGD>
+                <NetworkForwardingPaths id="0" n_endpoint="3" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeA"/>
+                    <Node_Connection nodeRef="nodeB"/>
+                    <Node_Connection nodeRef="nodeC"/>
+                </NetworkForwardingPaths>
+                <NetworkForwardingPaths id="1" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="node1"/>
+                    <Node_Connection nodeRef="node2"/>
+                    <Node_Connection nodeRef="node3"/>
+                    <Node_Connection nodeRef="node4"/>
+                </NetworkForwardingPaths>
+                <NetworkForwardingPaths id="2" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="node5"/>
+                    <Node_Connection nodeRef="node6"/>
+                    <Node_Connection nodeRef="node7"/>
+                    <Node_Connection nodeRef="node8"/>
+                </NetworkForwardingPaths>
+                <NetworkForwardingPaths id="3" n_endpoint="2" n_vl="2" vnffgd_security="SHA-256">
+                    <Node_Connection nodeRef="nodeB"/>
+                    <Node_Connection nodeRef="node4"/>
+                    <Node_Connection nodeRef="node7"/>
+                </NetworkForwardingPaths>
+            </VNFFGD>
+
+            <flavours>
+                <Service_deployment_flavour id="0" flavour_key="calls_per_second" flavour_value="300"/>
+            </flavours>
+
+            <Connection_points>
+                <Connection_point id="0" type="endpoint"/>
+                <Connection_point id="1" type="virtual_nic_addr"/>
+            </Connection_points>
+        </NSD>
+    </NS>
+</NFV>

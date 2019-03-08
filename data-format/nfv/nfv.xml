@@ -1,50 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nfv.xsd">
+<NFV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./nfv.xsd">
 	<PNI>
 		<Hosts>
-			<Host id="hostA" type="CLIENT" fixedEndpoint="nodeA">
+			<Host id="host1" type="CLIENT" fixedEndpoint="nodeA">
+				<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
+				<Memory_properties memory="4" disk_storage="10"/>
+				<Network_properties bandwidth="20"/>
+			</Host>
+			<Host id="host2" type="SERVER" fixedEndpoint="nodeB">
+				<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
+				<Memory_properties memory="4" disk_storage="10"/>
+				<Network_properties bandwidth="20"/>
+			</Host>
+			<Host id="hostA" type="MIDDLEBOX" fixedEndpoint="nodeA">
 				<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
 				<Memory_properties memory="4" disk_storage="10"/>
 				<Network_properties bandwidth="20"/>
 				<V_Node_Ref id="0"/>
+				<SupportedVNF functional_type="WEBCLIENT"/>
 			</Host>
-			<Host id="hostC" type="SERVER" fixedEndpoint="nodeB">
+			<Host id="hostB" type="MIDDLEBOX" fixedEndpoint="nodeB">
 				<Computational_properties cpu="1000" cores="2" nOfOperations="10"/>
 				<Memory_properties memory="4" disk_storage="10"/>
 				<Network_properties bandwidth="20"/>
-				<P_Node_Ref id="0"/>
+				<V_Node_Ref id="1"/>
+				<SupportedVNF functional_type="WEBSERVER"/>
 			</Host>
-			<Host id="host1" maxVNF="1" type="MIDDLEBOX">
+			<Host id="hostC" maxVNF="1" type="MIDDLEBOX">
 				<Computational_properties cpu="3000" cores="16"/>
 				<Memory_properties memory="16" disk_storage="50"/>
 				<Network_properties bandwidth="20"/>
+				<V_Node_Ref id="2"/>
+				<V_Node_Ref id="3"/>
+				<V_Node_Ref id="4"/>
 				<SupportedVNF functional_type="FIREWALL"/>
 				<SupportedVNF functional_type="CACHE"/>
 				<SupportedVNF functional_type="FIELDMODIFIER"/>
 			</Host>
-			<Host id="host2" maxVNF="2" type="MIDDLEBOX">
+			<Host id="hostD" maxVNF="2" type="MIDDLEBOX">
 				<Computational_properties cpu="4000" cores="4"/>
 				<Memory_properties memory="16" disk_storage="20"/>
 				<Network_properties bandwidth="20"/>
+				<V_Node_Ref id="2"/>
 				<SupportedVNF functional_type="FIREWALL"/>
 			</Host>
-			<Host id="host3" maxVNF="3" type="MIDDLEBOX">
+			<Host id="hostE" maxVNF="3" type="MIDDLEBOX">
 				<Computational_properties cpu="3000" cores="8"/>
 				<Memory_properties memory="16" disk_storage="10"/>
 				<Network_properties bandwidth="20"/>
+				<V_Node_Ref id="3"/>
+				<V_Node_Ref id="4"/>
 				<SupportedVNF functional_type="CACHE"/>
 				<SupportedVNF functional_type="FIELDMODIFIER"/>
-			</Host>
-			<Host id="hostB" type="SERVER" fixedEndpoint="nodeB">
-			<Computational_properties cpu="1000" cores="2"/>
-				<Memory_properties memory="2" disk_storage="10"/>
-				<Network_properties bandwidth="20"/>
 			</Host>
 		</Hosts>
 		
 		<Connections>
-			<Connection sourceHost="host1" destHost="host2"/>
-			<Connection sourceHost="host2" destHost="host3"/>
+			<Connection sourceHost="hostA" destHost="hostB"/>
+			<Connection sourceHost="hostC" destHost="hostD"/>
+			<Connection sourceHost="hostB" destHost="hostC"/>
+			<Connection sourceHost="hostD" destHost="hostE"/>
 		</Connections>
 	</PNI>
 
@@ -52,22 +67,19 @@
 		<NSD id="0">
 			<VNF_dependency>
 				<graph id="0">
-					<node functional_type="WEBCLIENT" name="nodeA">
-						<neighbour name="node1"/>
+					<node functional_type="WEBCLIENT" name="nodeA" id="0">
 						<configuration description="A simple description" name="confA">
 							<webclient nameWebServer="nodeB"/>
 						</configuration>
 					</node>
-					<node functional_type="WEBCLIENT" name="nodeC">
-						<neighbour name="node3"/>
-						<configuration description="A simple description" name="confA">
-							<webclient nameWebServer="nodeD"/>
+					<node functional_type="WEBSERVER" name="nodeB" id="1">
+						<configuration description="A simple description" name="confB">
+							<webserver>
+								<name>nodeB</name>
+							</webserver>
 						</configuration>
 					</node>
-					<node functional_type="FIREWALL" name="node1">
-						<neighbour name="nodeA"/>
-						<neighbour name="node2"/>
-						<neighbour name="node3"/>
+					<node functional_type="FIREWALL" name="nodeC"  id="2">
 						<configuration description="A simple description" name="conf1">
 							<firewall>
 								<elements>
@@ -77,42 +89,19 @@
 							</firewall>
 						</configuration>
 					</node>
-					<node functional_type="CACHE" name="node2">
-						<neighbour name="node1"/>
-						<neighbour name="node3"/>
-						<neighbour name="nodeB"/>
+					<node functional_type="CACHE" name="nodeD" id="3">
 						<configuration description="A simple description" name="conf2">
 							<cache>
 								<resource>nodeA</resource>
-								<resource>node1</resource>
+								<resource>nodeB</resource>
 							</cache>
 						</configuration>
 					</node>
-					<node functional_type="FIELDMODIFIER" name="node3">
-						<neighbour name="nodeC"/>
-						<neighbour name="node1"/>
-						<neighbour name="node2"/>
-						<neighbour name="nodeD"/>
+					<node functional_type="FIELDMODIFIER" name="nodeE" id="4">
 						<configuration description="A simple description" name="conf3">
 							<fieldmodifier>
 								<name>name</name>
 							</fieldmodifier>
-						</configuration>
-					</node>
-					<node functional_type="WEBSERVER" name="nodeB">
-						<neighbour name="node2"/>
-						<configuration description="A simple description" name="confB">
-							<webserver>
-								<name>nodeB</name>
-							</webserver>
-						</configuration>
-					</node>
-					<node functional_type="WEBSERVER" name="nodeD">
-						<neighbour name="node3"/>
-						<configuration description="A simple description" name="confB">
-							<webserver>
-								<name>nodeD</name>
-							</webserver>
 						</configuration>
 					</node>
 				</graph>
@@ -166,16 +155,15 @@
 				<NetworkForwardingPaths id="0" n_endpoint="4" n_vl="2" vnffgd_security="SHA-256">
 					<Node_Connection nodeRef="nodeA"/>
 					<Node_Connection nodeRef="nodeB"/>
-					<Node_Connection nodeRef="node1"/>
-					<Node_Connection nodeRef="node2"/>
+					<Node_Connection nodeRef="nodeC"/>
 				</NetworkForwardingPaths>
 				<NetworkForwardingPaths id="1">
-					<Node_Connection nodeRef="node1"/>
-					<Node_Connection nodeRef="node2"/>
-					<Node_Connection nodeRef="node3"/>
-					<Node_Connection nodeRef="nodeC"/>
-					<Node_Connection nodeRef="nodeC"/>
+					<Node_Connection nodeRef="nodeE"/>
 					<Node_Connection nodeRef="nodeD"/>
+				</NetworkForwardingPaths>
+				<NetworkForwardingPaths id="2">
+					<Node_Connection nodeRef="nodeC"/>
+					<Node_Connection nodeRef="nodeE"/>
 				</NetworkForwardingPaths>
 			</VNFFGD>
 
