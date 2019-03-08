@@ -65,7 +65,7 @@ public class NsResources {
     }
 
     @GET
-    @Path("nsd/{nsdID}")
+    @Path("/nsd/{nsdID}")
     @ApiOperation(value = "getNSD", notes = "Read the NSD data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -82,7 +82,7 @@ public class NsResources {
     }
 
     @POST
-    @Path("nsd/")
+    @Path("/nsd")
     @ApiOperation(value = "addNSD", notes = "Add a new NSD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 400, message = "Bad request"),
@@ -105,7 +105,7 @@ public class NsResources {
     }
 
     @DELETE
-    @Path("nsd/{nsdID}")
+    @Path("/nsd/{nsdID}")
     @ApiOperation(value = "deleteNSD", notes = "Delete a NSD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 403, message = "Forbidden"),

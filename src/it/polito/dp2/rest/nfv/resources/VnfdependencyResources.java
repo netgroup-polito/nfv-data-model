@@ -176,4 +176,28 @@ public class VnfdependencyResources {
             throw e;
         }
     }
+
+    @PUT
+    @Path("/graph/{graphID}/node")
+    @ApiOperation(value = "modifyNode", notes = "Modify a node of a certain graph")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Node not found"),
+            @ApiResponse(code = 500, message = "Internal Error")})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+    public Node modifyNode(@PathParam("nsdID") String nsdID, @PathParam("graphID") Long graphID, Node nodeMod) {
+        Node node = null;
+        try{
+            node = service.modifyNode(nsdID, graphID, nodeMod);
+            if(node == null)
+                throw new NotFoundException();
+            if(node == nodeMod)
+                throw new InternalServerErrorException();
+        }
+        catch (Exception e){
+            throw e;
+        }
+
+        return node;
+    }
 }

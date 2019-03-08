@@ -209,6 +209,16 @@ public class NsDB {
         return null;
     }
 
+    public Node modifyNode(String nsdID, Long graphID, Node node){
+        if(getNode(nsdID, graphID, node.getName()) != null){
+            deleteNode(nsdID, graphID, node.getName());
+            addNode(nsdID, graphID, node);
+            return node;
+        }
+
+        return null;
+    }
+
     /* --- VNF --- */
     public VNF getVNF(String nsdID){
         return nsdMap.get(nsdID).getVNF();

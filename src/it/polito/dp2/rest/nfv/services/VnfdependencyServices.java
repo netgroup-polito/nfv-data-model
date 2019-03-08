@@ -98,4 +98,15 @@ public class VnfdependencyServices {
     public Node deleteNode(String nsdID, Long graphID, String nodeName) {
         return nsDB.deleteNode(nsdID, graphID, nodeName);
     }
+
+    /**
+     * Modify a node
+     * @param nsdID
+     * @param graphID
+     * @param node
+     * @return Node modified or null if node is not present
+     */
+    public Node modifyNode(String nsdID, Long graphID, Node node){
+        return nsDB.modifyNode(nsdID, graphID, node);
+    }
 }
