@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Path("/ns")
 @Api(value = "/ns")
@@ -42,6 +44,10 @@ public class NsResources {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("ns");
         URI self = builder.build();
+
+        Logger logger;
+        logger = Logger.getLogger(NsResources.class.getName());
+        logger.log(Level.SEVERE, "NS POST");
 
         try{
             service.addNS(ns);

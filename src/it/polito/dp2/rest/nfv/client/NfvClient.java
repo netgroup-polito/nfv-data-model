@@ -74,7 +74,7 @@ public class NfvClient {
 		
 		if(responseEntered.getStatus() == 201){
 			Host returnedHost = responseEntered.readEntity(Host.class);
-			LOGGER.log(Level.FINEST, "Succesful: Inserted Host {".concat(returnedHost.toString()+"}"));
+			LOGGER.log(Level.FINEST, "Successful: Inserted Host {".concat(returnedHost.toString()+"}"));
 		}else if(responseEntered.getStatus() == 403){
 			client.close();
 			throw new ForbiddenException();
@@ -498,8 +498,4 @@ public class NfvClient {
 		
 		
 	}
-	
-	
-	
-
 }

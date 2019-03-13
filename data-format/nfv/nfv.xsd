@@ -6,7 +6,7 @@
 
     <xsd:annotation>
         <xsd:documentation
-                source="https://github.com/NFV-Architecture/data-format"
+                source="https://github.com/netgroup-polito/nfv-data-model/tree/master/data-format"
                 xml:lang="EN">
             Special Project 3 - NFV dataModel
         </xsd:documentation>

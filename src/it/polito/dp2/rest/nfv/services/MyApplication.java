@@ -12,19 +12,23 @@ public class MyApplication extends Application{
 	//The method returns a non-empty collection with classes, that must be included in the published JAX-RS application
 	@Override
 	public Set<Class<?>> getClasses() {
-	HashSet<Class<?>> h = new HashSet<Class<?>>();
-	
-	h.add(NfvResources.class);
-	h.add(ConnectionPointsResources.class);
-	h.add(FlavoursResources.class);
-	h.add(NsResources.class);
-	h.add(PnfdResources.class);
-	h.add(PniResources.class);
-	h.add(PropertyDefinitionResources.class);
-	h.add(VnfdependencyResources.class);
-	h.add(VnfdResources.class);
-	h.add(VnffgdResources.class);
-	
-	return h;
+		HashSet<Class<?>> h = new HashSet<Class<?>>();
+
+		h.add(NfvResources.class);
+		h.add(ConnectionPointsResources.class);
+		h.add(FlavoursResources.class);
+		h.add(NsResources.class);
+		h.add(PnfdResources.class);
+		h.add(PniResources.class);
+		h.add(PropertyDefinitionResources.class);
+		h.add(VnfdependencyResources.class);
+		h.add(VnfdResources.class);
+		h.add(VnffgdResources.class);
+
+		h.add(XmlValidationProvider.class);
+		h.add(JsonValidationInterceptor.class);
+		h.add(MyErrorHandler.class);
+
+		return h;
 	}
 }

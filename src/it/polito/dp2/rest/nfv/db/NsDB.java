@@ -53,8 +53,8 @@ public class NsDB {
     	newnsd.setVNFFGD(new VNFFGD());
     	
     	newnsd.setId(nsd.getId());
-    	newnsd.setVendor(nsd.getId());
-    	newnsd.setVersion(nsd.getId());
+    	newnsd.setVendor(nsd.getVendor());
+    	newnsd.setVersion(nsd.getVersion());
     	newnsd.setConnectionPoints(nsd.getConnectionPoints());
     	newnsd.setFlavours(nsd.getFlavours());
     	newnsd.setPNF(nsd.getPNF());
@@ -259,9 +259,10 @@ public class NsDB {
 
     public VNFD deleteVNFD(String nsdID, String vnfdID){
         for(VNFD vnfd : getVNF(nsdID).getVNFD()) {
-            if(vnfd.getId().equals(vnfdID))
+            if(vnfd.getId().equals(vnfdID)){
                 getVNF(nsdID).getVNFD().remove(vnfd);
                 return vnfd;
+            }
         }
 
         return null;
