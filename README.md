@@ -108,6 +108,14 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     3. Select all jARs inside **lib** folder and click **OK**.
     4. **Apply** and then **OK** to close
 
+# Application Class
+
+Keep attention on the fact that every time you add a new service, resource or general class you must "register" this class in the MyApplication class. You have to add the new class in the defined hash set of classes in order to make that class available.
+
+For example, if you want to add newClass.java, then:
+
+        h.add(newClass.class);
+
 # Issues
 
 - IntelliJ 13.1 and Glassfish 4.1 on MacOS X:
