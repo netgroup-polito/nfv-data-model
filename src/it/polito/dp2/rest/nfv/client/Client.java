@@ -1,7 +1,6 @@
 package it.polito.dp2.rest.nfv.client;
 
 import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -17,12 +16,12 @@ import java.util.logging.Logger;
 import it.polito.dp2.rest.nfv.jaxb.*;
 import it.polito.dp2.rest.nfv.jaxb.Dependency.Relation;
 
-public class NfvClient {
+public class Client {
 	
 	private String baseUrl;
-	private static final Logger LOGGER = Logger.getLogger(NfvClient.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Client.class.getName());
 	
-	public NfvClient() {
+	public Client() {
 		Handler handlerObj = new ConsoleHandler();
 		handlerObj.setLevel(Level.ALL);
 		LOGGER.addHandler(handlerObj);
@@ -33,8 +32,7 @@ public class NfvClient {
 			baseUrl = "http://localhost:8080/RESTful_nfv/nfv";	
 	}
 	
-	
-	public void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf, 
+	private void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf,
 							int cores, int cpu, int nOfOp,
 							int mem, int diskSt, int virtMem,
 							int bandWidth, 
@@ -66,7 +64,7 @@ public class NfvClient {
 			host.getVNodeRef().addAll(sup_vnfd);
 		
 		String path = "/hosts/host"; 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 				  .accept(MediaType.APPLICATION_JSON)
@@ -82,8 +80,8 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterConnection(String hostSrc, String hostDest, int avgLat){
+
+	private void enterConnection(String hostSrc, String hostDest, int avgLat){
 		
 		/*Creation of Hosts*/
 		Connection connection = new Connection();
@@ -92,7 +90,7 @@ public class NfvClient {
 		connection.setAvgLatency(avgLat);
 		
 		String path = "/connections/connection"; 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -108,13 +106,13 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterNS(){
+
+	private void enterNS(){
 		
 		NS ns = new NS();
 		
 		String path = "/ns"; 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -130,8 +128,8 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterNSD(String id, NSD nsdToAdd){
+
+	private void enterNSD(String id, NSD nsdToAdd){
 		
 		NSD nsd = new NSD();
 		
@@ -142,7 +140,7 @@ public class NfvClient {
 		nsd.setPNF(nsdToAdd.getPNF());
 		
 		String path = "/ns/nsd"; 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -158,8 +156,8 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterVNFD(String nsdID, String id, String vendor, String version,
+
+	private void enterVNFD(String nsdID, String id, String vendor, String version,
 						List<VDU> vdus, Dependency vduDep, List<VirtualLink> vlinks){
 			
 		VNFD vnfd = new VNFD();
@@ -171,7 +169,7 @@ public class NfvClient {
 		vnfd.getVirtualLink().addAll(vlinks);
 		
 		String path = "ns/nsd/".concat(nsdID+"/vnf/vnfd"); 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -187,8 +185,8 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterPNFD(String nsdID, String id, String vendor, String version, 
+
+	private void enterPNFD(String nsdID, String id, String vendor, String version,
 			String description, ConnectionPoint cp){
 
 		PNFD pnfd = new PNFD();
@@ -199,7 +197,7 @@ public class NfvClient {
 		pnfd.setConnectionPoint(cp);
 		
 		String path = "ns/nsd/".concat(nsdID+"/pnf/pnfd"); 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -215,15 +213,15 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterVNFFGD(String nsdID, List<NetworkForwardingPaths> nfps){
+
+	private void enterVNFFGD(String nsdID, List<NetworkForwardingPaths> nfps){
 		
 		VNFFGD vnffgd = new VNFFGD();
 		vnffgd.getNetworkForwardingPaths().addAll(nfps);
 		
 		
 		String path = "ns/nsd/".concat(nsdID+"/vnffgd"); 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 		  .accept(MediaType.APPLICATION_JSON)
@@ -239,14 +237,14 @@ public class NfvClient {
 		
 		client.close();
 	}
-	
-	public void enterVNF_dependency(String nsdID, List<Graph> dependecies ){
+
+	private void enterVNF_dependency(String nsdID, List<Graph> dependecies ){
 
 		VNFDependency vnf_dep = new VNFDependency();
 		vnf_dep.getGraph().addAll(dependecies);
 		
 		String path = "ns/nsd/".concat(nsdID+"/vnfdependency"); 
-		Client client = ClientBuilder.newClient();
+		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
 		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON)
@@ -495,7 +493,5 @@ public class NfvClient {
 	    
 	    /* ENTRY THE NSD CREATED PREVIOUSLY*/
 		enterNSD("0", nsd);
-		
-		
 	}
 }
