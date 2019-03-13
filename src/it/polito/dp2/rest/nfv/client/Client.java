@@ -60,15 +60,15 @@ public class Client {
 		host.setNetworkProperties(np);
 		if (sup_pnfd != null)
 			host.getPNodeRef().add(sup_pnfd);
-		else
+		else if(sup_vnfd != null)
 			host.getVNodeRef().addAll(sup_vnfd);
 		
-		String path = "/hosts/host"; 
+		String path = "pni/hosts/host"; 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-				  .accept(MediaType.APPLICATION_JSON)
-				  .post(Entity.entity(host, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+				  .accept(MediaType.APPLICATION_XML)
+				  .post(Entity.entity(host, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			Host returnedHost = responseEntered.readEntity(Host.class);
@@ -89,12 +89,12 @@ public class Client {
 		connection.setDestHost(hostDest);
 		connection.setAvgLatency(avgLat);
 		
-		String path = "/connections/connection"; 
+		String path = "pni/connections/connection"; 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(connection, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(connection, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			Connection returnedConn = responseEntered.readEntity(Connection.class);
@@ -114,9 +114,9 @@ public class Client {
 		String path = "/ns"; 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(ns, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(ns, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			NS returnedNS = responseEntered.readEntity(NS.class);
@@ -129,22 +129,26 @@ public class Client {
 		client.close();
 	}
 
-	private void enterNSD(String id, NSD nsdToAdd){
+	private void enterNSD(NSD nsdToAdd){
 		
 		NSD nsd = new NSD();
 		
-		nsd.setId(id);
+		nsd.setId(nsdToAdd.getId());
 		nsd.setVNFDependency(nsdToAdd.getVNFDependency());
+		nsd.setPropertyDefinition(nsdToAdd.getPropertyDefinition());
 		nsd.setVNF(nsdToAdd.getVNF());
 		nsd.setVNFFGD(nsdToAdd.getVNFFGD());
 		nsd.setPNF(nsdToAdd.getPNF());
+		nsd.setFlavours(nsdToAdd.getFlavours());
+		nsd.setConnectionPoints(nsdToAdd.getConnectionPoints());
+		nsd.setParsingString(nsdToAdd.getParsingString());
 		
 		String path = "/ns/nsd"; 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(nsd, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(nsd, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			NSD returnedNSD = responseEntered.readEntity(NSD.class);
@@ -171,9 +175,9 @@ public class Client {
 		String path = "ns/nsd/".concat(nsdID+"/vnf/vnfd"); 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(vnfd, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(vnfd, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			VNFD returnedVNFD = responseEntered.readEntity(VNFD.class);
@@ -199,9 +203,9 @@ public class Client {
 		String path = "ns/nsd/".concat(nsdID+"/pnf/pnfd"); 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(pnfd, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(pnfd, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			PNFD returnedPNFD = responseEntered.readEntity(PNFD.class);
@@ -223,9 +227,9 @@ public class Client {
 		String path = "ns/nsd/".concat(nsdID+"/vnffgd"); 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-		  .accept(MediaType.APPLICATION_JSON)
-		  .post(Entity.entity(vnffgd, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+		  .accept(MediaType.APPLICATION_XML)
+		  .post(Entity.entity(vnffgd, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			VNFFGD returnedVNFFGD = responseEntered.readEntity(VNFFGD.class);
@@ -246,9 +250,9 @@ public class Client {
 		String path = "ns/nsd/".concat(nsdID+"/vnfdependency"); 
 		javax.ws.rs.client.Client client = ClientBuilder.newClient();
 		WebTarget enterHost = client.target(baseUrl).path(path);
-		Response responseEntered = enterHost.request(MediaType.APPLICATION_JSON)
-			.accept(MediaType.APPLICATION_JSON)
-			.post(Entity.entity(vnf_dep, MediaType.APPLICATION_JSON));
+		Response responseEntered = enterHost.request(MediaType.APPLICATION_XML)
+			.accept(MediaType.APPLICATION_XML)
+			.post(Entity.entity(vnf_dep, MediaType.APPLICATION_XML));
 		
 		if(responseEntered.getStatus() == 201){
 			VNFDependency returnedVNF_dep = responseEntered.readEntity(VNFDependency.class);
@@ -278,9 +282,13 @@ public class Client {
 		
 		enterNS();
 		
-		NSD nsd = new NSD();
 		
-		/* ENTRY A SOME VNFD COMPRENSIVE OF EACH FIELD*/
+		NSD nsd = new NSD();
+		nsd.setId("0");
+		
+		// ENTRY A SOME VNF COMPRENSIVE OF EACH FIELD
+		VNF vnf = new VNF();
+		
 		VNFD vnfd1 = new VNFD();
 		vnfd1.setId("0");
 		vnfd1.setVendor("POLITO");
@@ -316,7 +324,7 @@ public class Client {
 		cp2.setCores(500);
 		cp2.setCpu(2);
 		cp2.setNOfOperations(500);
-		vdu1.setComputationalRequirements(cp2);
+		vdu2.setComputationalRequirements(cp2);
 		MemoryPropertiesType mp2 = new MemoryPropertiesType();
 		mp2.setDiskStorage(30);
 		mp2.setMemory(100);
@@ -324,7 +332,7 @@ public class Client {
 		vdu2.setMemoryRequirements(mp2);
 		NetworkPropertiesType np2 = new NetworkPropertiesType();
 		np2.setBandwidth(100);
-		vdu1.setNetworkRequirements(np2);
+		vdu2.setNetworkRequirements(np2);
 		vnfd1.getVDU().add(vdu2);
 		
 		Dependency dep = new Dependency();
@@ -332,9 +340,9 @@ public class Client {
 		rel.setSrc("0");
 		rel.setTarget("1");
 		dep.getRelation().add(rel);
-		
 		vnfd1.setDependency(dep);
-		nsd.getVNF().getVNFD().add(vnfd1);
+		
+		vnf.getVNFD().add(vnfd1);
 		
 		VNFD vnfd2 = new VNFD();
 		vnfd2.setId("1");
@@ -347,7 +355,7 @@ public class Client {
 		vnfd2.getVirtualLink().add(vl2);
 		
 		VDU vdu3 = new VDU();
-		vdu3.setId("0");
+		vdu3.setId("2");
 		vdu3.setVmImage("Linux_Server");
 		ComputationalPropertiesType cp3 = new ComputationalPropertiesType();
 		cp3.setCores(500);
@@ -364,9 +372,10 @@ public class Client {
 		vdu3.setNetworkRequirements(np3);
 		vnfd2.getVDU().add(vdu3);
 		
-		nsd.getVNF().getVNFD().add(vnfd2);
+		vnf.getVNFD().add(vnfd2);
+		nsd.setVNF(vnf);
 		
-		/* ENTRY A VNF DEPENDENCY*/
+		// ENTRY A VNF DEPENDENCY
 		VNFDependency vnfdep = new VNFDependency();
 	    Graph g1 = new Graph();
 	    g1.setId((long) 0);
@@ -374,7 +383,9 @@ public class Client {
 	    Node n1 = new Node();
 	    n1.setId((long) 0);
 	    n1.setName("nodeA");
+	    n1.setFunctionalType(FunctionalTypes.WEBSERVER);
 	    Configuration conf1 = new Configuration();
+	    conf1.setName("confA");
 	    conf1.setDescription("A simple description");
 	    Webclient web1 = new Webclient();
 	    web1.setNameWebServer("nodeB");
@@ -385,7 +396,9 @@ public class Client {
 	    Node n2 = new Node();
 	    n2.setId((long) 1);
 	    n2.setName("nodeB");
+	    n2.setFunctionalType(FunctionalTypes.WEBCLIENT);
 	    Configuration conf2 = new Configuration();
+	    conf2.setName("confB");
 	    conf2.setDescription("A simple description");
 	    Webserver web2 = new Webserver();
 	    web2.setName("nodeB");
@@ -396,7 +409,9 @@ public class Client {
 	    Node n3= new Node();
 	    n3.setId((long) 2);
 	    n3.setName("nodeC");
+	    n3.setFunctionalType(FunctionalTypes.FIREWALL);
 	    Configuration conf3 = new Configuration();
+	    conf3.setName("confC");
 	    conf3.setDescription("A simple description");
 	    Firewall f1 = new Firewall();
 	    Elements el1 = new Elements();
@@ -410,7 +425,9 @@ public class Client {
 	    Node n4 = new Node();
 	    n4.setId((long) 3);
 	    n4.setName("nodeD");
+	    n4.setFunctionalType(FunctionalTypes.CACHE);
 	    Configuration conf4 = new Configuration();
+	    conf4.setName("confD");
 	    conf4.setDescription("A simple description");
 	    Cache c1 = new Cache();
 	    c1.getResource().add("nodeA");
@@ -420,9 +437,11 @@ public class Client {
 	    g1.getNode().add(n4);
 	    
 	    Node n5 = new Node();
-	    n1.setId((long) 4);
-	    n1.setName("nodeE");
+	    n5.setId((long) 4);
+	    n5.setName("nodeE");
+	    n5.setFunctionalType(FunctionalTypes.FIELDMODIFIER);
 	    Configuration conf5 = new Configuration();
+	    conf5.setName("confE");
 	    conf5.setDescription("A simple description");
 	    Fieldmodifier fm1 = new Fieldmodifier();
 	    fm1.setName("name");
@@ -433,7 +452,37 @@ public class Client {
 	    vnfdep.getGraph().add(g1);
 	    nsd.setVNFDependency(vnfdep);
 	    
-	    /* ENTRY A VNFFGD */
+	    // ENTRY A PROPERTY_DEFINITION
+	    PropertyDefinition pd = new PropertyDefinition();
+	    
+	    Property prop1 = new Property();
+	    prop1.setGraph(g1.getId());
+	    prop1.setName(PName.ISOLATION_PROPERTY);
+	    prop1.setSrc("nodeA");
+	    prop1.setDst("nodeB");
+	    prop1.setSrcPort("5000");
+	    prop1.setDstPort("80");
+	    HTTPDefinition http = new HTTPDefinition();
+	    http.setBody("weapons");
+	    prop1.setHTTPDefinition(http);
+	    pd.getProperty().add(prop1);
+	    
+	    Property prop2 = new Property();
+	    prop2.setGraph(g1.getId());
+	    prop2.setName(PName.ISOLATION_PROPERTY);
+	    prop2.setSrc("nodeC");
+	    prop2.setDst("nodeD");
+	    prop2.setSrcPort("3000");
+	    prop2.setDstPort("110");
+	    POP3Definition pop3 = new POP3Definition();
+	    pop3.setEmailFrom("polito");
+	    pop3.setBody("weapons");
+	    prop2.setPOP3Definition(pop3);
+	    pd.getProperty().add(prop2);
+	    
+	    nsd.setPropertyDefinition(pd);
+	    
+	    // ENTRY A VNFFGD 
 	    VNFFGD vnffgd = new VNFFGD();
 	    
 	    NetworkForwardingPaths nfp1 = new NetworkForwardingPaths();
@@ -443,29 +492,38 @@ public class Client {
 	    nfp1.setVnffgdSecurity("SHA-256");
 	    NodeConnection nc11 = new NodeConnection();
 	    nc11.setNodeRef("nodeA");
+	    nfp1.getNodeConnection().add(nc11);
 	    NodeConnection nc12 = new NodeConnection();
 	    nc12.setNodeRef("nodeB");
+	    nfp1.getNodeConnection().add(nc12);
 	    NodeConnection nc13 = new NodeConnection();
 	    nc13.setNodeRef("nodeC");
+	    nfp1.getNodeConnection().add(nc13);
 	    vnffgd.getNetworkForwardingPaths().add(nfp1);
 	    
 	    NetworkForwardingPaths nfp2 = new NetworkForwardingPaths();
+	    nfp2.setId("1");
 	    NodeConnection nc21 = new NodeConnection();
 	    nc21.setNodeRef("nodeE");
+	    nfp2.getNodeConnection().add(nc21);
 	    NodeConnection nc22 = new NodeConnection();
 	    nc22.setNodeRef("nodeD");
+	    nfp2.getNodeConnection().add(nc22);
 	    vnffgd.getNetworkForwardingPaths().add(nfp2);
 	    
 	    NetworkForwardingPaths nfp3 = new NetworkForwardingPaths();
+	    nfp3.setId("2");
 	    NodeConnection nc31 = new NodeConnection();
 	    nc31.setNodeRef("nodeC");
+	    nfp3.getNodeConnection().add(nc31);
 	    NodeConnection nc32 = new NodeConnection();
 	    nc32.setNodeRef("nodeE");
+	    nfp3.getNodeConnection().add(nc32);
 	    vnffgd.getNetworkForwardingPaths().add(nfp3);
 	    
 	    nsd.setVNFFGD(vnffgd);
 	    
-	    /* ENTRY A PNFD */
+	    // ENTRY A PNFD 
 	    PNF pnf = new PNF();
 	    
 	    PNFD pnfd1 = new PNFD();
@@ -480,18 +538,43 @@ public class Client {
 	    pnf.getPNFD().add(pnfd1);
 	    
 	    PNFD pnfd2 = new PNFD();
-	    pnfd2.setId("0");
+	    pnfd2.setId("1");
 	    pnfd2.setVendor("fastweb");
 	    pnfd2.setVersion("1.2");
 	    pnfd2.setDescription("DHCP");
-	    cp.setId("0");
+	    cp.setId("1");
 	    cp.setType(ConnectionPointType.ENDPOINT);
 	    pnfd1.setConnectionPoint(cp);
 	    pnf.getPNFD().add(pnfd2);
 	    
 	    nsd.setPNF(pnf);
 	    
-	    /* ENTRY THE NSD CREATED PREVIOUSLY*/
-		enterNSD("0", nsd);
+	    // ENTRY A Flavours 
+	    Flavours flavours = new Flavours();
+	    
+	    ServiceDeploymentFlavour sdf1 = new ServiceDeploymentFlavour();
+	    sdf1.setId("0");
+	    sdf1.setFlavourKey("call_per_second");
+	    sdf1.setFlavourValue(300);
+	    flavours.getServiceDeploymentFlavour().add(sdf1);
+	    
+	    nsd.setFlavours(flavours);
+	    
+	    // ENTRY A ConnectionPoints 
+	    ConnectionPoints nsdCps = new ConnectionPoints();
+	    
+	    ConnectionPoint nsdCp = new ConnectionPoint();
+	    nsdCp.setId("0");
+	    nsdCp.setType(ConnectionPointType.ENDPOINT);
+	    nsdCps.getConnectionPoint().add(nsdCp);
+	    
+	    nsd.setConnectionPoints(nsdCps);
+	    
+	    // ENTRY A ParsingString 
+	    nsd.setParsingString("30L?");
+	    
+	    // ENTRY THE NSD CREATED PREVIOUSLY
+		enterNSD(nsd);
+		
 	}
 }
