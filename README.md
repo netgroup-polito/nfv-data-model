@@ -6,11 +6,11 @@ Different methos allow you to manage the whole structure and also the sub-struct
 
 # Menù
 
-- [Configuration](https://github.com/NFV-Architecture/RESTful-web-service#configuration)
-    - [IntelliJ IDEA](https://github.com/NFV-Architecture/RESTful-web-service#intellij-idea)
-    - [Eclipse](https://github.com/NFV-Architecture/RESTful-web-service#eclipse)
-- [Issues](https://github.com/NFV-Architecture/RESTful-web-service#issues)
-- [Application Class](https://github.com/NFV-Architecture/RESTful-web-service#application-class)
+- [Configuration](https://github.com/netgroup-polito/nfv-data-model#configuration)
+    - [IntelliJ IDEA](https://github.com/netgroup-polito/nfv-data-model#intellij-idea)
+    - [Eclipse](https://github.com/netgroup-polito/nfv-data-model#eclipse)
+- [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
+- [Application Class](https://github.com/netgroup-polito/nfv-data-model#application-class)
 
 # Configuration
 
