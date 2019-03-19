@@ -9,8 +9,8 @@ Different methos allow you to manage the whole structure and also the sub-struct
 - [Configuration](https://github.com/netgroup-polito/nfv-data-model#configuration)
     - [IntelliJ IDEA](https://github.com/netgroup-polito/nfv-data-model#intellij-idea)
     - [Eclipse](https://github.com/netgroup-polito/nfv-data-model#eclipse)
-- [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
 - [Application Class](https://github.com/netgroup-polito/nfv-data-model#application-class)
+- [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
 
 # Configuration
 
