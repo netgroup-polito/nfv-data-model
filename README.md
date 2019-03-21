@@ -9,7 +9,7 @@ Different methos allow you to manage the whole structure and also the sub-struct
 - [Configuration](https://github.com/netgroup-polito/nfv-data-model#configuration)
     - [IntelliJ IDEA](https://github.com/netgroup-polito/nfv-data-model#intellij-idea)
     - [Eclipse](https://github.com/netgroup-polito/nfv-data-model#eclipse)
-- [Application Class](https://github.com/netgroup-polito/nfv-data-model#application-class)
+- [Application Class](https://github.com/netgroup-polito/nfv-data-model#classes-configuration)
 - [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
 
 # Configuration
@@ -109,13 +109,27 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     3. Select all jARs inside **lib** folder and click **OK**.
     4. **Apply** and then **OK** to close
 
-# Application Class
+# Classes configuration
+
+### Application Class
 
 Keep attention on the fact that every time you add a new service, resource or general class you must "register" this class in the MyApplication class. You have to add the new class in the defined hash set of classes in order to make that class available.
 
 For example, if you want to add newClass.java, then:
 
         h.add(newClass.class);
+
+### Client Class
+
+You need to specify the name of your project in the URL in which the client will perform the test. So, make sure that `XXXXXXX`, inside the Client constructor, will be replaced the name of your project or the client will not work properly.
+
+If the name of the project is `rest_nfv`, then:
+
+			baseUrl = "http://localhost:8080/rest_nfv/nfv";
+            
+Note that in **IntelliJ IDEA** is also present the `_war_exploded`, then:
+
+            baseUrl = "http://localhost:8080/rest_nfv_war_exploded/nfv";
 
 # Issues
 
