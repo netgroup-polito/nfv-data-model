@@ -29,7 +29,9 @@ public class Client {
 		LOGGER.setUseParentHandlers(false);
 		baseUrl = System.getProperty("it.polito.dp2.rest.nfv.URL");
 		if(baseUrl == null)
-			baseUrl = "http://localhost:8080/RESTful_nfv/nfv";	
+			//make sure that XXXXXXX will be the name of your project
+			//or client will not work properly
+			baseUrl = "http://localhost:8080/XXXXXXX/nfv";	
 	}
 	
 	private void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf,
