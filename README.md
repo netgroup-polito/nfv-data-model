@@ -125,11 +125,11 @@ You need to specify the name of your project in the URL in which the client will
 
 If the name of the project is `rest_nfv`, then:
 
-			baseUrl = "http://localhost:8080/rest_nfv/nfv";
+	baseUrl = "http://localhost:8080/rest_nfv/nfv";
             
 Note that in **IntelliJ IDEA** is also present the `_war_exploded`, then:
 
-            baseUrl = "http://localhost:8080/rest_nfv_war_exploded/nfv";
+	baseUrl = "http://localhost:8080/rest_nfv_war_exploded/nfv";
 
 # Issues
 
