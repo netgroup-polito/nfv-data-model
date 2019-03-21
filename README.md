@@ -9,7 +9,7 @@ Different methos allow you to manage the whole structure and also the sub-struct
 - [Configuration](https://github.com/netgroup-polito/nfv-data-model#configuration)
     - [IntelliJ IDEA](https://github.com/netgroup-polito/nfv-data-model#intellij-idea)
     - [Eclipse](https://github.com/netgroup-polito/nfv-data-model#eclipse)
-- [Application Class](https://github.com/netgroup-polito/nfv-data-model#classes-configuration)
+- [Classes Configuration](https://github.com/netgroup-polito/nfv-data-model#classes-configuration)
 - [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
 
 # Configuration
@@ -109,7 +109,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     3. Select all jARs inside **lib** folder and click **OK**.
     4. **Apply** and then **OK** to close
 
-# Classes configuration
+# Classes Configuration
 
 ### Application Class
 
