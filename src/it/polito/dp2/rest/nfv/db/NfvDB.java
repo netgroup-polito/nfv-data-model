@@ -12,34 +12,35 @@ public class NfvDB {
         return nfvDB;
     }
 
-    NFV nfv;
+    private NFV nfv;
 
     private NfvDB(){
         nfv = new NFV();
-        nfv.setNS(new NS());
-        nfv.setPNI(new PNI());
+        nfv.setNS(nsDB.getNS());
+        nfv.setPNI(pniDB.getPNI());
     }
 
     public NFV getNFV(){
-    	nfv.setPNI(pniDB.getPNI());
-    	nfv.setNS(nsDB.getNS());
-    	
+        nfv.setNS(nsDB.getNS());
+        nfv.setPNI(pniDB.getPNI());
+
         return nfv;
     }
 
     public NFV addNFV(NFV nfvAdd){
         deleteNFV();
 
-        nfv.setNS(nfvAdd.getNS());
-        nfv.setPNI(nfvAdd.getPNI());
+        nfv.setPNI(pniDB.addPNI(nfvAdd.getPNI()));
+        nfv.setNS(nsDB.addNS(nfvAdd.getNS()));
 
         return nfv;
     }
 
     public void deleteNFV(){
-    	nfv.setPNI(new PNI());
-    	nfv.setNS(new NS());
+        pniDB.deletePNI();
+        nsDB.deleteNS();
 
+        nfv.setNS(nsDB.getNS());
+        nfv.setPNI(pniDB.getPNI());
     }
-    
 }

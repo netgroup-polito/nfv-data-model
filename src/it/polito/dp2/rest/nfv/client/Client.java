@@ -29,9 +29,7 @@ public class Client {
 		LOGGER.setUseParentHandlers(false);
 		baseUrl = System.getProperty("it.polito.dp2.rest.nfv.URL");
 		if(baseUrl == null)
-			//make sure that XXXXXXX will be the name of your project
-			//or client will not work properly
-			baseUrl = "http://localhost:8080/XXXXXXX/nfv";	
+			baseUrl = "http://localhost:8080/XXXXXX/nfv";
 	}
 	
 	private void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf,
@@ -268,6 +266,8 @@ public class Client {
 	}
 	
 	public void test (){
+		LOGGER.log(Level.FINEST, "Test start ");
+
 		/* ENTER A PNI COMPRENSIVE OF SEVERAL HOSTS AND CONNECTIONS */
 		enterHost("host1", TypeOfHost.CLIENT, "nodeA", 0, 1000, 2, 10, 4, 10, 0, 20, null,null);
 		enterHost("host2", TypeOfHost.SERVER, "nodeB", 0, 1000, 2, 10, 4, 10, 0, 20, null,null);
@@ -577,6 +577,8 @@ public class Client {
 	    
 	    // ENTRY THE NSD CREATED PREVIOUSLY
 		enterNSD(nsd);
+
+		LOGGER.log(Level.FINEST, "Succesful: Test ended");
 		
 	}
 }

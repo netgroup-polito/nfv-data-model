@@ -27,7 +27,7 @@ public class ClientResources {
     @ApiOperation(value = "testClient", notes = "Run Client perform different tests")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void getConnectionPoints() {
+    public void test() {
         service.test();
     }
 }
