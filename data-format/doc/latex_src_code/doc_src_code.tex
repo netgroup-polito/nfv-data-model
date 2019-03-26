@@ -143,7 +143,7 @@ Riccardo Sisto \\
 This paper is for the subject \textit{Distributed programming II}. The purpose of the project is to:
 \begin{itemize}
     \item Design a data format (described by means of an XML schema) for the representation of all the most relevant information in the NFV and SDN contexts.
-    \item Design and implement a RESTful web service that permits to store and retrieve the NFV/SDN information and interact with Orchestration services like VerifOO or Verigraph.
+    \item Design and implement a RESTful web service that permits to store and retrieve the NFV/SDN information.
 \end{itemize}
 
 \section{Background}
@@ -403,8 +403,8 @@ Describe dependencies between VNF. Defined in terms of source and target VNF, i.
 \begin{center}
     \begin{figure}[h!]
         \centering
-    	\includegraphics[width=9cm, height=5cm]{vnf_dependency.png}
-    	\caption{Network composed by two subnets, respectively with 3 and 4 hosts.} \label{Fig1}
+        \includegraphics[width=9cm, height=5cm]{vnf_dependency.png}
+        \caption{Network composed by two subnets, respectively with 3 and 4 hosts.} \label{Fig1}
     \end{figure}
 \end{center}
 
@@ -688,10 +688,10 @@ See \cite{etsi}, clause 6.2.1.2.
 The developed \textbf{RESTful web service} allows to store and retrieve information about the NFV schema previously described. It permits to add, delete and modify not only the entire structure of the network but also its sub-parts.
 
 \subsection{Development}
-The RESTful has been developed in Eclipse Neon 2, with the following features:
+The RESTful has been developed both in Eclipse Neon 2 and IntelliJ IDEA, with the following features:
 \begin{itemize}
     \item Framework: Jersey 2.2 and JAXB
-    \item Server: Tomcat v8.5
+    \item Server: Tomcat v8.5 (for Eclipse) and Glassfish 4.1 (for IntelliJ)
     \item Swagger API
 \end{itemize}
 
@@ -735,7 +735,7 @@ NFV's methods permits to manage the whole PNI and NS structure. \\
     \hline
     POST & - & Add a NFV. It will overwrite all the previous structures (if exist). & The body must contain the NFV structure. & 201 Created and the added NFV. \\
     \hline
-    PUT & - & Clear the NFV structure.  & - & Void. \\
+    DELETE & - & Clear the NFV structure.  & - & 204 No Content. \\
     \hline
 \end{tabular}
 
@@ -753,7 +753,7 @@ PNI's methods permits to manage the whole PNI structure. \\
     \hline
     POST & /pni & Add a new PNI. It will overwrite the previous one (if exists). & The body must contain the PNI structure. & 201 Created and the added PNI. \\
     \hline
-    DELETE & /pni & Clear the PNI structure.  & - & Void. \\
+    DELETE & /pni & Clear the PNI structure.  & - & 204 No Content. \\
     \hline
 \end{tabular}
 
@@ -775,7 +775,7 @@ Hosts methods permits to manage single or multiple hosts. \\
     \hline
     POST & /pni/hosts/host & Add a Host. & The body must contain the Host structure. & 403 Forbidden if the Host just exists. 201 Created and the added Host otherwise. \\
     \hline
-    DELETE & /pni/hosts/ host/\{id\} & Delete an existing Host. & The Id of the Host must be in the path. & 404 Not Found if the Host does not exist. Void otherwise. \\
+    DELETE & /pni/hosts/ host/\{id\} & Delete an existing Host. & The Id of the Host must be in the path. & 404 Not Found if the Host does not exist. 204 No Content otherwise. \\
     \hline
     PUT & /pni/hosts/host/ & Modify an existing Host. & The body must contain the Host structure. & 404 Not Found if the Host does not exist. 200 OK and the modified Host otherwise. \\
     \hline
@@ -799,7 +799,7 @@ Connections methods permits to manage single or multiple connections. \\
     \hline
     POST & /pni/ connections/ connection & Add a Connection. & The body must contain the Connection structure. & 403 Forbidden if the that connection just exist. 201 Created and the added connection otherwise. \\
     \hline
-    DELETE & /pni/ connections/ connection/ \{src\}\&\{dst\} & Delete a Connection. & Source and destination of that connection must be in the path. & 404 Not Found if the connection does not exist. Void otherwise. \\
+    DELETE & /pni/ connections/ connection/ \{src\}\&\{dst\} & Delete a Connection. & Source and destination of that connection must be in the path. & 404 Not Found if the connection does not exist. 204 No Content otherwise. \\
     \hline
     PUT & /pni/ connections/ connection/ & Modify an existing Connection. & The body must contain the Connection structure. & 404 Not Found if the connection does not exist. 200 OK and the modified connection otherwise. \\
     \hline
@@ -820,7 +820,7 @@ NS methods permits to manage the whole NS structure. \\
     \hline
     POST & /ns & Add a list of NSD. It will add the list of NSD and overwrite the previous one. & The body must contain the NS structure. & 201 Created and the added NS. \\
     \hline
-    DELETE & /ns & Clear all the NSD.  & - & Void. \\
+    DELETE & /ns & Clear all the NSD.  & - & 204 No Content. \\
     \hline
 \end{tabular} \\
 
@@ -837,7 +837,7 @@ NSD's methods permits to manage each NSD inside the NS sequence. \\
     \hline
     POST & /ns/nsd & Add a NSD. & The body must contain the NSD strucutre. & 403 Forbidden if the NSD just exists. 201 Created and the added NSD otherwise. \\
     \hline
-    DELETE & /ns/nsd/\{id\} & Delete a NSD. & The Id of that NSD must be in the path. & 404 Not Found  if the NSD does not exist. Void otherwise. \\
+    DELETE & /ns/nsd/\{id\} & Delete a NSD. & The Id of that NSD must be in the path. & 404 Not Found  if the NSD does not exist. 204 No Content otherwise. \\
     \hline
 \end{tabular} \\
 
@@ -858,7 +858,7 @@ VNF Dependency's methods permits to manage the whole VNF Dependency structure. \
     \hline
     POST & /vnfdependency & Add a VNFDependency. It will overwrite the previous one. & The body must contain the VNFDependency structure. & 201 Created and the added VNFDependency. \\
     \hline
-    DELETE & /vnfdependency & Clear VNFDependency. & - & Void. \\
+    DELETE & /vnfdependency & Clear VNFDependency. & - & 204 No Content. \\
     \hline
 \end{tabular}
 
@@ -873,13 +873,13 @@ VNF Dependency's methods permits to manage the whole VNF Dependency structure. \
     \hline
     POST & /vnfdependency /graph & Add a new Graph. & The body must contain the Graph structure. & 403 Forbidden if the graph does exist. 201 Created and the added Graph otherwise . \\
     \hline
-    DELETE & /vnfdependency /graph/\{id\} & Delete a Graph. & The Id of the Graph must be in the path. & 404 Not Found if the Graph does not exist. Void otherwise. \\
+    DELETE & /vnfdependency /graph/\{id\} & Delete a Graph. & The Id of the Graph must be in the path. & 404 Not Found if the Graph does not exist. 204 No Content otherwise. \\
     \hline
     GET   & /vnfdependency /graph/\{id\} /node/\{id\} & Read a certain Node of a Graph. & The Id of the Graph and Id of the Node must be in the path. & 404 Not Found if the Node does not exist in that Graph. 200 OK and the Node otherwise. \\
     \hline
     POST & /vnfdependency /graph/\{id\} /node & Add a new Node in a Graph. & The body must contain the Node structure. & 403 Forbidden if the Node just exists in that Graph. 201 Created and the added Node otherwise . \\
     \hline
-    DELETE & /vnfdependency /graph/\{id\} /node/\{id\} & Delete a Node of a Graph. & The Id of the Graph and Id of the Node must be in the path. & 404 Not Found if the Node does not exist in that Graph. Void otherwise. \\
+    DELETE & /vnfdependency /graph/\{id\} /node/\{id\} & Delete a Node of a Graph. & The Id of the Graph and Id of the Node must be in the path. & 404 Not Found if the Node does not exist in that Graph. 204 No Content otherwise. \\
     \hline
     PUT & /vnfdependency /graph/\{id\} /node & Modify a Node of a Graph. & The Id of the Graph must be in the path. & 404 Not Found if the Node does not exist in that Graph. 200 OK and the modified node otherwise. \\
     \hline
@@ -900,13 +900,13 @@ Property Definition's methods permits to manage single or multiple properties. \
     \hline
     POST & /propertydefinition & Add a list of Property Definition. It will overwrite the previous one. & The body must contain the PropertyDefinition structure. & 201 Created and the added PropertyDefintion. \\
     \hline
-    DELETE & /propertydefinition & Clear all the PropertyDefintion. & - & Void. \\
+    DELETE & /propertydefinition & Clear all the PropertyDefintion. & - & 204 No Content. \\
     \hline
     GET   & /propertydefinition /property/\{id\} & Read a Property. & The Id of the Graph (that owns the property) must be in the path. & 404 Not Found if that Graph does not have that property. 200 OK and the Property otherwise. \\
     \hline
     POST & /propertydefinition /property & Add a new Property Definition. & The body must contain the Property structure. & 201 Created and the added Property. \\
     \hline
-    DELETE & /propertydefinition /property/\{id\} & Delete a Property. & The Id of the Graph (that owns the property) must be in the path. & 404 Not Found if that Graph does not have that property. Void otherwise. \\
+    DELETE & /propertydefinition /property/\{id\} & Delete a Property. & The Id of the Graph (that owns the property) must be in the path. & 404 Not Found if that Graph does not have that property. 204 No Content otherwise. \\
     \hline
     PUT & /propertydefinition /property & Modify a Property. & The body must contain the Property structure. & 404 Not Found if the Property does not exist. 200 OK and the modified Property otherwise. \\
     \hline
@@ -927,13 +927,13 @@ VNF's methods permits to manage single or multiple VNFDs. \\
     \hline
     POST & /vnf & Add a list of VNFD. It will add overwrite the previous one. & The body must contain the VNF structure. & 201 Created and the added VNF. \\
     \hline
-    DELETE & /vnf & Clear all the VNFD. & - & Void. \\
+    DELETE & /vnf & Clear all the VNFD. & - & 204 No Content. \\
     \hline
     GET & /vnf/vnfd/\{id\} & Read a VNFD. & The Id of the VNFD must be in the path. & 404 Not Found if VNFD does not exist. 200 OK and the VNFD otherwise. \\
     \hline
     POST & /vnf/vnfd & Add a new VNFD. & The body must contain the VNFD structure. & 403 Forbidden if that VNFD exists. 201 Created and the added VNFD otherwise. \\
     \hline
-    DELETE & /vnf/vnfd/\{id\} & Delete a VNFD. & The Id of the VNFD must be in the path. & 404 Not Found if the VNFD does not exist. Void otherwise. \\
+    DELETE & /vnf/vnfd/\{id\} & Delete a VNFD. & The Id of the VNFD must be in the path. & 404 Not Found if the VNFD does not exist. 204 No Content otherwise. \\
     \hline
     PUT & /vnf/vnfd & Modify a VNFD. & The body must contain the VNFD structure. & 404 Not Found if the VNFD does not exist. 200 OK and the modified VNFD otherwise. \\
     \hline
@@ -954,13 +954,13 @@ VNFFGD's methods permits to manage single or multiple Network Forwarding Path. \
     \hline
     POST & /vnffgd & Add a list of Network Forwarding Path. It will overwrite the previous the one. & The body must contain the Network Forwarding Path structure. & 201 Created and the added VNFFGD. \\
     \hline
-    DELETE & /vnffgd & Clear all the Network Forwarding Path. & - & Void. \\
+    DELETE & /vnffgd & Clear all the Network Forwarding Path. & - & 204 No Content. \\
     \hline
     GET & /vnffgd/nfp/\{id\} & Read a Network Forwarding Path. & The Id of the Network Forwarding Path must be the path. & 404 Not Found if NetworkForwardingPath does not exist. 200 OK and the NetworkForwardingPath otherwise. \\
     \hline
     POST & /vnffgd/nfp & Add a new NetworkForwardingPath. & The body must contain the Network Forwarding Path. & 403 Forbidden if that NetworkForwardingPath exists. 201 Created and the NetworkForwardingPath otherwise. \\
     \hline
-    DELETE & /vnffgd/nfp/\{id\} & Delete a Network Forwarding Path. & The Id of the NetworkForwardingPath must be in the path. & 404 Not Found if the NetworkForwardingPath does not exist. Void otherwise. \\
+    DELETE & /vnffgd/nfp/\{id\} & Delete a Network Forwarding Path. & The Id of the NetworkForwardingPath must be in the path. & 404 Not Found if the NetworkForwardingPath does not exist. 204 No Content otherwise. \\
     \hline
     PUT & /vnffgd/nfp & Modify a NetworkForwardingPath. & The body must contain the Network Forwarding Path structure. & 404 Not Found if the NetworkForwardingPath does not exist. 200 OK and the modified  NetworkForwardingPath otherwise. \\
     \hline
@@ -981,13 +981,13 @@ PNF's methods permits to manage single or multiple PNFDs. \\
     \hline
     POST & /pnf & Add a list of PNF. It will overwrite the previous the one. & The body must contain the PNF structure. & 201 Created and the added PNF. \\
     \hline
-    DELETE & /pnf & Clear all the Physical Network Function. & - & Void. \\
+    DELETE & /pnf & Clear all the Physical Network Function. & - & 204 No Content. \\
     \hline
     GET & /pnf/pnfd/\{id\} & Read a PNFD. & The Id of the PNFD must be in the path. & 404 Not Found if PNFD does not exist. 200 OK and the PNFD otherwise. \\
     \hline
     POST & /pnf/pnfd & Add a new PNFD. & The body must contain the PNFD structure. & 403 Forbidden if that PNFD exists. 201 Created and the PNFD otherwise. \\
     \hline
-    DELETE & /pnf/pnfd/\{id\} & Delete a PNFD. & The Id of the PNFD must be in the path. & 404 Not Found if the PNFD does not exist. Void otherwise. \\
+    DELETE & /pnf/pnfd/\{id\} & Delete a PNFD. & The Id of the PNFD must be in the path. & 404 Not Found if the PNFD does not exist. 204 No Content otherwise. \\
     \hline
     PUT & /pnf/pnfd & Modify a PNFD. & The body must contain the PNFD structure. & 404 Not Found if the PNFD does not exist. 200 OK and the modified PNFD otherwise. \\
     \hline
@@ -1008,13 +1008,13 @@ Flavours methods permits to manage single or multiple Service Deployment Flavour
     \hline
     POST & /flavours & Add a list of Service Deployment Service. It will overwrite the previous the one. & The body must contain the Flavours structure. & 201 Created and the added Flavours. \\
     \hline
-    DELETE & /flavours & Clear all the Service Deployment Service. & - & Void. \\
+    DELETE & /flavours & Clear all the Service Deployment Service. & - & 204 No Content. \\
     \hline
     GET & /flavours/flavour/ \{id\} & Read a Service Deployment Service. & The Id of the Service Deployment Service must be in the path. & 404 Not Found if Service Deployment Service does not exist. 200 OK and the Service Deployment Service otherwise. \\
     \hline
     POST & /flavours/flavour & Add a new Service Deployment Service. & The body must contain the Service Deployment Service structure. & 403 Forbidden if that Service Deployment Service exists. 201 Created and the Service Deployment Service otherwise. \\
     \hline
-    DELETE & /flavours/flavour/ \{id\} & Delete a Service Deployment Service. & The Id of the Service Deployment Service must be in the path. & 404 Not Found if the Service Deployment Service does not exist. Void otherwise. \\
+    DELETE & /flavours/flavour/ \{id\} & Delete a Service Deployment Service. & The Id of the Service Deployment Service must be in the path. & 404 Not Found if the Service Deployment Service does not exist. 204 No Content otherwise. \\
     \hline
 \end{tabular}
 
@@ -1033,13 +1033,13 @@ Connection Points methods permits to manage single or multiple Connection Point.
     \hline
     POST & /cps & Add a list of Connection Point. It will overwrite the previous the one. & The body must contain the Connection Points structure. & 201 Created and the added Connection Points. \\
     \hline
-    DELETE & /cps & Clear all the Connection Points. & - & Void. \\
+    DELETE & /cps & Clear all the Connection Points. & - & 204 No Content. \\
     \hline
     GET & /cps/cp/\{id\} & Read a Connection Point. & The Id of the Connection Point must be in the path. & 404 Not Found if Connection Point does not exist. 200 OK and the Connection Point otherwise. \\
     \hline
     POST & /cps/cp & Add a new Connection Point. & The body must contain the Connection Point structure. & 403 Forbidden Exception if that Connection Point exists. 201 Created and the added Connection Point otherwise. \\
     \hline
-    DELETE & /cps/cp/\{id\} & Delete a Connection Point. & The Id of the Connection Point must be in the path. & 404 Not Found if the Connection Point does not exist. Void otherwise. \\
+    DELETE & /cps/cp/\{id\} & Delete a Connection Point. & The Id of the Connection Point must be in the path. & 404 Not Found if the Connection Point does not exist. 204 No Content otherwise. \\
     \hline
 \end{tabular}
 
