@@ -2,7 +2,7 @@
 
 Implementation of a RESTful web service that permits to store and retrieve the NFV/SDN information. 
 
-Different methos allow you to manage the whole structure and also the sub-structure. There is the possibility to **add**, **remove**, **modify** hosts, graphs, vnfd and so on. Check [documentation](https://github.com/NFV-Architecture/data-format/blob/master/doc/DP2_NFV_Data_Models.pdf), section 5, for more details.
+Different methos allow you to manage the whole structure and also the sub-structure. There is the possibility to **add**, **remove**, **modify** hosts, graphs, vnfd and so on. Check [documentation](https://github.com/netgroup-polito/nfv-data-model/blob/master/data-format/doc/DP2_NFV_Data_Models.pdf), section 5, for more details.
 
 # Overview
 
