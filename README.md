@@ -71,7 +71,7 @@ Click Finish and wait while IntelliJ IDEA is creating the project.
 
 1. Clone the project
 
-        git clone https://github.com/NFV-Architecture/RESTful-web-service.git
+        git clone https://github.com/netgroup-polito/nfv-data-model.git
 
 2. Change the name folder of **WebContent** into **web**.
 3. Rewrite all the file folder of your project with the new one downloaded.
@@ -106,7 +106,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
 
 1. Clone the project
 
-        git clone https://github.com/NFV-Architecture/RESTful-web-service.git
+        git clone https://github.com/netgroup-polito/nfv-data-model.git
 
 2. Rewrite all the file folder of your project with the new one downloaded.
 3. Insert libs dependancy inside the project (to fix class import errors).
