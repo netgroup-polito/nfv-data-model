@@ -14,8 +14,8 @@ Different methos allow you to manage the whole structure and also the sub-struct
 	- [Client Class](https://github.com/netgroup-polito/nfv-data-model#client-class)
 	- [ClientTest Class](https://github.com/netgroup-polito/nfv-data-model#clienttest-class)
 - [Test](https://github.com/netgroup-polito/nfv-data-model#test)
-	- [JUnit test](https://github.com/netgroup-polito/nfv-data-model#junit-test)
-	- [Client test](https://github.com/netgroup-polito/nfv-data-model#client-test)
+	- JUnit test
+	- Client test
 - [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
 
 # Configuration
