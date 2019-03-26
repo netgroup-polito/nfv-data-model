@@ -186,8 +186,8 @@ Two ways to perform test:
 
 - Glassfish does not recognize JDK (*Error: glassfish requires java se version 6. your jdk is version 0*)
 
-    Check `glassfish\config\asenv.bat` and edit it: `set AS_JAVA=PATH_TO_JDK`
+    Check `glassfish\config\asenv.bat` and edit it: `set AS_JAVA=JDK_PATH`
 
 - Java Path
 
-        export JAVA_HOME="PATH_TO_JAVA"
+        export JAVA_HOME="JAVA_PATH"
