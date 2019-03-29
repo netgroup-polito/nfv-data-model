@@ -99,8 +99,9 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     1. Search for **Dynamic Web Project**.
     2. Set the **Project name**.
     3. On **Target runtime** select **Apache Tomcat v8.5**.
-    4. From **Dynamic web module version** select **3.1**.
-    5. Click **Finish**.
+    4. Now browse the path of Tomcat home directory: usually (for version 5) */opt/tomcat/apache-tomcat-8.5.20* or */opt/apache-tomcat-8.5.20*
+    5. From **Dynamic web module version** select **3.1**.
+    6. Click **Finish**.
     
 ### Import the project
 
@@ -113,7 +114,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
     1. Right click on the project and click on **Properties**.
     2. From **Java Build Path** select **Add jARs**.
     3. Select all jARs inside **lib** folder and click **OK**.
-    4. **Apply** and then **OK** to close
+    4. **Apply** and then **OK** to close.
 
 # Classes Configuration
 
