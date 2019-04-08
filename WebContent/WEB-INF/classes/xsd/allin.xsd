@@ -5,7 +5,7 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:annotation>
         <xsd:documentation
-                source="https://github.com/netgroup-polito/nfv-data-model/tree/master/data-format"
+                source="https://github.com/netgroup-polito/nfv-data-model/tree/master/data-format/doc"
                 xml:lang="EN">
             Special Project 3 - NFV dataModel
         </xsd:documentation>
@@ -23,9 +23,9 @@
             <xsd:selector xpath="NS/NSD"/>
             <xsd:field xpath="@id"/>
         </xsd:unique>
-        <!-- NFV Virtual and Pysical references
-        Physical is connected directly with the physical function implemented [PNFD{id}]
-        Virtual ref is instead linked to the Node that host that function [in VNF_dependency/graph/node{id}]
+        <!-- NFV Virtual and Physical references
+			Physical is connected directly with the physical function implemented [PNFD{id}]
+			Virtual ref is instead linked to the Node that host that function [in VNF_dependency/graph/node{id}]
         -->
         <xsd:key name="VNFDKey">
             <xsd:selector xpath="NS/NSD/VNF/VNFD" />
@@ -70,6 +70,10 @@
 	<xsd:element name="PNI">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="Hosts" minOccurs="1" maxOccurs="1"/>
 		        <xsd:element ref="Connections" minOccurs="0" maxOccurs="1"/>
 		    </xsd:sequence>
@@ -98,6 +102,10 @@
 	<xsd:element name="Hosts">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="Host" minOccurs="0" maxOccurs="unbounded"/>
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -146,6 +154,10 @@
 	<xsd:element name="Connections">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="Connection" minOccurs="0" maxOccurs="unbounded"/>
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -161,6 +173,10 @@
 	<xsd:element name="NS">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="NSD" minOccurs="0" maxOccurs="unbounded"/>
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -170,6 +186,10 @@
 	<xsd:element name="NSD">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 				<xsd:element ref="VNF_dependency" minOccurs="0" maxOccurs="1"/>
 				<xsd:element ref="PropertyDefinition" minOccurs="1" maxOccurs="1"/>
 				<xsd:element ref="VNF" minOccurs="0" maxOccurs="1"/>
@@ -214,6 +234,10 @@
 	<xsd:element name="VNF">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 				<xsd:element ref="VNFD" minOccurs="1" maxOccurs="unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
@@ -222,6 +246,10 @@
 		<xsd:element name="PNF">
 		<xsd:complexType>
 			<xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 				<xsd:element ref="PNFD" minOccurs="0" maxOccurs="unbounded"/>
 			</xsd:sequence>
 		</xsd:complexType>
@@ -231,6 +259,10 @@
 	<xsd:element name="VNF_dependency">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="graph" maxOccurs="unbounded" minOccurs="0" />
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -321,6 +353,10 @@
 	<xsd:element name="PropertyDefinition">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 				<xsd:element name="Property" type="Property" minOccurs="1" maxOccurs="unbounded"/>
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -472,6 +508,10 @@
 	<xsd:element name="VNFFGD">
 		<xsd:complexType>
 		    <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
 		        <xsd:element ref="NetworkForwardingPaths" minOccurs="0" maxOccurs="unbounded"/>
 		    </xsd:sequence>
 		</xsd:complexType>
@@ -503,6 +543,10 @@
 	<xsd:element name="flavours">
         <xsd:complexType>
             <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
                 <xsd:element ref="Service_deployment_flavour" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>
@@ -518,6 +562,10 @@
     <xsd:element name="Connection_points">
         <xsd:complexType>
             <xsd:sequence>
+				<xsd:element name="totalPages" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="page" type="xsd:positiveInteger" minOccurs="0"/>
+				<xsd:element name="next" type="xsd:anyURI" minOccurs="0"/>
+
                 <xsd:element ref="Connection_point" minOccurs="0" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>

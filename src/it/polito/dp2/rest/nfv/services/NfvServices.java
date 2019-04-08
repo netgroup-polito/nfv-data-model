@@ -16,7 +16,7 @@ public class NfvServices {
 
     /**
      * Add a NS list
-     * @param ns
+     * @param nfv
      * @return The NFV structure inserted or null if something wrong happened
      */
     public NFV addNFV(NFV nfv) {

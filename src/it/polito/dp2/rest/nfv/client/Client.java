@@ -29,7 +29,7 @@ public class Client {
 		LOGGER.setUseParentHandlers(false);
 		baseUrl = System.getProperty("it.polito.dp2.rest.nfv.URL");
 		if(baseUrl == null)
-			baseUrl = "http://localhost:8080/XXXXXX/nfv";
+			baseUrl = "http://localhost:8080/nfv_rest_war_exploded/nfv";
 	}
 	
 	private void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf,
@@ -383,7 +383,7 @@ public class Client {
 	    g1.setId((long) 0);
 	    
 	    Node n1 = new Node();
-	    n1.setId((long) 0);
+	    n1.setId("0");
 	    n1.setName("nodeA");
 	    n1.setFunctionalType(FunctionalTypes.WEBSERVER);
 	    Configuration conf1 = new Configuration();
@@ -396,7 +396,7 @@ public class Client {
 	    g1.getNode().add(n1);
 	    
 	    Node n2 = new Node();
-	    n2.setId((long) 1);
+	    n2.setId("1");
 	    n2.setName("nodeB");
 	    n2.setFunctionalType(FunctionalTypes.WEBCLIENT);
 	    Configuration conf2 = new Configuration();
@@ -409,7 +409,7 @@ public class Client {
 	    g1.getNode().add(n2);
 	    
 	    Node n3= new Node();
-	    n3.setId((long) 2);
+	    n3.setId("2");
 	    n3.setName("nodeC");
 	    n3.setFunctionalType(FunctionalTypes.FIREWALL);
 	    Configuration conf3 = new Configuration();
@@ -425,7 +425,7 @@ public class Client {
 	    g1.getNode().add(n3);
 	    
 	    Node n4 = new Node();
-	    n4.setId((long) 3);
+	    n4.setId("3");
 	    n4.setName("nodeD");
 	    n4.setFunctionalType(FunctionalTypes.CACHE);
 	    Configuration conf4 = new Configuration();
@@ -439,7 +439,7 @@ public class Client {
 	    g1.getNode().add(n4);
 	    
 	    Node n5 = new Node();
-	    n5.setId((long) 4);
+	    n5.setId("4");
 	    n5.setName("nodeE");
 	    n5.setFunctionalType(FunctionalTypes.FIELDMODIFIER);
 	    Configuration conf5 = new Configuration();

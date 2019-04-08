@@ -29,8 +29,8 @@ public class PniResources {
     @ApiOperation(value = "getPni", notes = "Read the PNI data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public PNI getPNI() {
-        return service.getPNI();
+    public PNI getPNI(@QueryParam("page") int page) {
+        return service.getPNI(uriInfo.getBaseUri().toString(), page);
     }
 
     @POST
@@ -71,8 +71,8 @@ public class PniResources {
     @ApiOperation(value = "getHosts", notes = "Read all the hosts inside the PNI")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Hosts getHosts() {
-        return service.getHosts();
+    public Hosts getHosts(@QueryParam("page") int page) {
+        return service.getHosts(uriInfo.getBaseUri().toString(), page);
     }
     
     @POST
@@ -104,8 +104,9 @@ public class PniResources {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response getHostInfo(@PathParam("id") String hostID) {
-        Host host = service.getHostInfo(hostID);
+        Host host;
         try{
+            host = service.getHostInfo(hostID);
         	if(host == null)
                 throw new NotFoundException();
         }catch(Exception e){
@@ -126,6 +127,7 @@ public class PniResources {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path(hostAdd.getId());
         URI self = builder.build();
+
         try{
         	if(service.addHost(hostAdd) == null)
                 throw new ForbiddenException();
@@ -159,7 +161,7 @@ public class PniResources {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Host modifyHost(Host hostMod){
-        Host host = null;
+        Host host;
 
         try{
             host = service.modifyHost(hostMod);
@@ -180,8 +182,8 @@ public class PniResources {
     @ApiOperation(value = "getConnections", notes = "Read all the connections inside the PNI")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Connections getConnections() {
-        return service.getConnections();
+    public Connections getConnections(@QueryParam("page") int page) {
+        return service.getConnections(uriInfo.getBaseUri().toString(), page);
     }
     
     @POST
@@ -213,9 +215,11 @@ public class PniResources {
             @ApiResponse(code = 404, message = "Connection not Found")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-    public Response getConnectionInfo(@PathParam("src") String connectionSrc, @PathParam("dst") String connectionDst) {
-        Connection connection = service.getConnectionInfo(connectionSrc, connectionDst);
+    public Response getConnectionInfo(@PathParam("src") String connectionSrc, @PathParam("dst") String connectionDst){
+        Connection connection;
+
         try{
+            connection = service.getConnectionInfo(connectionSrc, connectionDst);
         	if(connection == null)
                 throw new NotFoundException();
         }catch(Exception e){
@@ -270,7 +274,8 @@ public class PniResources {
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Connection modifyConnection(Connection connectionMod){
-        Connection connection = null;
+        Connection connection;
+
         try{
             connection = service.modifyConnection(connectionMod);
             if(connection == null)

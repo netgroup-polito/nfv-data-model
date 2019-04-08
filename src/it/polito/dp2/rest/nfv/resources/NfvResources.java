@@ -24,7 +24,7 @@ import it.polito.dp2.rest.nfv.services.NfvServices;
 import it.polito.dp2.rest.nfv.jaxb.NFV;
 
 @Path("/")
-@Api(value = "./")
+@Api(value = "/")
 public class NfvResources {
 	
 	public UriInfo uriInfo;

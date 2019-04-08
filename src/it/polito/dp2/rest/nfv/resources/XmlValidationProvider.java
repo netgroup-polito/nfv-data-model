@@ -1,6 +1,5 @@
 package it.polito.dp2.rest.nfv.resources;
-// This validator performs JAXB unmarshalling with validation
-// against the schema
+
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 import java.io.BufferedReader;
@@ -28,17 +27,16 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 @Provider
 @Consumes({"application/xml","text/xml"})
 public class XmlValidationProvider<T> implements MessageBodyReader<T> {
-	final String jaxbPackage = "it.polito.dp2.rest.nfv.jaxb";
-	Schema schema;
-	JAXBContext jc;
-	Logger logger;
-	String responseBodyTemplate;
+	private final String jaxbPackage = "it.polito.dp2.rest.nfv.jaxb";
+	private Schema schema;
+	private JAXBContext jc;
+	private Logger logger;
+	private String responseBodyTemplate;
 
 
 	public XmlValidationProvider() {
@@ -117,5 +115,4 @@ public class XmlValidationProvider<T> implements MessageBodyReader<T> {
 		}
 
 	}
-
 }

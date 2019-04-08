@@ -27,14 +27,14 @@ public class VnffgdResources {
     @ApiOperation(value = "getVNFFGD", notes = "Read the VNFFGD data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public VNFFGD getVNFFGD(@PathParam("nsdID") String nsdID) {
-        return service.getVNFFGD(nsdID);
+    public VNFFGD getVNFFGD(@QueryParam("page") int page, @PathParam("nsdID") String nsdID) {
+        return service.getVNFFGD(nsdID, uriInfo.getBaseUri().toString(), page);
     }
 
     @POST
     @ApiOperation(value = "addVNFFGD", notes = "Add a new VNFFGD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addVNFFGD(@PathParam("nsdID") String nsdID, VNFFGD vnffgd) {
@@ -44,9 +44,9 @@ public class VnffgdResources {
 
         try{
             if(service.addVNFFGD(nsdID, vnffgd) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
-            throw new InternalServerErrorException();
+            throw e;
         }
 
         return Response.created(self).entity(vnffgd).build();
@@ -55,11 +55,11 @@ public class VnffgdResources {
     @DELETE
     @ApiOperation(value = "deleteVNFFGD", notes = "Clear the VNFFGD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     public void deleteVNFFGD(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteVNFFGD(nsdID) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -69,10 +69,10 @@ public class VnffgdResources {
     @Path("/nfp/{pathID}")
     @ApiOperation(value = "getVNFFGD", notes = "Read a certain VNFFGD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-    		@ApiResponse(code = 404, message = "Path Not Found")})
+    		@ApiResponse(code = 404, message = "NSD does not exist or Path Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public NetworkForwardingPaths getNetworkForwardingPathsInfo(@PathParam("nsdID") String nsdID, @PathParam("pathID") String pathID) {
-    	NetworkForwardingPaths nfp = new NetworkForwardingPaths();
+    	NetworkForwardingPaths nfp;
     	
     	try{
     		if((nfp = service.getNetworkForwardingPathsInfo(nsdID, pathID)) == null)
@@ -88,7 +88,7 @@ public class VnffgdResources {
     @Path("/nfp")
     @ApiOperation(value = "addNetworkForwardingPaths", notes = "Add a new NetworkForwardingPaths")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-    		@ApiResponse(code = 403, message = "Forbidden: Path already exists")})
+    		@ApiResponse(code = 403, message = "NSD does not exist or Path already exists")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addNetworkForwardingPaths(@PathParam("nsdID") String nsdID, NetworkForwardingPaths nfp) {
@@ -110,7 +110,7 @@ public class VnffgdResources {
     @Path("/nfp/{pathID}")
     @ApiOperation(value = "deleteNetworkForwardingPaths", notes = "Remove a certain NetworkForwardingPaths")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Path Not Found")})
+            @ApiResponse(code = 404, message = "NSD does not exist or Path Not Found")})
     public void deleteNetworkForwardingPaths(@PathParam("nsdID") String nsdID, @PathParam("pathID") String pathID) {
         try{
             if(service.deleteNetworkForwardingPaths(nsdID, pathID) == null)
@@ -124,7 +124,7 @@ public class VnffgdResources {
     @Path("/nfp")
     @ApiOperation(value = "deleteNetworkForwardingPaths", notes = "Remove a certain NetworkForwardingPaths")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Path Not Found"),})
+            @ApiResponse(code = 404, message = "NSD does not exist or Path Not Found")})
     public NetworkForwardingPaths modifyNetworkForwardingPaths(@PathParam("nsdID") String nsdID, NetworkForwardingPaths nfp) {
         try{
             if(service.modifyNetworkForwardingPaths(nsdID, nfp) == null)
@@ -135,5 +135,4 @@ public class VnffgdResources {
         
         return nfp;
     }
-
 }

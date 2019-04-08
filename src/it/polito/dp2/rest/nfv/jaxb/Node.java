@@ -24,8 +24,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{}neighbour" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{}configuration"/>
  *       &lt;/sequence>
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}long" />
+ *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="vnfd_ref" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="functional_type" use="required" type="{}functionalTypes" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,9 +47,11 @@ public class Node {
     @XmlElement(required = true)
     protected Configuration configuration;
     @XmlAttribute(name = "id")
-    protected Long id;
+    protected String id;
     @XmlAttribute(name = "name", required = true)
     protected String name;
+    @XmlAttribute(name = "vnfd_ref")
+    protected String vnfdRef;
     @XmlAttribute(name = "functional_type", required = true)
     protected FunctionalTypes functionalType;
 
@@ -110,10 +113,10 @@ public class Node {
      * 
      * @return
      *     possible object is
-     *     {@link Long }
+     *     {@link String }
      *     
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -122,10 +125,10 @@ public class Node {
      * 
      * @param value
      *     allowed object is
-     *     {@link Long }
+     *     {@link String }
      *     
      */
-    public void setId(Long value) {
+    public void setId(String value) {
         this.id = value;
     }
 
@@ -151,6 +154,30 @@ public class Node {
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà vnfdRef.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVnfdRef() {
+        return vnfdRef;
+    }
+
+    /**
+     * Imposta il valore della proprietà vnfdRef.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVnfdRef(String value) {
+        this.vnfdRef = value;
     }
 
     /**

@@ -15,15 +15,15 @@ public class MyApplication extends Application{
 	public Set<Class<?>> getClasses() {
 		HashSet<Class<?>> h = new HashSet<>();
 
-		h.add(NfvResources.class);
+		//h.add(NfvResources.class);
 		h.add(ConnectionPointsResources.class);
 		h.add(FlavoursResources.class);
 		h.add(NsResources.class);
-		h.add(PnfdResources.class);
+		h.add(PnfResources.class);
 		h.add(PniResources.class);
 		h.add(PropertyDefinitionResources.class);
 		h.add(VnfdependencyResources.class);
-		h.add(VnfdResources.class);
+		h.add(VnfResources.class);
 		h.add(VnffgdResources.class);
 
 		h.add(XmlValidationProvider.class);

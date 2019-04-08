@@ -12,8 +12,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 import java.net.URI;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Path("/ns")
 @Api(value = "/ns")
@@ -30,8 +28,8 @@ public class NsResources {
     @ApiOperation(value = "getNS", notes = "Read the NS data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public NS getNS() {
-        return service.getNS();
+    public NS getNS(@QueryParam("page") int page) {
+        return service.getNS(uriInfo.getBaseUri().toString(), page);
     }
 
     @POST
@@ -44,10 +42,6 @@ public class NsResources {
         //Set self URI
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("ns");
         URI self = builder.build();
-
-        Logger logger;
-        logger = Logger.getLogger(NsResources.class.getName());
-        logger.log(Level.SEVERE, "NS POST");
 
         try{
             service.addNS(ns);
@@ -73,12 +67,14 @@ public class NsResources {
     @GET
     @Path("/nsd/{nsdID}")
     @ApiOperation(value = "getNSD", notes = "Read the NSD data")
-    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public NSD getNSDInfo(@PathParam("nsdID") String nsdID) {
-    	NSD nsd = new NSD();
+    public NSD getNSDInfo(@QueryParam("page") int page, @PathParam("nsdID") String nsdID) {
+    	NSD nsd;
+
         try{
-        	if((nsd = service.getNSDInfo(nsdID)) == null)
+        	if((nsd = service.getNSDInfo(nsdID, uriInfo.getBaseUri().toString(), page)) == null)
         		throw new NotFoundException();
         }catch(Exception e){
         	throw e;
@@ -91,8 +87,7 @@ public class NsResources {
     @Path("/nsd")
     @ApiOperation(value = "addNSD", notes = "Add a new NSD")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 403, message = "NSD just exist: ID must be unique")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addNSD(NSD nsd) {
@@ -114,8 +109,7 @@ public class NsResources {
     @Path("/nsd/{nsdID}")
     @ApiOperation(value = "deleteNSD", notes = "Delete a NSD")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 500, message = "Internal Error"),})
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     public void deleteVNFDependency(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteNSD(nsdID) == null)

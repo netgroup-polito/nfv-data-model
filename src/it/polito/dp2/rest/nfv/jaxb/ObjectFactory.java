@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the it.polito.dp2.rest.nfv.jaxb package.
+ * generated in the it.polito.dp2.rest.nfv.jaxb package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -46,14 +46,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Mailclient }
-     * 
-     */
-    public Mailclient createMailclient() {
-        return new Mailclient();
-    }
-
-    /**
      * Create an instance of {@link Connections }
      * 
      */
@@ -67,6 +59,14 @@ public class ObjectFactory {
      */
     public Connection createConnection() {
         return new Connection();
+    }
+
+    /**
+     * Create an instance of {@link Mailclient }
+     * 
+     */
+    public Mailclient createMailclient() {
+        return new Mailclient();
     }
 
     /**
@@ -155,6 +155,54 @@ public class ObjectFactory {
      */
     public Webclient createWebclient() {
         return new Webclient();
+    }
+
+    /**
+     * Create an instance of {@link NS }
+     * 
+     */
+    public NS createNS() {
+        return new NS();
+    }
+
+    /**
+     * Create an instance of {@link NSD }
+     * 
+     */
+    public NSD createNSD() {
+        return new NSD();
+    }
+
+    /**
+     * Create an instance of {@link VNFDependency }
+     * 
+     */
+    public VNFDependency createVNFDependency() {
+        return new VNFDependency();
+    }
+
+    /**
+     * Create an instance of {@link Graph }
+     * 
+     */
+    public Graph createGraph() {
+        return new Graph();
+    }
+
+    /**
+     * Create an instance of {@link Node }
+     * 
+     */
+    public Node createNode() {
+        return new Node();
+    }
+
+    /**
+     * Create an instance of {@link Neighbour }
+     * 
+     */
+    public Neighbour createNeighbour() {
+        return new Neighbour();
     }
 
     /**
@@ -254,62 +302,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link NodeConnection }
-     * 
-     */
-    public NodeConnection createNodeConnection() {
-        return new NodeConnection();
-    }
-
-    /**
-     * Create an instance of {@link NS }
-     * 
-     */
-    public NS createNS() {
-        return new NS();
-    }
-
-    /**
-     * Create an instance of {@link NSD }
-     * 
-     */
-    public NSD createNSD() {
-        return new NSD();
-    }
-
-    /**
-     * Create an instance of {@link VNFDependency }
-     * 
-     */
-    public VNFDependency createVNFDependency() {
-        return new VNFDependency();
-    }
-
-    /**
-     * Create an instance of {@link Graph }
-     * 
-     */
-    public Graph createGraph() {
-        return new Graph();
-    }
-
-    /**
-     * Create an instance of {@link Node }
-     * 
-     */
-    public Node createNode() {
-        return new Node();
-    }
-
-    /**
-     * Create an instance of {@link Neighbour }
-     * 
-     */
-    public Neighbour createNeighbour() {
-        return new Neighbour();
-    }
-
-    /**
      * Create an instance of {@link PropertyDefinition }
      * 
      */
@@ -379,6 +371,14 @@ public class ObjectFactory {
      */
     public NetworkForwardingPaths createNetworkForwardingPaths() {
         return new NetworkForwardingPaths();
+    }
+
+    /**
+     * Create an instance of {@link NodeConnection }
+     * 
+     */
+    public NodeConnection createNodeConnection() {
+        return new NodeConnection();
     }
 
     /**

@@ -13,7 +13,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 
 @Path("ns/nsd/{nsdID}/cps")
-@Api(value = "/ns/{nsdID}/cps")
+@Api(value = "/ns/nsd/{nsdID}/cps")
 public class ConnectionPointsResources {
     public UriInfo uriInfo;
 
@@ -27,14 +27,14 @@ public class ConnectionPointsResources {
     @ApiOperation(value = "getConnectionPoints", notes = "Read the ConnectionPoints data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ConnectionPoints getConnectionPoints(@PathParam("nsdID") String nsdID) {
-        return service.getConnectionPoints(nsdID);
+    public ConnectionPoints getConnectionPoints(@QueryParam("page") int page, @PathParam("nsdID") String nsdID) {
+        return service.getConnectionPoints(nsdID, uriInfo.getBaseUri().toString(), page);
     }
 
     @POST
     @ApiOperation(value = "addConnectionPoints", notes = "Add a new ConnectionPoints")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addConnectionPoints(@PathParam("nsdID") String nsdID, ConnectionPoints cps) {
@@ -44,7 +44,7 @@ public class ConnectionPointsResources {
 
         try{
             if(service.addConnectionPoints(nsdID, cps) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -55,11 +55,11 @@ public class ConnectionPointsResources {
     @DELETE
     @ApiOperation(value = "deleteConnectionPoints", notes = "Clear the ConnectionPoints")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 404, message = "NSD Not Found")})
     public void deleteConnectionPoints(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteConnectionPoints(nsdID) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -69,10 +69,10 @@ public class ConnectionPointsResources {
     @Path("/cp/{cpID}")
     @ApiOperation(value = "getServiceConnectionPoint", notes = "Read a certain ConnectionPoint")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-    		@ApiResponse(code = 404, message = "Connection Point Not Found")})
+    		@ApiResponse(code = 404, message = "NSD does not exist or Connection Point Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ConnectionPoint getConnectionPointInfo(@PathParam("nsdID") String nsdID, @PathParam("cpID") String cpID) {
-    	ConnectionPoint cp = new ConnectionPoint();
+    	ConnectionPoint cp;
     	
     	try{ 
         	if((cp = service.getConnectionPoint(nsdID, cpID)) == null)
@@ -89,7 +89,7 @@ public class ConnectionPointsResources {
     @Path("/cp")
     @ApiOperation(value = "addConnectionPoint", notes = "Add a new ConnectionPoint")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 403, message = "Forbidden: connection point already exists")})
+            @ApiResponse(code = 403, message = "NSD does not exist or Connection Point already exists")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addConnectionPoint(@PathParam("nsdID") String nsdID, ConnectionPoint cp) {
@@ -111,7 +111,7 @@ public class ConnectionPointsResources {
     @Path("/cp/{cpID}")
     @ApiOperation(value = "deleteConnectionPoint", notes = "Remove a certain ConnectionPoint")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Connection Point Not Found")})
+            @ApiResponse(code = 404, message = "NSD does not exist or Connection Point Not Found")})
     public void deleteConnectionPoint(@PathParam("nsdID") String nsdID, @PathParam("cpID") String cpID) {
         try{
             if(service.deleteConnectionPoint(nsdID, cpID) == null)
@@ -120,5 +120,4 @@ public class ConnectionPointsResources {
             throw e;
         }
     }
-
 }

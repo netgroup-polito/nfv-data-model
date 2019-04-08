@@ -1,11 +1,13 @@
 
 package it.polito.dp2.rest.nfv.jaxb;
 
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -19,6 +21,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="totalPages" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/>
+ *         &lt;element name="page" type="{http://www.w3.org/2001/XMLSchema}positiveInteger" minOccurs="0"/>
+ *         &lt;element name="next" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *         &lt;element ref="{}VNF_dependency" minOccurs="0"/>
  *         &lt;element ref="{}PropertyDefinition"/>
  *         &lt;element ref="{}VNF" minOccurs="0"/>
@@ -40,6 +45,9 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "totalPages",
+    "page",
+    "next",
     "vnfDependency",
     "propertyDefinition",
     "vnf",
@@ -52,6 +60,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "NSD")
 public class NSD {
 
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger totalPages;
+    @XmlSchemaType(name = "positiveInteger")
+    protected BigInteger page;
+    @XmlSchemaType(name = "anyURI")
+    protected String next;
     @XmlElement(name = "VNF_dependency")
     protected VNFDependency vnfDependency;
     @XmlElement(name = "PropertyDefinition", required = true)
@@ -73,6 +87,78 @@ public class NSD {
     protected String vendor;
     @XmlAttribute(name = "version")
     protected String version;
+
+    /**
+     * Recupera il valore della proprietà totalPages.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getTotalPages() {
+        return totalPages;
+    }
+
+    /**
+     * Imposta il valore della proprietà totalPages.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setTotalPages(BigInteger value) {
+        this.totalPages = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà page.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    public BigInteger getPage() {
+        return page;
+    }
+
+    /**
+     * Imposta il valore della proprietà page.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    public void setPage(BigInteger value) {
+        this.page = value;
+    }
+
+    /**
+     * Recupera il valore della proprietà next.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNext() {
+        return next;
+    }
+
+    /**
+     * Imposta il valore della proprietà next.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNext(String value) {
+        this.next = value;
+    }
 
     /**
      * Recupera il valore della proprietà vnfDependency.

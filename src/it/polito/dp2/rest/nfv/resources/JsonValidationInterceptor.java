@@ -3,7 +3,6 @@ package it.polito.dp2.rest.nfv.resources;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +18,6 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.ReaderInterceptor;
 import javax.ws.rs.ext.ReaderInterceptorContext;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -32,11 +30,11 @@ import org.xml.sax.SAXParseException;
 @Provider
 @Consumes({"application/json","text/json"})
 public class JsonValidationInterceptor implements ReaderInterceptor {
-	final String jaxbPackage = "it.polito.dp2.rest.nfv.jaxb";
-	Schema schema;
-	JAXBContext jc;
-	Logger logger;
-	String responseBodyTemplate;
+	private final String jaxbPackage = "it.polito.dp2.rest.nfv.jaxb";
+	private Schema schema;
+	private JAXBContext jc;
+	private Logger logger;
+	private String responseBodyTemplate;
 
 	public JsonValidationInterceptor() {
 		logger = Logger.getLogger(XmlValidationProvider.class.getName());
@@ -103,5 +101,4 @@ public class JsonValidationInterceptor implements ReaderInterceptor {
 		validate(ret);
 		return ret;
 	}
-
 }

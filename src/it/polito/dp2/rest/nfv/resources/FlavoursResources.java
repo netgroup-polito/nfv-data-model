@@ -27,14 +27,14 @@ public class FlavoursResources {
     @ApiOperation(value = "getFlavours", notes = "Read the Flavours data")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Flavours getFlavours(@PathParam("nsdID") String nsdID) {
-        return service.getFlavours(nsdID);
+    public Flavours getFlavours(@QueryParam("page") int page, @PathParam("nsdID") String nsdID) {
+        return service.getFlavours(nsdID, uriInfo.getBaseUri().toString(), page);
     }
 
     @POST
     @ApiOperation(value = "addFlavours", notes = "Add a new Flavours")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 200, message = "NSD Not Found")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addFlavours(@PathParam("nsdID") String nsdID, Flavours flavours) {
@@ -44,7 +44,7 @@ public class FlavoursResources {
 
         try{
             if(service.addFlavours(nsdID, flavours) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -55,11 +55,11 @@ public class FlavoursResources {
     @DELETE
     @ApiOperation(value = "deleteFlavours", notes = "Clear the Flavours")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 500, message = "Internal Error")})
+            @ApiResponse(code = 200, message = "NSD Not Found")})
     public void deleteFlavours(@PathParam("nsdID") String nsdID) {
         try{
             if(service.deleteFlavours(nsdID) == null)
-                throw new InternalServerErrorException();
+                throw new NotFoundException();
         }catch (Exception e) {
             throw e;
         }
@@ -69,10 +69,10 @@ public class FlavoursResources {
     @Path("/flavour/{sdfID}")
     @ApiOperation(value = "getServiceDeploymentFlavour", notes = "Read a certain ServiceDeploymentFlavour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-    		@ApiResponse(code = 200, message = "Flavour Not Found")})
+    		@ApiResponse(code = 200, message = "NSD does not exist or Flavour Not Found")})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ServiceDeploymentFlavour getFlavourInfo(@PathParam("nsdID") String nsdID, @PathParam("sdfID") String sdfID) {
-    	ServiceDeploymentFlavour sdf = new ServiceDeploymentFlavour();
+    	ServiceDeploymentFlavour sdf;
     	
     	try{
         	if((sdf = service.getServiceDeploymentFlavour(nsdID, sdfID)) == null)
@@ -89,7 +89,7 @@ public class FlavoursResources {
     @Path("/flavour")
     @ApiOperation(value = "addServiceDeploymentFlavour", notes = "Add a new ServiceDeploymentFlavour")
     @ApiResponses(value = {@ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 400, message = "Forbidden: Flavour already exists")})
+            @ApiResponse(code = 400, message = "NSD does not exist or Flavour already exists")})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
     public Response addServiceDeploymentFlavour(@PathParam("nsdID") String nsdID, ServiceDeploymentFlavour sdf) {
@@ -111,7 +111,7 @@ public class FlavoursResources {
     @Path("/flavour/{sdfID}")
     @ApiOperation(value = "deleteServiceDeploymentFlavour", notes = "Remove a certain ServiceDeploymentFlavour")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Flavour Not Found")})
+            @ApiResponse(code = 404, message = "NSD does not exist or Flavour Not Found")})
     public void deleteServiceDeploymentFlavour(@PathParam("nsdID") String nsdID, @PathParam("sdfID") String sdfID) {
         try{
             if(service.deleteServiceDeploymentFlavour(nsdID, sdfID) == null)
@@ -120,5 +120,4 @@ public class FlavoursResources {
             throw e;
         }
     }
-
 }
