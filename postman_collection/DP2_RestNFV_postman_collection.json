@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "9f5d4944-0b6a-403b-8b2f-b44e14da73ef",
-		"name": "DP2",
+		"_postman_id": "1b7ce7f9-af81-430c-8920-1b7f7045ffd2",
+		"name": "DP2 Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -22,14 +22,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/test",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/test",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"test"
 					]
@@ -54,14 +54,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv",
+					"raw": "http://localhost:8080/Rest-nfv/nfv",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv"
 					]
 				}
@@ -85,14 +85,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv",
+					"raw": "http://localhost:8080/Rest-nfv/nfv",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv"
 					]
 				}
@@ -116,14 +116,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv",
+					"raw": "http://localhost:8080/Rest-nfv/nfv",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv"
 					]
 				}
@@ -147,14 +147,14 @@
 					"raw": "<PNI>\n\t\t<Hosts>\n\t\t\t<Host id=\"host1\" type=\"CLIENT\" fixedEndpoint=\"nodeA\">\n\t\t\t\t<Computational_properties cpu=\"1000\" cores=\"2\" nOfOperations=\"10\"/>\n\t\t\t\t<Memory_properties memory=\"4\" disk_storage=\"10\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"host2\" type=\"SERVER\" fixedEndpoint=\"nodeB\">\n\t\t\t\t<Computational_properties cpu=\"1000\" cores=\"2\" nOfOperations=\"10\"/>\n\t\t\t\t<Memory_properties memory=\"4\" disk_storage=\"10\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"hostA\" type=\"MIDDLEBOX\" fixedEndpoint=\"nodeA\">\n\t\t\t\t<Computational_properties cpu=\"1000\" cores=\"2\" nOfOperations=\"10\"/>\n\t\t\t\t<Memory_properties memory=\"4\" disk_storage=\"10\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t\t<V_Node_Ref id=\"0\"/>\n\t\t\t\t<SupportedVNF functional_type=\"WEBCLIENT\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"hostB\" type=\"MIDDLEBOX\" fixedEndpoint=\"nodeB\">\n\t\t\t\t<Computational_properties cpu=\"1000\" cores=\"2\" nOfOperations=\"10\"/>\n\t\t\t\t<Memory_properties memory=\"4\" disk_storage=\"10\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t\t<V_Node_Ref id=\"1\"/>\n\t\t\t\t<SupportedVNF functional_type=\"WEBSERVER\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"hostC\" maxVNF=\"1\" type=\"MIDDLEBOX\">\n\t\t\t\t<Computational_properties cpu=\"3000\" cores=\"16\"/>\n\t\t\t\t<Memory_properties memory=\"16\" disk_storage=\"50\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t\t<V_Node_Ref id=\"2\"/>\n\t\t\t\t<V_Node_Ref id=\"3\"/>\n\t\t\t\t<V_Node_Ref id=\"4\"/>\n\t\t\t\t<SupportedVNF functional_type=\"FIREWALL\"/>\n\t\t\t\t<SupportedVNF functional_type=\"CACHE\"/>\n\t\t\t\t<SupportedVNF functional_type=\"FIELDMODIFIER\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"hostD\" maxVNF=\"2\" type=\"MIDDLEBOX\">\n\t\t\t\t<Computational_properties cpu=\"4000\" cores=\"4\"/>\n\t\t\t\t<Memory_properties memory=\"16\" disk_storage=\"20\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t\t<V_Node_Ref id=\"2\"/>\n\t\t\t\t<SupportedVNF functional_type=\"FIREWALL\"/>\n\t\t\t</Host>\n\t\t\t<Host id=\"hostE\" maxVNF=\"3\" type=\"MIDDLEBOX\">\n\t\t\t\t<Computational_properties cpu=\"3000\" cores=\"8\"/>\n\t\t\t\t<Memory_properties memory=\"16\" disk_storage=\"10\"/>\n\t\t\t\t<Network_properties bandwidth=\"20\"/>\n\t\t\t\t<V_Node_Ref id=\"3\"/>\n\t\t\t\t<V_Node_Ref id=\"4\"/>\n\t\t\t\t<SupportedVNF functional_type=\"CACHE\"/>\n\t\t\t\t<SupportedVNF functional_type=\"FIELDMODIFIER\"/>\n\t\t\t</Host>\n\t\t</Hosts>\n\t\t\n\t\t<Connections>\n\t\t\t<Connection sourceHost=\"hostA\" destHost=\"hostB\"/>\n\t\t\t<Connection sourceHost=\"hostC\" destHost=\"hostD\"/>\n\t\t\t<Connection sourceHost=\"hostB\" destHost=\"hostC\"/>\n\t\t\t<Connection sourceHost=\"hostD\" destHost=\"hostE\"/>\n\t\t</Connections>\n\t</PNI>"
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/pni",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/pni",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"pni"
 					]
@@ -179,14 +179,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/pni",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/pni",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"pni"
 					]
@@ -211,14 +211,14 @@
 					"raw": "<Host id=\"hostPippo\" maxVNF=\"5\" type=\"MIDDLEBOX\">\n\t<Computational_properties cpu=\"3000\" cores=\"8\"/>\n\t<Memory_properties memory=\"16\" disk_storage=\"10\"/>\n\t<Network_properties bandwidth=\"20\"/>\n\t<V_Node_Ref id=\"3\"/>\n\t<V_Node_Ref id=\"4\"/>\n\t<SupportedVNF functional_type=\"CACHE\"/>\n\t<SupportedVNF functional_type=\"FIELDMODIFIER\"/>\n</Host>"
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/pni/hosts/host",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/pni/hosts/host",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"pni",
 						"hosts",
@@ -245,14 +245,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/pni/hosts/host/hostPippo",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/pni/hosts/host/hostPippo",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"pni",
 						"hosts",
@@ -280,51 +280,17 @@
 					"raw": "<NSD id=\"0\">\n\t\t\t<VNF_dependency>\n\t\t\t\t<graph id=\"0\">\n\t\t\t\t\t<node functional_type=\"WEBCLIENT\" name=\"nodeA\" id=\"0\">\n\t\t\t\t\t\t<configuration description=\"A simple description\" name=\"confA\">\n\t\t\t\t\t\t\t<webclient nameWebServer=\"nodeB\"/>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</node>\n\t\t\t\t\t<node functional_type=\"WEBSERVER\" name=\"nodeB\" id=\"1\">\n\t\t\t\t\t\t<configuration description=\"A simple description\" name=\"confB\">\n\t\t\t\t\t\t\t<webserver>\n\t\t\t\t\t\t\t\t<name>nodeB</name>\n\t\t\t\t\t\t\t</webserver>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</node>\n\t\t\t\t\t<node functional_type=\"FIREWALL\" name=\"nodeC\"  id=\"2\">\n\t\t\t\t\t\t<configuration description=\"A simple description\" name=\"conf1\">\n\t\t\t\t\t\t\t<firewall>\n\t\t\t\t\t\t\t\t<elements>\n\t\t\t\t\t\t\t\t\t<source>nodeC</source>\n\t\t\t\t\t\t\t\t\t<destination>nodeC</destination>\n\t\t\t\t\t\t\t\t</elements>\n\t\t\t\t\t\t\t</firewall>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</node>\n\t\t\t\t\t<node functional_type=\"CACHE\" name=\"nodeD\" id=\"3\">\n\t\t\t\t\t\t<configuration description=\"A simple description\" name=\"conf2\">\n\t\t\t\t\t\t\t<cache>\n\t\t\t\t\t\t\t\t<resource>nodeA</resource>\n\t\t\t\t\t\t\t\t<resource>nodeB</resource>\n\t\t\t\t\t\t\t</cache>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</node>\n\t\t\t\t\t<node functional_type=\"FIELDMODIFIER\" name=\"nodeE\" id=\"4\">\n\t\t\t\t\t\t<configuration description=\"A simple description\" name=\"conf3\">\n\t\t\t\t\t\t\t<fieldmodifier>\n\t\t\t\t\t\t\t\t<name>name</name>\n\t\t\t\t\t\t\t</fieldmodifier>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</node>\n\t\t\t\t</graph>\n\t\t\t</VNF_dependency>\n\n\t\t\t<PropertyDefinition>\n\t\t\t\t<Property graph=\"0\" name=\"IsolationProperty\" src=\"nodeA\" dst=\"nodeB\" src_port=\"5000\" dst_port=\"80\">\n\t\t\t\t\t<HTTPDefinition body=\"weapons\"/>\n\t\t\t\t</Property>\n\t\t\t\t<Property graph=\"0\" name=\"ReachabilityProperty\" src=\"nodeC\" dst=\"nodeD\" src_port=\"3000\" dst_port=\"110\">\n\t\t\t\t\t<POP3Definition email_from=\"polito\" body=\"weapons\"/>\n\t\t\t\t</Property>\n\t\t\t</PropertyDefinition>\n\n\t\t\t<VNF>\n\t\t\t\t<VNFD id=\"0\" vendor=\"POLITO\" version=\"1.0\">\n\t\t\t\t\t<Virtual_Link src=\"0\" dst=\"1\" test_access=\"Passive\">\n\t\t\t\t\t\t<qos>\n\t\t\t\t\t\t\t<latency>10</latency>\n\t\t\t\t\t\t</qos>\n\t\t\t\t\t</Virtual_Link>\n\t\t\t\t\t<VDU id=\"0\" vm_image=\"Linux_Server\">\n\t\t\t\t\t\t<Computational_requirements cpu=\"1000\" cores=\"1\" nOfOperations=\"1000\" />\n\t\t\t\t\t\t<Memory_requirements memory=\"30\" disk_storage=\"100\" virtual_mem_res=\"10\" />\n\t\t\t\t\t\t<Network_requirements bandwidth=\"150\" />\n\t\t\t\t\t</VDU>\n\t\t\t\t\t<VDU id=\"1\" vm_image=\"Linux Server\">\n\t\t\t\t\t\t<Computational_requirements cpu=\"500\" cores=\"2\" nOfOperations=\"500\" />\n\t\t\t\t\t\t<Memory_requirements memory=\"30\" disk_storage=\"100\" virtual_mem_res=\"10\" />\n\t\t\t\t\t\t<Network_requirements bandwidth=\"100\" />\n\t\t\t\t\t</VDU>\n\t\t\t\t\t<Dependency>\n\t\t\t\t\t\t<Relation src=\"0\" target=\"1\" />\n\t\t\t\t\t</Dependency>\n\t\t\t\t</VNFD>\n\t\t\t\t<VNFD id=\"1\" vendor=\"POLIMI\" version=\"0.5\">\n\t\t\t\t\t<Virtual_Link src=\"0\" dst=\"1\" test_access=\"Passive\">\n\t\t\t\t\t\t<qos>\n\t\t\t\t\t\t\t<latency>10</latency>\n\t\t\t\t\t\t</qos>\n\t\t\t\t\t</Virtual_Link>\n\t\t\t\t\t<VDU id=\"0\" vm_image=\"Linux Server\">\n\t\t\t\t\t\t<Computational_requirements cpu=\"500\" cores=\"2\" nOfOperations=\"500\" />\n\t\t\t\t\t\t<Memory_requirements memory=\"30\" disk_storage=\"100\" virtual_mem_res=\"10\" />\n\t\t\t\t\t\t<Network_requirements bandwidth=\"100\" />\n\t\t\t\t\t</VDU>\n\t\t\t\t</VNFD>\n\t\t\t</VNF>\n\n\t\t\t<VNFFGD>\n\t\t\t\t<NetworkForwardingPaths id=\"0\" n_endpoint=\"4\" n_vl=\"2\" vnffgd_security=\"SHA-256\">\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeA\"/>\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeB\"/>\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeC\"/>\n\t\t\t\t</NetworkForwardingPaths>\n\t\t\t\t<NetworkForwardingPaths id=\"1\">\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeE\"/>\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeD\"/>\n\t\t\t\t</NetworkForwardingPaths>\n\t\t\t\t<NetworkForwardingPaths id=\"2\">\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeC\"/>\n\t\t\t\t\t<Node_Connection nodeRef=\"nodeE\"/>\n\t\t\t\t</NetworkForwardingPaths>\n\t\t\t</VNFFGD>\n\n\t\t\t<PNF>\n\t\t\t\t<PNFD id=\"0\" vendor=\"fastweb\" version=\"1.2\" description=\"DHCP\">\n\t\t\t\t\t<Connection_point id=\"0\" type=\"physical_port\" />\n\t\t\t\t</PNFD>\n\t\t\t\t<PNFD id=\"1\" vendor=\"fastweb\" version=\"1.0\" description=\"LoadBalancer\">\n\t\t\t\t\t<Connection_point id=\"0\" type=\"endpoint\" />\n\t\t\t\t</PNFD>\n\t\t\t</PNF>\n\n\t\t\t<flavours>\n\t\t\t\t<Service_deployment_flavour id=\"0\" flavour_key=\"calls_per_second\" flavour_value=\"300\"/>\n\t\t\t</flavours>\n\n\t\t\t<Connection_points>\n\t\t\t\t<Connection_point id=\"0\" type=\"endpoint\"/>\n\t\t\t</Connection_points>\n\t\t\t<ParsingString>30L?</ParsingString>\n\t\t</NSD>"
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/ns/nsd",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/ns/nsd",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"ns",
 						"nsd"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8080/nfv_rest_war_exploded/nfv/ns/nsd/0",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/xml",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/ns/nsd/0",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"nfv_rest_war_exploded",
-						"nfv",
-						"ns",
-						"nsd",
-						"0"
 					]
 				}
 			},
@@ -347,14 +313,14 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/nfv_rest_war_exploded/nfv/ns/nsd/0/vnf",
+					"raw": "http://localhost:8080/Rest-nfv/nfv/ns/nsd/0/vnf",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"nfv_rest_war_exploded",
+						"Rest-nfv",
 						"nfv",
 						"ns",
 						"nsd",
