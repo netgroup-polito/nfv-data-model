@@ -86,7 +86,7 @@ Click Finish and wait while IntelliJ IDEA is creating the project.
         2. Browse the folder lib of the Project
         3. Apply and then OK to close
 		
-File *build.xml* and *tomcat.xml* can be deleted (useful only for Eclipse configuration).
+File *build.xml* and *tomcat-build.xml* can be deleted (useful only for Eclipse configuration).
 
 ## Eclipse
 
@@ -119,13 +119,13 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
 	- Use the **build.xml**
 		- Target: start-tomcat
 		- Target: deploy
-		
-	At this point the services has been deploied
+		- Now the services has been deployed and ready to use
 	- Do it manually
+		- It is recommandend to delete the build.xml and tomcat-build.xml.
 		- Insert libs dependancy inside the project (to fix class import errors).
 		    1. Right click on the project and click on **Properties**.
 		    2. From **Java Build Path** select **Add jARs**.
-		    3. Select all jARs inside **lib** folder and click **OK**.
+		    3. Select all jARs inside **lib** and **Webcontent/WEB-INF/lib** folders and click **OK**.
 		    4. **Apply** and then **OK** to close.
 		- Create server Tomcat
 			1. Click *New > Other > Server*
