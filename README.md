@@ -119,6 +119,7 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
 	- Use the **build.xml**
 		- Target: start-tomcat
 		- Target: deploy
+		
 	At this point the services has been deploied
 	- Do it manually
 		- Insert libs dependancy inside the project (to fix class import errors).
