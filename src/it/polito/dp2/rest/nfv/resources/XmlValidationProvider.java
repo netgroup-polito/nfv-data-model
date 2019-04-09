@@ -44,7 +44,7 @@ public class XmlValidationProvider<T> implements MessageBodyReader<T> {
 		logger.log(Level.SEVERE, "--- XML validator ---");
 
 		try {				
-			InputStream schemaStream = XmlValidationProvider.class.getResourceAsStream("/xsd/allin.xsd");
+			InputStream schemaStream = XmlValidationProvider.class.getResourceAsStream("/xsd/nfv.xsd");
 			if (schemaStream == null) {
 				logger.log(Level.SEVERE, "xml schema file Not found.");
 				throw new IOException();
