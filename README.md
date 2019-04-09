@@ -154,7 +154,7 @@ Note that in **IntelliJ IDEA** is also present the `_war_exploded`, then:
 # Test
 
 Two ways to perform test:
-- [JUnit test](https://github.com/netgroup-polito/nfv-data-model/tree/master/test)
+- [JUnit test](https://github.com/netgroup-polito/nfv-data-model/blob/master/src/it/polito/dp2/rest/nfv/test/TestFromObj.java)
 
 	It will perform some different kind of tests:
 
@@ -170,7 +170,7 @@ Two ways to perform test:
 
 	- *delete_ns()* will perform a delete of the **NS** and will assert a *204 No Content*
 
-- [Client test](https://github.com/netgroup-polito/nfv-data-model/tree/master/src/it/polito/dp2/rest/nfv/client)
+- [Client test](https://github.com/netgroup-polito/nfv-data-model/blob/master/src/it/polito/dp2/rest/nfv/client/Client.java)
 
 	It is a resource that can be called by performing a GET to path `http://localhost:8080/project_name/nfv/test`. 
 	
