@@ -12,13 +12,16 @@ Different methos allow you to manage the whole structure and also the sub-struct
 - [Classes Configuration](https://github.com/netgroup-polito/nfv-data-model#classes-configuration)
 	- [Application Class](https://github.com/netgroup-polito/nfv-data-model#application-class)
 	- [Client Class](https://github.com/netgroup-polito/nfv-data-model#client-class)
-	- [ClientTest Class](https://github.com/netgroup-polito/nfv-data-model#clienttest-class)
+	- [Test Class](https://github.com/netgroup-polito/nfv-data-model#test-class)
 - [Test](https://github.com/netgroup-polito/nfv-data-model#test)
 	- JUnit test
 	- Client test
-- [Issues](https://github.com/netgroup-polito/nfv-data-model#issues)
+- [Postman Collection](https://github.com/netgroup-polito/nfv-data-model#postman-collection)
+- [Possible Issues](https://github.com/netgroup-polito/nfv-data-model#possible-issues)
 
 # Configuration
+
+Make sure the name of the project you are going to create is **Rest-nfv**, if not just check [Classes Configuration](https://github.com/netgroup-polito/nfv-data-model#classes-configuration) section to configure the dependencies. Some classes, 
 
 ## IntelliJ IDEA
 
@@ -128,17 +131,17 @@ For example, if you want to add newClass.java, then:
 
 ### Client Class
 
-You need to specify the name of your project in the URL in which the client will perform the test. So, make sure that `XXXXXXX`, inside the Client constructor, will be replaced the name of your project or the client will not work properly.
+You need to specify the name of your project in the URL in which the client will perform the test. So, make sure that `base URL`, inside the Client constructor, will contain the correct name of your project or the client will not work properly.
 
-If the name of the project is `rest_nfv`, then:
+If the name of the project is `Rest-nfv`, then:
 
-	baseUrl = "http://localhost:8080/rest_nfv/nfv";
+	baseUrl = "http://localhost:8080/Rest-nfv/nfv";
             
 Note that in **IntelliJ IDEA** is also present the `_war_exploded`, then:
 
-	baseUrl = "http://localhost:8080/rest_nfv_war_exploded/nfv";
+	baseUrl = "http://localhost:8080/Rest-nfv_war_exploded/nfv";
 
-### ClientTest Class
+### Test Class
 
 Make sure the base URL containts the URL of your project or the test will not work properly:
 
@@ -153,25 +156,19 @@ Note that in **IntelliJ IDEA** is also present the `_war_exploded`, then:
 Two ways to perform test:
 - [JUnit test](https://github.com/netgroup-polito/nfv-data-model/tree/master/test)
 
-	It will perform nine kind of different tests:
-	
-	- The first one will add a wrong **NFV** ([wrong_nfv.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/wrong_nfv.xml)) and then, the expected status code will be *400 Bad Requeset*
-		
-	- The second one will add a correct **NFV** ([ok_nfv.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/ok_nfv.xml)) and then, the expected status code will be *201 Created*
+	It will perform some different kind of tests:
 
-	- The third one will perform a delete of the **NFV** and will assert a *204 No Content*
+	- *post_wrong_pni()* will add a wrong **PNI** and then, the expected status code will be *400 Bad Requeset*
 
-	- The fourth one will add a wrong **PNI** ([wrong_pni.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/wrong_pni.xml)) and then, the expected status code will be *400 Bad Requeset*
+	- *post_fine_pni()* will add a correct **PNI** and then, the expected status code will be *201 Created*
 
-	- The fifth one will add a correct **PNI** ([ok_pni.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/ok_pni.xml)) and then, the expected status code will be *201 Created*
+	- *post_wrong_ns()* will add a wrong **NS** and then, the expected status code will be *400 Bad Requeset*
 
-	- The sixth one will add a wrong **NS** ([wrong_ns.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/wrong_ns.xml)) and then, the expected status code will be *400 Bad Requeset*
+	- *post_fine_ns()* will add a correct **NS** and then, the expected status code will be *201 Created*
 
-	- The seventh one will add a correct **NS** ([ok_ns.xml](https://github.com/netgroup-polito/nfv-data-model/blob/master/test/assertion/ok_ns.xml)) and then, the expected status code will be *201 Created*
+	- *delete_pni()* will perform a delete of the **PNI** and will assert a *204 No Content*
 
-	- The eighth one will perform a delete of the **PNI** and will assert a *204 No Content*
-
-	- The ninth one will perform a delete of the **NS** and will assert a *204 No Content*
+	- *delete_ns()* will perform a delete of the **NS** and will assert a *204 No Content*
 
 - [Client test](https://github.com/netgroup-polito/nfv-data-model/tree/master/src/it/polito/dp2/rest/nfv/client)
 
@@ -179,7 +176,11 @@ Two ways to perform test:
 	
 	The resource will call a test service and a lot of insertion will be performed. To be sure that each insertion is correct the Client class will check for each insertion if the status code is the expected one or not: if yes it will log the insertion, otherwise it will throw an exception.
 
-# Issues
+# Postman Collection
+
+The postman folder contains a .json file (that can be imported in Postman) wich inside are defined some GET, POST, DELETE and PUT examples for some elements.
+
+# Possible Issues
 
 - IntelliJ 13.1 and Glassfish 4.1 on MacOS X:
 
