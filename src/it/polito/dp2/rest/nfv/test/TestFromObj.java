@@ -1,7 +1,9 @@
 package it.polito.dp2.rest.nfv.test;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -53,8 +55,8 @@ import javax.ws.rs.core.Response;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestFromObj {
-
     private String baseUrl = "http://localhost:8080/Rest-nfv";
     private static final Logger LOGGER = Logger.getLogger(TestFromObj.class.getName());
     private DataToObj util = new DataToObj();
@@ -327,7 +329,7 @@ public class TestFromObj {
     }
 
     @Test
-    public void delete_pni() {
+    public void z_delete_pni() {
         String path = "/nfv/pni";
 
         LOGGER.log(Level.FINEST, "[!] NFV{delete}(pni) test [:Started]");
@@ -350,7 +352,7 @@ public class TestFromObj {
     }
 
     @Test
-    public void delete_ns() {
+    public void z_delete_ns() {
         String path = "/nfv/ns";
 
         LOGGER.log(Level.FINEST, "[!] NFV{delete}(ns) test [:Started]");
