@@ -1,5 +1,6 @@
 \documentclass[11pt, english]{article}
 \usepackage{graphicx}
+\usepackage{comment}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage[english]{babel}
 \selectlanguage{english}
@@ -697,10 +698,10 @@ The RESTful has been developed both in Eclipse Neon 2 and IntelliJ IDEA, with th
 
 The used library are available  \href{https://github.com/netgroup-polito/nfv-data-model/tree/master/lib}{\underline{here}}.
 
-In the \href{https://github.com/netgroup-polito/nfv-data-model/blob/master/README.md#configuration}{\underline{GitHub repo}} is described how to configure the environment for both \textit{Eclipse} and \textit{IntelliJ IDEA}. It is also available the \href{https://github.com/netgroup-polito/nfv-data-model}{\underline{source code}}. 
+In the \href{https://github.com/netgroup-polito/nfv-data-model/blob/master/README.md#configuration}{\underline{README}} of the GitHub repo is described how to configure the environment for both \textit{Eclipse} and \textit{IntelliJ IDEA}. \href{https://github.com/netgroup-polito/nfv-data-model}{\underline{Source code}} is also available. 
 
 \subsection{Granularity}
-First of all, it is possible to GET, POST and DELETE the root element \textbf{NFV} and also the sub-root \textbf{PNI} and \textbf{NS}. Notice that, for these elements, the POST will overwrite all the previous structures (if there was one). This choice is due to the fact that in PNI, for example, if you want to add more \textit{Host} or \textit{Connection}, you can just use the relative Method instead of POST from the root. For the same reason, this approach has been adopted both in NFV and in NS.
+First of all, it is not allowed to to GET, POST and DELETE the root element \textbf{NFV} but is only possible to perform that methods in its sub-root: \textbf{PNI} and \textbf{NS}. Notice that, for these elements, the POST will overwrite all the previous structures (if there was one). This choice is due to the fact that in the PNI, for example, if you want to add more \textit{Host} or \textit{Connection}, you can just use the relative Method instead of POST from the root. For the same reason, this approach has been adopted also in the NS.
 
 Focusing on the sub-structures of PNI, it is allowed GET, POST, DELETE and also PUT (MODIFY) a single or multiple \textbf{Hosts} and/or \textbf{Connections}. In this way is very easy to modify the Physical Network Structure. It is not allowed to perform operations on the attributes and/or elements of \textit{Host} and \textit{Connection}: if you want to perform some kind of operations in that attributes/elements just perform it on the Host/Connection. The motivation is that the properties of a certain host will hardly change if the hosts itself will not change. So, at that point, if a specific requirements need to be changed probably also the host would need a change. Therefore, no methods to GET, POST and DELETE elements of Host and Connection. 
 
@@ -719,8 +720,9 @@ Concerning its elements, it is only allowed to GET, POST, DELETE and PUT (MODIFY
 Finally, for \textbf{VNFFGD}, \textbf{PNF}, \textbf{Flavours} and \textbf{ConnectionPoints} it is allowed to GET, POST, DELETE the root elements and PUT (MODIFY) the related elements. A POST from a root elements will overwrite all the previous structures for the same reason described above.
 
 \subsection{Methods}
-All method listed below are under the path \textbf{\{project\_name\}/nfv} and will return \textit{500 Internal Error} when an unexpected error occurred. More information will follow.
+All method listed below are under the path \textbf{\{project\_name\}/nfv} and will throw \textit{500 Internal Error} when an unexpected error occurred. More information will follow.
 
+\begin{comment}
 \subsubsection{NFV}
 NFV's methods permits to manage the whole PNI and NS structure. \\
 
@@ -738,6 +740,7 @@ NFV's methods permits to manage the whole PNI and NS structure. \\
     DELETE & - & Clear the NFV structure.  & - & 204 No Content. \\
     \hline
 \end{tabular}
+\end{comment}
 
 \subsubsection{PNI}
 PNI's methods permits to manage the whole PNI structure. \\
@@ -781,6 +784,7 @@ Hosts methods permits to manage single or multiple hosts. \\
     \hline
 \end{tabular}
 
+\newpage
 \paragraph{Connections}
 Connections methods permits to manage single or multiple connections. \\
 
@@ -841,7 +845,11 @@ NSD's methods permits to manage each NSD inside the NS sequence. \\
     \hline
 \end{tabular} \\
 
-\underline{NOTE:} The methods below refer each existing NSD. They can be called under the path \textbf{/ns/nsd/\{id\}}, where \textit{id} is the identifier of that NSD. Moreover, entity can't be created if NS and at least a NSD does not exist. 
+\underline{NOTE:} The methods below refer each existing NSD. 
+
+They have to be called under the path \textbf{/ns/nsd/\{id\}}, where \textit{id} is the identifier of that NSD. 
+
+Remember that, entity can be created only if NS and at least one NSD exists. So, each of the method below will work only if the corresponding NSD exists: if you try to GET, POST, DELETE or PUT an element considering a non existing NSD you'll got 404 Not Found (that is referred to the NSD that not exists). More information related to the methods response will follow.
 
 \newpage
 \paragraph{VNF Dependency}
