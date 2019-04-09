@@ -85,6 +85,8 @@ Click Finish and wait while IntelliJ IDEA is creating the project.
         1. in Dependencies tab '+' → Java
         2. Browse the folder lib of the Project
         3. Apply and then OK to close
+		
+File *build.xml* and *tomcat.xml* can be deleted (useful only for Eclipse configuration).
 
 ## Eclipse
 
@@ -113,11 +115,22 @@ The used software has been [Eclipse Neon 2](https://www.eclipse.org/downloads/pa
         git clone https://github.com/netgroup-polito/nfv-data-model.git
 
 2. Rewrite all the file folder of your project with the new one downloaded.
-3. Insert libs dependancy inside the project (to fix class import errors).
-    1. Right click on the project and click on **Properties**.
-    2. From **Java Build Path** select **Add jARs**.
-    3. Select all jARs inside **lib** folder and click **OK**.
-    4. **Apply** and then **OK** to close.
+3. At this point you can:
+	- Use the **build.xml**
+		- Target: start-tomcat
+		- Target: deploy
+	At this point the services has been deploied
+	- Do it manually
+		- Insert libs dependancy inside the project (to fix class import errors).
+		    1. Right click on the project and click on **Properties**.
+		    2. From **Java Build Path** select **Add jARs**.
+		    3. Select all jARs inside **lib** folder and click **OK**.
+		    4. **Apply** and then **OK** to close.
+		- Create server Tomcat
+			1. Click *New > Other > Server*
+			2. On the page of the Wizard:
+				1. Under **Apache** select **Tomcat v8.5 Server**.
+				2. Click **Finish**.
 
 # Classes Configuration
 
