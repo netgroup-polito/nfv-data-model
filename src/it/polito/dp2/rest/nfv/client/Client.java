@@ -29,7 +29,7 @@ public class Client {
 		LOGGER.setUseParentHandlers(false);
 		baseUrl = System.getProperty("it.polito.dp2.rest.nfv.URL");
 		if(baseUrl == null)
-			baseUrl = "http://localhost:8080/nfv_rest_war_exploded/nfv";
+			baseUrl = "http://localhost:8080/Rest-nfv/nfv";
 	}
 	
 	private void enterHost(String hostId, TypeOfHost type, String fixEnd, int maxVnf,
