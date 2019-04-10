@@ -7,7 +7,7 @@
 	<property name="resources.dir" location="resources"/>
 	<property name="javadoc.dir" location="docs"/>
 	<property name="dist.dir" location="dist"/>
-	<property name="schema.dir" location="data-format/nfv" />
+	<property name="schema.dir" location="WebContent/WEB-INF/classes/xsd" />
 	<property name="report.dir" location="log" />
 	<property name="gen_lib.dir" location="lib" />
 	<property name="lib.dir" location="WebContent/WEB-INF/lib" />
@@ -44,6 +44,7 @@
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${report.dir}"/>
 		<mkdir dir="${javadoc.dir}"/>
+		<mkdir dir="${target.dir}"/>
 	</target>
 
 	<!-- Target: chk-bindings -->
@@ -56,7 +57,7 @@
 	<!-- Target: generate-bindings 
 	insert: unless="generate-bindings.notRequired" to generate if required only
 	-->
-	<target name="generate-bindings" depends="init,-chk-bindings" unless="generate-bindings.notRequired" description="Generate bindings from schema">
+	<target name="generate-bindings" depends="init,-chk-bindings" description="Generate bindings from schema">
 		<exec executable="xjc" failonerror="true" >
 			<arg value="-d" />
 			<arg value="${src.dir}" />
@@ -99,11 +100,6 @@
 			<classpath location="${build.dir}" />
 			<test name="it.polito.dp2.rest.nfv.test.TestFromObj"
 			haltonfailure="no" todir="${report.dir}">
-				<formatter type="plain" />
-				<formatter type="xml" />
-			</test>
-			<test name="it.polito.dp2.rest.nfv.test.TestFromXml"
-    				haltonfailure="no" todir="${report.dir}">
 				<formatter type="plain" />
 				<formatter type="xml" />
 			</test>
